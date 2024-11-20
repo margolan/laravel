@@ -10,6 +10,14 @@
   @csrf
 </form>
 
+@php
+
+$str = "blOW";
+// $pattern = "/[оo]/i";
+echo preg_match("/[oо]/i", "СлОВО");
+
+@endphp
+
 @if(session('error'))
 {{ session('error') }}
 <hr>
@@ -22,12 +30,18 @@
 @if(isset($row_data))
 
 
+
+
+
 <!-- @foreach($anchor as $cell) -->
 <!-- <pre> -->
 <!-- {{ $cell }} -->
 <!-- </pre> -->
 <!-- @endforeach -->
 @php
+
+
+
 
 echo '
 <pre>';

@@ -15,6 +15,7 @@ class ExcelController extends Controller
             $row_data = Excel::toArray(new ExcelImport(), $request->file('file'));
 
             $anchor = [];
+            // $complete_data = ['names' => [], 'data' => ['main' => [], 'correction' => []], 'var1' => [], 'var2' => [], 'var3' => [], 'var4' => [], 'var5' => []];
             $complete_data = ['names' => [], 'data' => [], 'var1' => [], 'var2' => [], 'var3' => [], 'var4' => [], 'var5' => []];
 
             foreach ($row_data[0] as $k => $v) {
@@ -29,18 +30,24 @@ class ExcelController extends Controller
             $days = count(array_filter($row_data[0][$anchor[0] - 2]));
 
             for ($a = 0; $a < count($anchor); $a++) {
+                // $temp0 = [[],[]];
                 $temp = [];
                 for ($i = 0; $i < $days; $i++) {
-                    if ($row_data[0][$anchor[$a]][$i + 4] == 'B') {
+                    if (preg_match("/[вb]/i", $row_data[0][$anchor[$a]][$i + 4]) || $row_data[0][$anchor[$a]][$i + 4] == null) {
                         array_push($temp, '-');
-                    } else if ($row_data[0][$anchor[$a]][$i + 4] == 'О' || $row_data[0][$anchor[$a]][$i + 4] == null) {
+                    } else if (preg_match("/[оo]/i", $row_data[0][$anchor[$a]][$i + 4])) {
                         array_push($temp, 'О');
                     } else if ($row_data[0][$anchor[$a]][$i + 4] == '8:00' && $row_data[0][$anchor[$a] + 1][$i + 4] == '9:00') {
                         array_push($temp, '+');
                     } else if ($row_data[0][$anchor[$a]][$i + 4] == '8:00' && $row_data[0][$anchor[$a] + 1][$i + 4] == '12:00') {
                         array_push($temp, 'Д');
                     }
+
+                    // array_push($temp0[0], $row_data[0][$anchor[$a]][$i + 4]);
+                    // array_push($temp0[1], $row_data[0][$anchor[$a] + 1][$i + 4]);
                 }
+                // array_push($complete_data['data']['main'], $temp0[0]);
+                // array_push($complete_data['data']['correction'], $temp0[1]);
                 array_push($complete_data['data'], $temp);
             }
 
