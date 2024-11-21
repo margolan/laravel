@@ -12,9 +12,7 @@
 
 @php
 
-$str = "blOW";
-// $pattern = "/[оo]/i";
-echo preg_match("/[oо]/i", "СлОВО");
+
 
 @endphp
 
@@ -33,11 +31,8 @@ echo preg_match("/[oо]/i", "СлОВО");
 
 
 
-<!-- @foreach($anchor as $cell) -->
-<!-- <pre> -->
-<!-- {{ $cell }} -->
-<!-- </pre> -->
-<!-- @endforeach -->
+
+
 @php
 
 
