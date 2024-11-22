@@ -27,11 +27,18 @@
 
 @if(isset($row_data))
 
+<div class="wrap">
+  @for($a = 0; $a < count($complete_data['names']); $a++)
 
+  <div class="row">
+    <div class="names">{{ $complete_data['names'][$a] }}</div>
+      @for($b = 0; $b < $days; $b++)
+        <div class="cell">{{ $complete_data['data'][$a][$b] }}</div>
+      @endfor
+  </div>
 
-
-
-
+  @endfor
+</div>
 
 @php
 
@@ -40,7 +47,7 @@
 
 echo '
 <pre>';
-print_r($anchor);
+print_r($complete_data['data']);
 echo '</pre>';
 
 echo '

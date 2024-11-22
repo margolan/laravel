@@ -55,7 +55,7 @@ class ExcelController extends Controller
             // $lol = [$row_data[0][5], $row_data[0][4]];
 
             session()->flash('success', 'Excel Imported Successfully');
-            return view('schedule', compact('row_data', 'anchor', 'complete_data'));
+            return view('schedule', compact('row_data', 'anchor', 'complete_data', 'days'));
         } else {
             return redirect()->back()->with('error', 'Select File');
         }
