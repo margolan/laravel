@@ -1,20 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class="dark">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="/css/app.css">
+  @vite(['resources/js/app.js', 'resources/css/app.css'])
   <title>@yield('title')</title>
 </head>
 
-<body>
+<body class="bg-gray-100 dark:bg-gray-800 dark:text-white text-sm">
 
-  <a href="/">Главная</a> | <a href="/s">График</a>
-
-  <hr>
+  @include('layout.head')
 
   @yield('content')
+
+
 
 </body>
 

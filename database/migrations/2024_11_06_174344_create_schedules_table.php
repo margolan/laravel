@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->text('names');
             $table->text('data');
+            $table->text('dates');
+            $table->text('month');
             $table->text('var1')->nullable();
             $table->text('var2')->nullable();
             $table->text('var3')->nullable();
