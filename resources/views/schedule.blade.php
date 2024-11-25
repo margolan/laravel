@@ -28,17 +28,24 @@
 @if(isset($row_data))
 
 <div class="wrap">
-  @for($a = 0; $a < count($complete_data['names']); $a++)
-
   <div class="row">
-    <div class="names">{{ $complete_data['names'][$a] }}</div>
-      @for($b = 0; $b < $days; $b++)
-        <div class="cell">{{ $complete_data['data'][$a][$b] }}</div>
-      @endfor
+    <div class="names">Имя</div>
+    @foreach($days as $day)
+    <div class="cell">{{ $day }}</div>
+    @endforeach
   </div>
-
+  @for($a = 0; $a < count($complete_data['names']); $a++)
+    <div class="row">
+    <div class="names">{{ explode(" ", $complete_data['names'][$a])[1] }}</div>
+    @for($b = 0; $b < count($days); $b++)
+      <div class="cell">{{ $complete_data['data'][$a][$b] }}</div>
+    @endfor
+    </div>
   @endfor
 </div>
+
+
+
 
 @php
 
@@ -47,12 +54,12 @@
 
 echo '
 <pre>';
-print_r($complete_data['data']);
+print_r($dates);
 echo '</pre>';
 
 echo '
 <pre>';
-print_r($complete_data);
+print_r($days);
 echo '</pre>';
 
 

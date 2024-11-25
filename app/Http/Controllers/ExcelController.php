@@ -6,6 +6,8 @@ use App\Imports\ExcelImport;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 
+use function PHPUnit\Framework\isEmpty;
+
 class ExcelController extends Controller
 {
     public function getData(Request $request)
@@ -15,7 +17,7 @@ class ExcelController extends Controller
             $row_data = Excel::toArray(new ExcelImport(), $request->file('file'));
 
             $anchor = [];
-            // $complete_data = ['names' => [], 'data' => ['main' => [], 'correction' => []], 'var1' => [], 'var2' => [], 'var3' => [], 'var4' => [], 'var5' => []];
+            // $complete_data = ['names' => [], 'data' => ['main' => [], 'correction' => []], 'var1' => [], 'var2' => [], 'var3' => [], 'var4' => [], 'var5' => []]; // for testing purposes
             $complete_data = ['names' => [], 'data' => [], 'var1' => [], 'var2' => [], 'var3' => [], 'var4' => [], 'var5' => []];
 
             foreach ($row_data[0] as $k => $v) {
@@ -27,35 +29,48 @@ class ExcelController extends Controller
                 }
             }
 
-            $days = count(array_filter($row_data[0][$anchor[0] - 2]));
+            $days = array_filter($row_data[0][$anchor[0] - 2]);
+            $dates = array_filter($row_data[0][$anchor[0] - 1]);
 
             for ($a = 0; $a < count($anchor); $a++) {
-                // $temp0 = [[],[]];
+                // $temp0 = [[], []]; // for testing purposes
                 $temp = [];
-                for ($i = 0; $i < $days; $i++) {
-                    if (preg_match("/[вb]/i", $row_data[0][$anchor[$a]][$i + 4]) || $row_data[0][$anchor[$a]][$i + 4] == null) {
-                        array_push($temp, '-');
-                    } else if (preg_match("/[оo]/i", $row_data[0][$anchor[$a]][$i + 4])) {
-                        array_push($temp, 'О');
-                    } else if ($row_data[0][$anchor[$a]][$i + 4] == '8:00' && $row_data[0][$anchor[$a] + 1][$i + 4] == '9:00') {
+                for ($i = 0; $i < count($days); $i++) {
+
+                    $cellValue = $row_data[0][$anchor[$a]][$i + 4];
+
+                    if (preg_match('/\p{Cyrillic}/u', $cellValue)) {
+                        if (preg_match('/[Оо]/u', $cellValue)) {
+                            array_push($temp, 'О');
+                        } elseif (preg_match('/[Вв]/u', $cellValue)) {
+                            array_push($temp, '-');
+                        }
+                    } elseif (preg_match('/\p{Latin}/u', $cellValue)) {
+                        if (preg_match('/[Oo]/', $cellValue)) {
+                            array_push($temp, 'O');
+                        } elseif (preg_match('/[Bb]/', $cellValue)) {
+                            array_push($temp, '-');
+                        }
+                    } elseif ($cellValue == '8:00' && $row_data[0][$anchor[$a] + 1][$i + 4] == '9:00') {
                         array_push($temp, '+');
-                    } else if ($row_data[0][$anchor[$a]][$i + 4] == '8:00' && $row_data[0][$anchor[$a] + 1][$i + 4] == '12:00') {
+                    } elseif ($cellValue == '8:00' && $row_data[0][$anchor[$a] + 1][$i + 4] == '12:00') {
                         array_push($temp, 'Д');
+                    } else {
+                        array_push($temp, $cellValue);
                     }
 
-                    // array_push($temp0[0], $row_data[0][$anchor[$a]][$i + 4]);
-                    // array_push($temp0[1], $row_data[0][$anchor[$a] + 1][$i + 4]);
+                    // array_push($temp0[1], $row_data[0][$anchor[$a] + 1][$i + 4]); // for testing purposes
+                    // array_push($temp0[0], $row_data[0][$anchor[$a]][$i + 4]); // for testing purposes
                 }
-                // array_push($complete_data['data']['main'], $temp0[0]);
-                // array_push($complete_data['data']['correction'], $temp0[1]);
+                // array_push($complete_data['data']['main'], $temp0[0]); // for testing purposes
+                // array_push($complete_data['data']['correction'], $temp0[1]); // for testing purposes
                 array_push($complete_data['data'], $temp);
             }
 
-            // $lol = explode(';', $complete_data['data'][11]);
-            // $lol = [$row_data[0][5], $row_data[0][4]];
+            // $lol = [$row_data[0][5], $row_data[0][4]]; // for testing purposes
 
             session()->flash('success', 'Excel Imported Successfully');
-            return view('schedule', compact('row_data', 'anchor', 'complete_data', 'days'));
+            return view('schedule', compact('row_data', 'anchor', 'complete_data', 'days', 'dates'));
         } else {
             return redirect()->back()->with('error', 'Select File');
         }
