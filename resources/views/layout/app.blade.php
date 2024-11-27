@@ -10,11 +10,13 @@
 
 <body class="bg-gray-100 dark:bg-gray-800 dark:text-white text-sm">
 
-  @include('layout.head')
+  <div class="wrap p-3">
 
-  @yield('content')
+    @include('layout.head')
 
+    @yield('content')
 
+  </div>
 
 </body>
 

@@ -7,11 +7,9 @@ use App\Models\Schedule;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 
-use function PHPUnit\Framework\isEmpty;
-
 class ExcelController extends Controller
 {
-    public $complete_data = ['names' => [], 'data' => [], 'dates' => [], 'month' => '', 'var1' => [], 'var2' => [], 'var3' => [], 'var4' => [], 'var5' => []];
+    public $complete_data = ['names' => [], 'data' => [], 'dates' => [], 'month' => [], 'var1' => [], 'var2' => [], 'var3' => [], 'var4' => [], 'var5' => []];
 
     public function getData(Request $request)
     {
@@ -20,8 +18,6 @@ class ExcelController extends Controller
             $row_data = Excel::toArray(new ExcelImport(), $request->file('file'));
 
             $anchor = [];
-            // $complete_data = ['names' => [], 'data' => ['main' => [], 'correction' => []], 'var1' => [], 'var2' => [], 'var3' => [], 'var4' => [], 'var5' => []]; // for testing purposes
-            // $complete_data = ['names' => [], 'data' => [], 'var1' => [], 'var2' => [], 'var3' => [], 'var4' => [], 'var5' => []];
 
             foreach ($row_data[0] as $k => $v) {
                 foreach ($v as $k1 => $v1) {
@@ -32,11 +28,11 @@ class ExcelController extends Controller
                 }
             }
 
-            array_push($this->complete_data['dates'], array_filter($row_data[0][$anchor[0] - 2]));
-            array_push($this->complete_data['dates'], array_filter($row_data[0][$anchor[0] - 1]));
+            array_push($this->complete_data['dates'], array_filter($row_data[0][$anchor[0] - 2])); // Days
+            array_push($this->complete_data['dates'], array_filter($row_data[0][$anchor[0] - 1])); // Dates
+            array_push($this->complete_data['month'], $row_data[0][1][4]); // Month
 
             for ($a = 0; $a < count($anchor); $a++) {
-                // $temp0 = [[], []]; // for testing purposes
                 $temp = [];
                 for ($i = 0; $i < count($this->complete_data['dates'][0]); $i++) {
 
@@ -61,37 +57,38 @@ class ExcelController extends Controller
                     } else {
                         array_push($temp, $cellValue);
                     }
-
-                    // array_push($temp0[1], $row_data[0][$anchor[$a] + 1][$i + 4]); // for testing purposes
-                    // array_push($temp0[0], $row_data[0][$anchor[$a]][$i + 4]); // for testing purposes
                 }
-                // array_push($complete_data['data']['main'], $temp0[0]); // for testing purposes
-                // array_push($complete_data['data']['correction'], $temp0[1]); // for testing purposes
                 array_push($this->complete_data['data'], $temp);
             }
 
-            // $lol = [$row_data[0][5], $row_data[0][4]]; // for testing purposes
+            $dataToStore = [];
 
-            session()->flash('success', 'Excel Imported Successfully');
-            return view('schedule', ['complete_data' => $this->complete_data]);
+            foreach ($this->complete_data as $key => $value) {
+                if (!empty($value)) {
+                    $dataToStore[$key] = json_encode($value, JSON_UNESCAPED_UNICODE);
+                }
+            }
+
+            Schedule::create($dataToStore);
+
+            return view('schedule', ['complete_data' => $this->complete_data, 'row_data' => $row_data, 'dataToStore' => $dataToStore]);
         } else {
             return redirect()->back()->with('error', 'Select File');
         }
     }
 
-
-    public function write(Request $request)
-    {
-        $complete_data['data'] = "Any text";
-    }
-
-    public function storeData()
-    {
-        Schedule::create(['names' => $this->complete_data['names']]);
-    }
-
     public function show()
     {
-        return view('schedule');
+
+        $complete_data = Schedule::where('month', 'like', '%Август%')->get()->toArray();
+
+        foreach ($complete_data as &$value) {
+            $value['names'] = json_decode($value['names'], true);
+            $value['data'] = json_decode($value['data'], true);
+            $value['dates'] = json_decode($value['dates'], true);
+            $value['month'] = json_decode($value['month'], true);
+        }
+
+        return view('index', ['complete_data' => $complete_data[0]]);
     }
 }

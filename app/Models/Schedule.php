@@ -10,6 +10,8 @@ class Schedule extends Model
     protected $fillable = [
         'names',
         'data',
+        'dates',
+        'month',
         'var1',
         'var2',
         'var3',
