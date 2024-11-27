@@ -5,64 +5,65 @@
 @section('content')
 
   @if (isset($complete_data))
-
-    <h1 class="bg-gradient-to-br from-red-900 to-blue-900 rounded-lg dark:text-white p-3 my-3 text-2xl">
-      {{ $complete_data['month'][0] }}</h3>
-      <div class="wrap w-full inline-flex">
-        <div class="names_column">
-          <div class="names w-28 h-12 flex items-center dark:border-1 dark:border-white border-1 border-black px-1">
-            Имя
-          </div>
-          @for ($a = 0; $a < count($complete_data['names']); $a++)
-            <div class="w-28 h-6 flex items-center dark:border-1 dark:border-white border-1 border-black px-1">
-              {{ explode(' ', $complete_data['names'][$a])[1] }}
-            </div>
-          @endfor
+    <h1 class="p-3 my-3 text-2xl">
+      {{ $complete_data['month'][0] }}</h1>
+    <div class="wrap w-full inline-flex overflow-x-auto"> <!-- names -->
+      <div class="names_column bg-gray-700 rounded-l-lg">
+        <div class="names_header w-32 h-16 flex items-center pl-5 rounded-tl-lg bg-gray-300 text-gray-900 font-semibold">
+          Имя
         </div>
-        <div class="data_column w-min overflow-x-auto">
-          <div class="dates_row">
-            <div class="day_row inline-flex">
-              @foreach ($complete_data['dates'][0] as $day)
-                <div
-                  class="dark:border-1 dark:border-white border-1 border-black w-6 h-6 flex justify-center items-center">
-                  {{ $day }}
-                </div>
-              @endforeach
-            </div>
-            <div class="date_row inline-flex">
-              @foreach ($complete_data['dates'][1] as $date)
-                <div
-                  class="dark:border-1 dark:border-white border-1 border-black w-6 h-6 flex justify-center items-center">
-                  {{ $date }}
-                </div>
-              @endforeach
-            </div>
+        @for ($a = 0; $a < count($complete_data['names']); $a++)
+          <div class="names w-32 h-8 flex items-center pl-5 ">
+            {{ explode(' ', $complete_data['names'][$a])[1] }}
           </div>
-          @for ($a = 0; $a < count($complete_data['names']); $a++)
-            <div class="data_row inline-flex">
-              @for ($b = 0; $b < count($complete_data['dates'][0]); $b++)
-                <div
-                  class="dark:border-1 dark:border-white border-1 border-black w-6 h-6 flex justify-center items-center">
-                  {{ $complete_data['data'][$a][$b] }}
-                </div>
-              @endfor
-            </div>
-          @endfor
+        @endfor
+      </div> <!-- names -->
+      <div class="data_column w-min overflow-x-auto bg-gray-700 rounded-r-lg font-semibold">
+        <div class="dates_row">
+          <div class="day_row inline-flex bg-gray-300 text-gray-900">
+            @foreach ($complete_data['dates'][0] as $day)
+              <div class="w-8 h-8 flex justify-center items-center ">
+                {{ $day }}
+              </div>
+            @endforeach
+          </div>
+          <div class="date_row inline-flex bg-gray-300 text-gray-900">
+            @foreach ($complete_data['dates'][1] as $date)
+              <div class="w-8 h-8 flex justify-center items-center ">
+                {{ $date }}
+              </div>
+            @endforeach
+          </div>
         </div>
+        @for ($a = 0; $a < count($complete_data['names']); $a++)
+          <div class="data_row inline-flex">
+            @for ($b = 0; $b < count($complete_data['dates'][0]); $b++)
+              <div class="w-8 h-8 flex justify-center items-center ">
+                {{ $complete_data['data'][$a][$b] }}
+              </div>
+            @endfor
+          </div>
+        @endfor
       </div>
+    </div>
 
 
-      <div class="wrap w-full inline-flex px-3">
 
-        @php
+    <div class="wrap w-full inline-flex px-3">
 
-          echo '<pre>';
-          // print_r($complete_data);
-          echo '</pre>';
+      @php
 
-        @endphp
+        echo '<pre>';
+        // print_r($complete_data);
+        echo '</pre>';
 
-      </div>
+      @endphp
+
+    </div>
+  @else
+    <p class="my-3">
+      {{ $empty }}
+    </p>
   @endif
 
 @endsection

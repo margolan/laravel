@@ -80,16 +80,21 @@ class ExcelController extends Controller
     public function index()
     {
 
-        $complete_data = Schedule::where('month', 'like', '%Август%')->get()->toArray();
+        $complete_data = Schedule::where('id', '1')->get()->toArray();
 
-        foreach ($complete_data as &$value) {
-            $value['names'] = json_decode($value['names'], true);
-            $value['data'] = json_decode($value['data'], true);
-            $value['dates'] = json_decode($value['dates'], true);
-            $value['month'] = json_decode($value['month'], true);
+        if (!empty($complete_data)) {
+
+            foreach ($complete_data as &$value) {
+                $value['names'] = json_decode($value['names'], true);
+                $value['data'] = json_decode($value['data'], true);
+                $value['dates'] = json_decode($value['dates'], true);
+                $value['month'] = json_decode($value['month'], true);
+            }
+
+            return view('index', ['complete_data' => $complete_data[0]]);
+        } else {
+            return view('index', ['empty' => 'Nothing to show']);
         }
-
-        return view('index', ['complete_data' => $complete_data[0]]);
     }
 
     public function import()
