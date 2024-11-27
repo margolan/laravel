@@ -77,7 +77,7 @@ class ExcelController extends Controller
         }
     }
 
-    public function show()
+    public function index()
     {
 
         $complete_data = Schedule::where('month', 'like', '%Август%')->get()->toArray();
@@ -90,5 +90,10 @@ class ExcelController extends Controller
         }
 
         return view('index', ['complete_data' => $complete_data[0]]);
+    }
+
+    public function import()
+    {
+        return view('schedule');
     }
 }
