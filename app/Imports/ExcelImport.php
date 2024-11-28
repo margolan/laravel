@@ -11,4 +11,17 @@ class ExcelImport implements ToArray
     {
         return $array;
     }
+
+    public function getKeys(array $array)
+    {
+        $data = [];
+
+        foreach ($array[0] as $row) {
+            foreach ($row as $index => $value) {
+                $data[$index][] = $value;
+            }
+        }
+
+        return $data;
+    }
 }

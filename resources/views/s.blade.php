@@ -53,8 +53,9 @@
 
       @php
 
-        echo '<pre>';
-        // print_r($complete_data);
+        echo '
+  <pre>';
+        print_r($complete_data);
         echo '</pre>';
 
       @endphp
