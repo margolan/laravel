@@ -10,7 +10,7 @@ use Maatwebsite\Excel\Facades\Excel;
 class ExcelController extends Controller
 {
 
-    public function getData(Request $request)
+    public function getSchedule(Request $request)
     {
         if ($request->hasFile('file')) {
 
@@ -18,9 +18,9 @@ class ExcelController extends Controller
 
             $import = new ExcelImport();
 
-            $lol = $import->getSchedule($data);
+            $complete_data = $import->getSchedule($data);
 
-            return view('import', compact('lol'));
+            return view('import_schedule', compact('complete_data'));
         } else {
             return redirect()->back()->with('error', 'Файл не выбран');
         }
@@ -41,31 +41,26 @@ class ExcelController extends Controller
                 $value['month'] = json_decode($value['month'], true);
             }
 
-            return view('s', ['complete_data' => $complete_data[7]]);
+            return view('s', ['complete_data' => $complete_data[0]]);
         } else {
             return view('s', ['empty' => 'Nothing to show']);
         }
     }
 
-    public function import()
+    public function getKey(Request $request)
     {
-        return view('import');
+
+        if ($request->hasFile('file')) {
+
+            $data = Excel::toArray(null, $request->file('file'));
+
+            $import = new ExcelImport();
+
+            $lol = $import->getKey($data);
+
+            return view('import_key', compact('lol'));
+        } else {
+            return redirect()->route('import_key')->with('error', '::Select File');
+        }
     }
-
-    // public function getData(Request $request)
-    // {
-
-    //     if ($request->hasFile('file')) {
-
-    //         $data = Excel::toArray(null, $request->file('file'));
-
-    //         $import = new ExcelImport();
-
-    //         $lol = $import->getKeys($data);
-
-    //         return view('import', compact('lol'));
-    //     } else {
-    //         return redirect()->route('import')->with('error', '::Select File');
-    //     }
-    // }
 }

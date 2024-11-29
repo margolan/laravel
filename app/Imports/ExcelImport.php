@@ -73,14 +73,11 @@ class ExcelImport implements ToArray
 
             return $complete_data;
         } else {
-
-            $lol = $array;
-
-            return view('import', compact('lol'));
+            return $this->getKey($complete_data);
         }
     }
 
-    public function getKeys(array $array)
+    public function getKey(array $array)
     {
         $data = [];
 
@@ -91,5 +88,6 @@ class ExcelImport implements ToArray
         }
 
         return $data;
+        // return $array;
     }
 }
