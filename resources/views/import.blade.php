@@ -19,7 +19,7 @@
   @endif
 
   @if (isset($complete_data))
-    @if (isset($complete_data['names']) == 1)
+    @if (isset($complete_data['names']))
 
       <p class="bg-gradient-to-br from-red-900 to-blue-900 rounded-lg text-white p-4 m-3">Таблица загружена за
         {{ $complete_data['month'][0] }}. <a href="#">Подтвердить</a></p>
@@ -65,9 +65,16 @@
           @endfor
         </div>
       </div>
-    @elseif(isset($complete_data['names']) == 0)
+    @else
+      <form action="{{ route('confirmData', ['id' => $complete_data[1]['id']]) }}">
+        <input type="hidden" name="id" value="{{ $complete_data[1]['id'] }}">
+        <button type="submit">Подтвердить</button>
+        @csrf
+      </form>
+
       @php
         echo '<pre>';
+        // print_r($lol);
         print_r($complete_data);
         echo '</pre>';
       @endphp
@@ -77,6 +84,7 @@
 
   @if (isset($lol))
     @php
+      echo 'lol test text';
       echo '<pre>';
       print_r($lol);
       echo '</pre>';

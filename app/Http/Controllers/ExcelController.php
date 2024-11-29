@@ -4,27 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Imports\ExcelImport;
 use App\Models\Schedule;
+use App\Models\Key;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Concerns\ToArray;
 use Maatwebsite\Excel\Facades\Excel;
 
 class ExcelController extends Controller
 {
-
-    public function test(Request $request)
-    {
-        if ($request->hasFile('file')) {
-
-            $data = Excel::toArray(null, $request->file('file'));
-
-            $import = new ExcelImport();
-
-            $lol = $import->test($data);
-
-            return view('test', compact('lol'));
-        } else {
-            return redirect()->back()->with('error', 'Файл не выбран');
-        }
-    }
 
     public function getData(Request $request)
     {
@@ -32,9 +18,9 @@ class ExcelController extends Controller
 
             $data = Excel::toArray(null, $request->file('file'));
 
-            $import = new ExcelImport();
+            $ExcelImport = new ExcelImport();
 
-            $complete_data = $import->getSchedule($data);
+            $complete_data = $ExcelImport->import($data);
 
             return view('import', compact('complete_data'));
         } else {
@@ -42,9 +28,12 @@ class ExcelController extends Controller
         }
     }
 
-    public function import()
+    public function confirmData(Request $request)
     {
-        return view('import');
+
+        $lol = $request->get('id');
+
+        return view('import', compact('lol'));
     }
 
     public function index()
@@ -52,6 +41,12 @@ class ExcelController extends Controller
 
         // $complete_data = Schedule::where('id', '1')->get()->toArray();
         $complete_data = Schedule::all()->toArray();
+        $lol = Key::all()->last()->toArray();
+
+        foreach ($lol as $k => $v) {
+            $decoded[$k][] = json_decode($v, true);
+        }
+
 
         if (!empty($complete_data)) {
 
@@ -62,7 +57,7 @@ class ExcelController extends Controller
                 $value['month'] = json_decode($value['month'], true);
             }
 
-            return view('s', ['complete_data' => $complete_data[0]]);
+            return view('s', ['complete_data' => $complete_data[0], 'lol' => $decoded]);
         } else {
             return view('s', ['empty' => 'Nothing to show']);
         }

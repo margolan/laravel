@@ -2,18 +2,17 @@
 
 namespace App\Imports;
 
-use Maatwebsite\Excel\Concerns\ToArray;
+use App\Models\Key;
 
 class ExcelImport
 {
 
-    public function test(array $array)
+    public function import(array $array)
     {
         $flattened = array_merge(...$array[0]);
         if (in_array('сервис инженер', $flattened)) {
-            return ['type' => 'schedule', 'data' => $this->getSchedule($array)];
+            return $this->getSchedule($array);
         } else {
-            return ['type' => 'key', 'data' => $this->getKey($array)];
             return $this->getKey($array);
         }
     }
@@ -26,7 +25,7 @@ class ExcelImport
         $anchor = [];
 
         foreach ($array[0] as $k => $v) {
-            foreach ($v as $k1 => $v1) {
+            foreach ($v as $v1) {
                 if ($v1 == 'сервис инженер') {
                     array_push($anchor, $k);
                     array_push($complete_data['names'], $array[0][$k][1]);
@@ -83,14 +82,28 @@ class ExcelImport
 
     public function getKey(array $array)
     {
-        $data = [];
+        $complete_data = [];
 
-        foreach ($array[0] as $row) {
-            foreach ($row as $index => $value) {
-                $data[$index][] = $value;
+        foreach ($array as $sheet_key => $sheet_value) {
+            foreach ($sheet_value as $row) {
+                foreach ($row as $index => $value) {
+                    if (!empty($value)) {
+                        $complete_data['district' . $sheet_key + 1][$index][] = $value;
+                    }
+                }
             }
         }
 
-        return $data;
+        $json_data['confirmed'] = 'false';
+
+        foreach ($complete_data as $key => $value) {
+            $json_data[$key] = json_encode($value, JSON_UNESCAPED_UNICODE);
+        }
+
+        Key::create($json_data);
+
+        $retrieved_data = Key::all()->last()->toArray();
+
+        return [$complete_data, $retrieved_data];
     }
 }

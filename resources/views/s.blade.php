@@ -48,13 +48,12 @@
     </div>
 
 
-
     <div class="wrap w-full inline-flex px-3">
 
       @php
 
         echo '<pre>';
-        print_r($complete_data);
+        print_r($lol);
         echo '</pre>';
 
       @endphp
