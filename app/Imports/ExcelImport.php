@@ -4,12 +4,18 @@ namespace App\Imports;
 
 use Maatwebsite\Excel\Concerns\ToArray;
 
-class ExcelImport implements ToArray
+class ExcelImport
 {
 
-    public function array(array $array)
+    public function test(array $array)
     {
-        return $array;
+        $flattened = array_merge(...$array[0]);
+        if (in_array('сервис инженер', $flattened)) {
+            return ['type' => 'schedule', 'data' => $this->getSchedule($array)];
+        } else {
+            return ['type' => 'key', 'data' => $this->getKey($array)];
+            return $this->getKey($array);
+        }
     }
 
     public function getSchedule(array $array)
@@ -72,8 +78,6 @@ class ExcelImport implements ToArray
             }
 
             return $complete_data;
-        } else {
-            return $this->getKey($complete_data);
         }
     }
 
@@ -88,6 +92,5 @@ class ExcelImport implements ToArray
         }
 
         return $data;
-        // return $array;
     }
 }
