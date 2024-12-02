@@ -53,7 +53,7 @@
       @php
 
         echo '<pre>';
-        print_r($lol);
+        print_r($key);
         echo '</pre>';
 
       @endphp

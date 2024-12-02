@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Imports\ExcelImport;
 use App\Models\Schedule;
 use App\Models\Key;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
-use Maatwebsite\Excel\Concerns\ToArray;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Schema;
 use Maatwebsite\Excel\Facades\Excel;
 
 class ExcelController extends Controller
@@ -39,14 +41,21 @@ class ExcelController extends Controller
     public function index()
     {
 
-        // $complete_data = Schedule::where('id', '1')->get()->toArray();
-        $complete_data = Schedule::all()->toArray();
-        $lol = Key::all()->last()->toArray();
-
-        foreach ($lol as $k => $v) {
-            $decoded[$k][] = json_decode($v, true);
+        if (!Schema::hasTable('schedules')) {
+            Artisan::call('migrate', ['--force' => true]);
         }
 
+        // $complete_data = Schedule::where('id', '1')->get()->toArray();
+        $complete_data = Schedule::all()->toArray();
+
+        if (DB::table('keys')->count()) {
+            $key = Key::all()->toArray();
+            foreach ($key as $k => $v) {
+                $decoded[$k][] = json_decode($v, true);
+            }
+        } else {
+            $key = 'No keys in table';
+        }
 
         if (!empty($complete_data)) {
 
@@ -57,7 +66,7 @@ class ExcelController extends Controller
                 $value['month'] = json_decode($value['month'], true);
             }
 
-            return view('s', ['complete_data' => $complete_data[0], 'lol' => $decoded]);
+            return view('s', ['complete_data' => $complete_data[0], 'key' => $decoded]);
         } else {
             return view('s', ['empty' => 'Nothing to show']);
         }
