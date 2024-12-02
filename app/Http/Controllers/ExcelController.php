@@ -7,9 +7,10 @@ use App\Models\Schedule;
 use App\Models\Key;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Schema;
 use Maatwebsite\Excel\Facades\Excel;
+
+use function Laravel\Prompts\table;
 
 class ExcelController extends Controller
 {
@@ -41,34 +42,34 @@ class ExcelController extends Controller
     public function index()
     {
 
-        if (!Schema::hasTable('schedules')) {
-            Artisan::call('migrate', ['--force' => true]);
-        }
-
-        // $complete_data = Schedule::where('id', '1')->get()->toArray();
-        $complete_data = Schedule::all()->toArray();
-
-        if (DB::table('keys')->count()) {
-            $key = Key::all()->toArray();
-            foreach ($key as $k => $v) {
-                $decoded[$k][] = json_decode($v, true);
+        if (Schema::hasTable('schedules')) {
+            if (DB::table('schedules')->count()) {
+                $complete_data = Schedule::all()->toArray();
+                foreach ($complete_data as &$value) {
+                    $value['names'] = json_decode($value['names'], true);
+                    $value['data'] = json_decode($value['data'], true);
+                    $value['dates'] = json_decode($value['dates'], true);
+                    $value['month'] = json_decode($value['month'], true);
+                }
+            } else {
+                $complete_data[0][0] = 'No data in schedules table';
             }
         } else {
-            $key = 'No keys in table';
+            $complete_data[0][0] = 'No schedules table';
         }
 
-        if (!empty($complete_data)) {
-
-            foreach ($complete_data as &$value) {
-                $value['names'] = json_decode($value['names'], true);
-                $value['data'] = json_decode($value['data'], true);
-                $value['dates'] = json_decode($value['dates'], true);
-                $value['month'] = json_decode($value['month'], true);
+        if (Schema::hasTable('keys')) {
+            if (DB::table('keys')->count()) {
+                $key = Key::all()->toArray();
+                foreach ($key[0] as $k => $v) {
+                    $decoded[$k][] = json_decode($v, true);
+                }
+            } else {
+                $key = 'No data in keys table';
             }
-
-            return view('s', ['complete_data' => $complete_data[0], 'key' => $decoded]);
         } else {
-            return view('s', ['empty' => 'Nothing to show']);
+            $key = 'No keys table';
         }
+        return view('s', ['complete_data' => $complete_data[0], 'key' => $key]);
     }
 }

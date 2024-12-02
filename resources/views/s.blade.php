@@ -4,7 +4,7 @@
 
 @section('content')
 
-  @if (isset($complete_data))
+  @if (isset($complete_data['names']))
     <h1 class="p-3 my-3 text-2xl">
       {{ $complete_data['month'][0] }}</h1>
     <div class="wrap w-full inline-flex overflow-x-auto"> <!-- names -->
@@ -46,10 +46,14 @@
         @endfor
       </div>
     </div>
+  @else
+    <p class="my-3">
+      {{ $complete_data[0] }}
+    </p>
+  @endif
 
-
-    <div class="wrap w-full inline-flex px-3">
-
+  @if (isset($key))
+    <p class="my-3">
       @php
 
         echo '<pre>';
@@ -57,12 +61,16 @@
         echo '</pre>';
 
       @endphp
-
-    </div>
-  @else
-    <p class="my-3">
-      {{ $empty }}
     </p>
   @endif
+
+  @php
+
+    echo '<hr>';
+    echo '<pre>';
+    print_r($complete_data);
+    echo '</pre>';
+
+  @endphp
 
 @endsection

@@ -3,6 +3,7 @@
 namespace App\Imports;
 
 use App\Models\Key;
+use App\Models\Schedule;
 
 class ExcelImport
 {
@@ -75,6 +76,8 @@ class ExcelImport
                     $dataToStore[$key] = json_encode($value, JSON_UNESCAPED_UNICODE);
                 }
             }
+
+            Schedule::create($dataToStore);
 
             return $complete_data;
         }
