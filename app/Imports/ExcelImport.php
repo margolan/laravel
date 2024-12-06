@@ -54,7 +54,7 @@ class ExcelImport
                         }
                     } elseif (preg_match('/\p{Latin}/u', $cellValue)) {
                         if (preg_match('/[Oo]/', $cellValue)) {
-                            array_push($temp, 'O');
+                            array_push($temp, 'О');
                         } elseif (preg_match('/[Bb]/', $cellValue)) {
                             array_push($temp, '-');
                         }

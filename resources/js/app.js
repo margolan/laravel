@@ -25,8 +25,17 @@ if (savedTheme === 'dark') {
 
 const cell = document.querySelectorAll('.cell');
 
+const cellStyle = {
+  "+": "dark:text-red-500 font-bold",
+  "-": "dark:text-blue-500 font-bold",
+  "Д": "text-sm dark:text-red-500",
+  "O": "text-sm dark:text-gray-500",
+  "0": ['text-sm', 'dark:text-gray-500'],
+};
+
 cell.forEach(e => {
-  if (e.innerText == '+') {
-    e.style.color = '#ff491d';
+  let text = e.innerText.trim();
+  if (cellStyle[text]) {
+    e.classList.add(...cellStyle[text].split(' '));
   }
 })
