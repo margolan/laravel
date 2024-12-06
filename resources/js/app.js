@@ -1,6 +1,5 @@
 import './bootstrap';
 
-alert('lol')
 
 // ==================== Dark Theme ====================
 
@@ -24,4 +23,10 @@ if (savedTheme === 'dark') {
 
 // ==================== Misc ====================
 
-const all_names = document.querySelectorAll('.names');
+const cell = document.querySelectorAll('.cell');
+
+cell.forEach(e => {
+  if (e.innerText == '+') {
+    e.style.color = '#ff491d';
+  }
+})
