@@ -14,6 +14,22 @@ use function Laravel\Prompts\table;
 
 class ExcelController extends Controller
 {
+    public function getDataLol(Request $request)
+    {
+        if ($request->hasFile('file')) {
+
+            $data = Excel::toCollection(null, $request->file('file'));
+
+            $ExcelImport = new ExcelImport();
+
+            $lol = $ExcelImport->importLol($data);
+
+            return view('test', compact('lol'));
+        } else {
+            return redirect()->back()->with('error', 'Файл не выбран');
+        }
+    }
+
 
     public function getData(Request $request)
     {

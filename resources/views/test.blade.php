@@ -7,14 +7,18 @@
   @if (isset($lol))
     @php
 
-      if ($lol['type'] === 'schedule') {
-          echo "It's schedule!";
-      } else {
-          echo "It's key!";
-      }
+      // if ($lol['type'] === 'schedule') {
+      //     echo "It's schedule!";
+      // } else {
+      //     echo "It's key!";
+      // }
+
+      // $bla = $lol->get(0)?->get(0)?->get(4);
+
+      // echo $bla;
 
       echo '<pre>';
-      print_r($lol);
+      print_r($lol->get(0)?->get(4));
       echo '</pre>';
 
     @endphp

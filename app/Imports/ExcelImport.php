@@ -4,9 +4,22 @@ namespace App\Imports;
 
 use App\Models\Key;
 use App\Models\Schedule;
+use App\Models\Test;
 
 class ExcelImport
 {
+
+    public function importLol($collection)
+    {
+
+        $bbb = json_encode($collection->get(0)?->get(4)?->get(1));
+
+        $data['text'] = $bbb;
+
+        Test::insert($data);
+
+        return $collection;
+    }
 
     public function import(array $array)
     {
@@ -48,20 +61,20 @@ class ExcelImport
 
                     if (preg_match('/\p{Cyrillic}/u', $cellValue)) {
                         if (preg_match('/[Оо]/u', $cellValue)) {
-                            array_push($temp, 'О');
+                            array_push($temp, 'O');
                         } elseif (preg_match('/[Вв]/u', $cellValue)) {
                             array_push($temp, '-');
                         }
                     } elseif (preg_match('/\p{Latin}/u', $cellValue)) {
                         if (preg_match('/[Oo]/', $cellValue)) {
-                            array_push($temp, 'О');
+                            array_push($temp, 'O');
                         } elseif (preg_match('/[Bb]/', $cellValue)) {
                             array_push($temp, '-');
                         }
                     } elseif ($cellValue == '8:00' && $array[0][$anchor[$a] + 1][$i + 4] == '9:00') {
                         array_push($temp, '+');
                     } elseif ($cellValue == '8:00' && $array[0][$anchor[$a] + 1][$i + 4] == '12:00') {
-                        array_push($temp, 'Д');
+                        array_push($temp, 'D');
                     } else {
                         array_push($temp, $cellValue);
                     }

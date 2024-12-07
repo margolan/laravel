@@ -28,9 +28,9 @@ const cell = document.querySelectorAll('.cell');
 const cellStyle = {
   "+": "dark:text-red-500 font-bold",
   "-": "dark:text-blue-500 font-bold",
-  "Д": "text-sm dark:text-red-500",
-  "O": "text-sm dark:text-gray-500",
-  "0": ['text-sm', 'dark:text-gray-500'],
+  "D": "text-sm dark:text-red-500",
+  // "O": "text-sm dark:text-gray-500 dark:bg-gradient-to-t from-indigo-100 to-white",
+  "O": "text-sm dark:text-gray-500 dark:bg-[url('/assets/cell_bg.png')]",
 };
 
 cell.forEach(e => {

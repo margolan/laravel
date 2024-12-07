@@ -15,5 +15,6 @@ Route::get('/s/import', function () {
 Route::get('/s', [ExcelController::class, 'index'])->name('index');
 
 Route::post('/s/import', [ExcelController::class, 'getData'])->name('getData');
+// Route::post('/s/import', [ExcelController::class, 'getDataLol'])->name('getDataLol');
 
 Route::get('/s/confirm', [ExcelController::class, 'confirmData'])->name('confirmData');
