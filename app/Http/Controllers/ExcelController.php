@@ -9,22 +9,23 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
 use Maatwebsite\Excel\Facades\Excel;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 
 use function Laravel\Prompts\table;
 
 class ExcelController extends Controller
 {
-    public function getDataLol(Request $request)
+    public function getDataTest(Request $request)
     {
         if ($request->hasFile('file')) {
 
-            $data = Excel::toCollection(null, $request->file('file'));
+            $spreadsheet = IOFactory::load($request->file('file'));
 
-            $ExcelImport = new ExcelImport();
+            $xi = new ExcelImport();
 
-            $lol = $ExcelImport->importLol($data);
+            $data = $xi->getKey($spreadsheet);
 
-            return view('test', compact('lol'));
+            return view('test', ['data' => $data]);
         } else {
             return redirect()->back()->with('error', 'Файл не выбран');
         }
@@ -35,11 +36,11 @@ class ExcelController extends Controller
     {
         if ($request->hasFile('file')) {
 
-            $data = Excel::toArray(null, $request->file('file'));
+            $spreadsheet = IOFactory::load($request->file('file'));
 
             $ExcelImport = new ExcelImport();
 
-            $complete_data = $ExcelImport->import($data);
+            $complete_data = $ExcelImport->import($spreadsheet);
 
             return view('import', compact('complete_data'));
         } else {
@@ -74,18 +75,22 @@ class ExcelController extends Controller
             $complete_data[0][0] = 'No schedules table';
         }
 
+        $complete_key = [];
+
         if (Schema::hasTable('keys')) {
             if (DB::table('keys')->count()) {
-                $key = Key::all()->toArray();
-                foreach ($key[0] as $k => $v) {
-                    $decoded[$k][] = json_decode($v, true);
+                $key = Key::latest()->get()->toArray();
+                foreach ($key[0] as $v) {
+                    // $decoded[$k][] = json_decode($v, true);
+                    array_push($complete_key, json_decode($v, true));
                 }
             } else {
-                $key = 'No data in keys table';
+                $complete_key = 'No data in keys table';
             }
         } else {
-            $key = 'No keys table';
+            $complete_key = 'No keys table';
         }
-        return view('s', ['complete_data' => $complete_data[0], 'key' => $key]);
+
+        return view('s', ['complete_data' => $complete_data[0], 'complete_key' => $complete_key]);
     }
 }

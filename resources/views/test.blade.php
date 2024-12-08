@@ -4,7 +4,7 @@
 
 @section('content')
 
-  @if (isset($lol))
+  @if (isset($data))
     @php
 
       // if ($lol['type'] === 'schedule') {
@@ -18,7 +18,7 @@
       // echo $bla;
 
       echo '<pre>';
-      print_r($lol->get(0)?->get(4));
+      print_r($data);
       echo '</pre>';
 
     @endphp

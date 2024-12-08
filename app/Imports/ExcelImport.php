@@ -9,26 +9,24 @@ use App\Models\Test;
 class ExcelImport
 {
 
-    public function importLol($collection)
+    public function import($array)
     {
 
-        $bbb = json_encode($collection->get(0)?->get(4)?->get(1));
+        $data = [];
 
-        $data['text'] = $bbb;
+        foreach ($array->getAllSheets() as $sheet) {
+            $data = $sheet->toArray();
+        }
 
-        Test::insert($data);
+        $flattened = array_merge(...$data);
 
-        return $collection;
-    }
-
-    public function import(array $array)
-    {
-        $flattened = array_merge(...$array[0]);
         if (in_array('сервис инженер', $flattened)) {
-            return $this->getSchedule($array);
+            return $this->getSchedule($data);
         } else {
             return $this->getKey($array);
         }
+
+        return $data;
     }
 
     public function getSchedule(array $array)
@@ -38,26 +36,26 @@ class ExcelImport
 
         $anchor = [];
 
-        foreach ($array[0] as $k => $v) {
+        foreach ($array as $k => $v) {
             foreach ($v as $v1) {
                 if ($v1 == 'сервис инженер') {
                     array_push($anchor, $k);
-                    array_push($complete_data['names'], $array[0][$k][1]);
+                    array_push($complete_data['names'], $array[$k][1]);
                 }
             }
         }
 
         if (count($anchor) > 1) {
 
-            array_push($complete_data['dates'], array_filter($array[0][$anchor[0] - 2])); // Days
-            array_push($complete_data['dates'], array_filter($array[0][$anchor[0] - 1])); // Dates
-            array_push($complete_data['month'], $array[0][1][4]); // Month
+            array_push($complete_data['dates'], array_filter($array[$anchor[0] - 2])); // Days
+            array_push($complete_data['dates'], array_filter($array[$anchor[0] - 1])); // Dates
+            array_push($complete_data['month'], $array[1][4]); // Month
 
             for ($a = 0; $a < count($anchor); $a++) {
                 $temp = [];
                 for ($i = 0; $i < count($complete_data['dates'][0]); $i++) {
 
-                    $cellValue = $array[0][$anchor[$a]][$i + 4];
+                    $cellValue = $array[$anchor[$a]][$i + 4];
 
                     if (preg_match('/\p{Cyrillic}/u', $cellValue)) {
                         if (preg_match('/[Оо]/u', $cellValue)) {
@@ -71,9 +69,9 @@ class ExcelImport
                         } elseif (preg_match('/[Bb]/', $cellValue)) {
                             array_push($temp, '-');
                         }
-                    } elseif ($cellValue == '8:00' && $array[0][$anchor[$a] + 1][$i + 4] == '9:00') {
+                    } elseif ($cellValue == '8:00' && $array[$anchor[$a] + 1][$i + 4] == '9:00') {
                         array_push($temp, '+');
-                    } elseif ($cellValue == '8:00' && $array[0][$anchor[$a] + 1][$i + 4] == '12:00') {
+                    } elseif ($cellValue == '8:00' && $array[$anchor[$a] + 1][$i + 4] == '12:00') {
                         array_push($temp, 'D');
                     } else {
                         array_push($temp, $cellValue);
@@ -96,30 +94,34 @@ class ExcelImport
         }
     }
 
-    public function getKey(array $array)
+    public function getKey($spreadsheet)
     {
-        $complete_data = [];
 
-        foreach ($array as $sheet_key => $sheet_value) {
-            foreach ($sheet_value as $row) {
-                foreach ($row as $index => $value) {
-                    if (!empty($value)) {
-                        $complete_data['district' . $sheet_key + 1][$index][] = $value;
-                    }
-                }
+        $data = [];
+
+        foreach ($spreadsheet->getAllSheets() as $sheet) {
+            $data[$sheet->getTitle()] = $sheet->toArray();
+        }
+
+        foreach ($data as $city => $data) {
+            foreach ($data as $v) {
+                $data_reindexed[$city][0][] = $v[0];
+                $data_reindexed[$city][1][] = $v[1];
+                $data_reindexed[$city][2][] = $v[2];
             }
         }
 
-        $json_data['confirmed'] = 'false';
+        $i = 1;
 
-        foreach ($complete_data as $key => $value) {
-            $json_data[$key] = json_encode($value, JSON_UNESCAPED_UNICODE);
+        foreach ($data_reindexed as $key => $value) {
+            $data_to_insert['district' . $i] = json_encode([$key => $value], JSON_UNESCAPED_UNICODE);
+            $i++;
         }
 
-        Key::create($json_data);
+        $data_to_insert['confirmed'] = 'false';
 
-        $retrieved_data = Key::all()->last()->toArray();
+        Key::create($data_to_insert);
 
-        return [$complete_data, $retrieved_data];
+        return $data_to_insert;
     }
 }
