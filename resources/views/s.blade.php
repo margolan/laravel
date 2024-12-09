@@ -4,6 +4,15 @@
 
 @section('content')
 
+  @php
+
+    echo '<hr>';
+    echo '<pre>';
+    // print_r($complete_key);
+    echo '</pre>';
+
+  @endphp
+  {{-- {{ ltrim(date('D'), '0') }} --}}
   @if (isset($complete_data['names']))
     <h1 class="p-3 my-3 text-2xl">
       {{ $complete_data['month'][0] }}</h1>
@@ -15,7 +24,7 @@
         </div>
         @for ($a = 0; $a < count($complete_data['names']); $a++)
           <div
-            class="names w-32 h-8 flex items-center pl-5 dark:text-gray-700 last:rounded-bl-lg odd:dark:bg-gray-100 even:dark:bg-white">
+            class="names w-32 h-8 flex items-center pl-5 dark:text-gray-700 last:rounded-bl-lg odd:dark:bg-gray-200 even:dark:bg-white">
             {{ explode(' ', $complete_data['names'][$a])[1] }}
           </div>
         @endfor
@@ -24,7 +33,8 @@
         <div class="dates_row">
           <div class="day_row inline-flex dark:bg-gray-200 dark:text-gray-700">
             @foreach ($complete_data['dates'][0] as $day)
-              <div class="w-8 h-8 flex justify-center items-center border-l-1 border-white">
+              <div
+                class="w-8 h-8 flex justify-center items-center border-l-1 border-white {{ $day == ltrim(date('d'), '0') ? 'text-red-500 today' : '' }}">
                 {{ $day }} <!-- days -->
               </div>
             @endforeach
@@ -38,7 +48,7 @@
           </div>
         </div>
         @for ($a = 0; $a < count($complete_data['names']); $a++)
-          <div class="data_row inline-flex dark:text-gray-700 odd:dark:bg-gray-100 even:dark:bg-white">
+          <div class="data_row inline-flex dark:text-gray-700 odd:dark:bg-gray-200 even:dark:bg-white">
             @for ($b = 0; $b < count($complete_data['dates'][0]); $b++)
               <div class="w-8 h-8 flex justify-center items-center border-l-1 cell">
                 {{ $complete_data['data'][$a][$b] }} <!-- data -->
@@ -91,13 +101,6 @@
     </p>
   @endif
 
-  @php
 
-    echo '<hr>';
-    echo '<pre>';
-    // print_r($complete_data);
-    echo '</pre>';
-
-  @endphp
 
 @endsection

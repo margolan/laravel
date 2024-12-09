@@ -8,13 +8,13 @@ use App\Models\Key;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
-use Maatwebsite\Excel\Facades\Excel;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
 use function Laravel\Prompts\table;
 
 class ExcelController extends Controller
 {
+
     public function getDataTest(Request $request)
     {
         if ($request->hasFile('file')) {
@@ -91,6 +91,6 @@ class ExcelController extends Controller
             $complete_key = 'No keys table';
         }
 
-        return view('s', ['complete_data' => $complete_data[0], 'complete_key' => $complete_key]);
+        return view('s', ['complete_data' => $complete_data[0], 'complete_key' => $complete_key,]);
     }
 }
