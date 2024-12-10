@@ -34,7 +34,7 @@
           <div class="day_row inline-flex dark:bg-gray-200 dark:text-gray-700">
             @foreach ($complete_data['dates'][0] as $index => $day)
               <div
-                class="h-8 flex justify-center items-center cell {{ $index == ltrim(date('d'), '0') - 1 ? 'w-9  text-red-500 bg-gray-50  shadow-3xl today border-l-1 border-r-1 border-gray-400' : 'w-8 border-l-1 border-white' }}">
+                class="h-8 flex justify-center items-center cell {{ $index == ltrim(date('d'), '0') - 1 ? 'w-9 text-red-500 bg-gray-200 backdrop-blur-2xl shadow-gray-500 shadow-lg border-r-1 border-l-2 border-gray-100 today' : 'w-8 border-l-1 border-white' }}">
                 {{ $day }} <!-- days -->
               </div>
             @endforeach
@@ -42,7 +42,7 @@
           <div class="date_row inline-flex dark:bg-gray-200 dark:text-gray-700">
             @foreach ($complete_data['dates'][1] as $index => $date)
               <div
-                class="h-8 flex justify-center items-center cell {{ $index == ltrim(date('d'), '0') - 1 ? 'w-9 text-red-500 bg-gray-50 shadow-red-500 shadow-3xl border-l-1 border-r-1 border-gray-400 today' : 'w-8 border-l-1 border-white' }}">
+                class="h-8 flex justify-center items-center cell {{ $index == ltrim(date('d'), '0') - 1 ? 'w-9 text-red-500 bg-gray-200 backdrop-blur-2xl shadow-gray-500 shadow-lg border-r-1 border-l-2 border-gray-100 today' : 'w-8 border-l-1 border-white' }}">
                 {{ $date }} <!-- dates -->
               </div>
             @endforeach
@@ -52,7 +52,7 @@
           <div class="data_row inline-flex dark:text-gray-700 odd:dark:bg-gray-200 even:dark:bg-white">
             @foreach ($data_rows as $index => $cell)
               <div
-                class="h-8 flex justify-center items-center cell {{ $index == ltrim(date('d'), '0') - 1 ? 'w-9 text-red-500 bg-gray-50 shadow-red-500 shadow-3xl border-l-1 border-r-1 border-gray-400 today' : 'w-8 border-l-1 border-white' }}">
+                class="h-8 flex justify-center items-center cell {{ $index == ltrim(date('d'), '0') - 1 ? 'w-9 text-red-500 bg-gray-200 backdrop-blur-2xl shadow-gray-500 shadow-lg border-r-1 border-l-1 border-gray-100 today' : 'w-8 border-l-1 border-white' }}">
                 {{ $cell }}
               </div>
             @endforeach
