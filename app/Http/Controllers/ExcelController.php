@@ -23,7 +23,7 @@ class ExcelController extends Controller
 
             $xi = new ExcelImport();
 
-            $data = $xi->getKey($spreadsheet);
+            $data = $xi->importTest($spreadsheet);
 
             return view('test', ['data' => $data]);
         } else {

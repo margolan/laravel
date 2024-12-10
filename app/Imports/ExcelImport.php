@@ -9,6 +9,42 @@ use App\Models\Test;
 class ExcelImport
 {
 
+    public function importTest($spreadsheet)
+    {
+
+        $data = [];
+
+        foreach ($spreadsheet->getAllSheets() as $sheet) {
+            $data = $sheet->toArray();
+        }
+
+        $complete_data = ['names' => [], 'data' => [], 'dates' => [], 'month' => [], 'var1' => [], 'var2' => [], 'var3' => [], 'var4' => [], 'var5' => []];
+
+        $anchor = [];
+
+        foreach ($data as $k => $v) {
+            foreach ($v as $v1) {
+                if ($v1 == 'сервис инженер') {
+                    array_push($anchor, $k);
+                    // array_push($complete_data['names'], $data[$k][1]);
+                }
+            }
+        }
+
+        array_push($complete_data['dates'], array_values(array_filter($data[$anchor[0] - 2]))); // Days
+        array_push($complete_data['dates'], array_values(array_filter($data[$anchor[0] - 1]))); // Dates
+        array_push($complete_data['month'], $data[1][4]); // Month
+
+        // $complete_data['dates'][0] = array_values(array_filter($data[$anchor[0] - 2]));
+        // $complete_data['dates'][0] = array_values(array_filter($data[$anchor[0] - 1]));
+
+
+
+
+        return ['complete_data' => $complete_data, 'data' => $data];
+    }
+
+
     public function import($array)
     {
 
@@ -47,8 +83,8 @@ class ExcelImport
 
         if (count($anchor) > 1) {
 
-            array_push($complete_data['dates'], array_filter($array[$anchor[0] - 2])); // Days
-            array_push($complete_data['dates'], array_filter($array[$anchor[0] - 1])); // Dates
+            array_push($complete_data['dates'], array_values(array_filter($array[$anchor[0] - 2]))); // Days
+            array_push($complete_data['dates'], array_values(array_filter($array[$anchor[0] - 1]))); // Dates
             array_push($complete_data['month'], $array[1][4]); // Month
 
             for ($a = 0; $a < count($anchor); $a++) {

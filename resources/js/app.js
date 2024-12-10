@@ -38,3 +38,13 @@ cell.forEach(e => {
     e.classList.add(...cellStyle[text].split(' '));
   }
 })
+
+// let today = document.querySelector('.today').getBoundingClientRect();
+// document.body.prepend(document.createElement('div'))
+// document.body.firstChild.classList.add('today_box', 'w-10', 'h-10', 'border-2', 'border-red-500', 'relative');
+// document.body.firstChild.style.top = `${today.top}px`;
+// document.body.firstChild.style.left = `${today.left}px`;
+
+
+
+// console.log(today);

@@ -32,30 +32,33 @@
       <div class="data_column w-min overflow-x-auto rounded-r-lg font-semibold">
         <div class="dates_row">
           <div class="day_row inline-flex dark:bg-gray-200 dark:text-gray-700">
-            @foreach ($complete_data['dates'][0] as $day)
+            @foreach ($complete_data['dates'][0] as $index => $day)
               <div
-                class="w-8 h-8 flex justify-center items-center border-l-1 border-white {{ $day == ltrim(date('d'), '0') ? 'text-red-500 today' : '' }}">
+                class="h-8 flex justify-center items-center cell {{ $index == ltrim(date('d'), '0') - 1 ? 'w-9  text-red-500 bg-gray-50  shadow-3xl today border-l-1 border-r-1 border-gray-400' : 'w-8 border-l-1 border-white' }}">
                 {{ $day }} <!-- days -->
               </div>
             @endforeach
           </div>
           <div class="date_row inline-flex dark:bg-gray-200 dark:text-gray-700">
-            @foreach ($complete_data['dates'][1] as $date)
-              <div class="w-8 h-8 flex justify-center items-center border-l-1 border-white">
+            @foreach ($complete_data['dates'][1] as $index => $date)
+              <div
+                class="h-8 flex justify-center items-center cell {{ $index == ltrim(date('d'), '0') - 1 ? 'w-9 text-red-500 bg-gray-50 shadow-red-500 shadow-3xl border-l-1 border-r-1 border-gray-400 today' : 'w-8 border-l-1 border-white' }}">
                 {{ $date }} <!-- dates -->
               </div>
             @endforeach
           </div>
         </div>
-        @for ($a = 0; $a < count($complete_data['names']); $a++)
+        @foreach ($complete_data['data'] as $data_rows)
           <div class="data_row inline-flex dark:text-gray-700 odd:dark:bg-gray-200 even:dark:bg-white">
-            @for ($b = 0; $b < count($complete_data['dates'][0]); $b++)
-              <div class="w-8 h-8 flex justify-center items-center border-l-1 cell">
-                {{ $complete_data['data'][$a][$b] }} <!-- data -->
+            @foreach ($data_rows as $index => $cell)
+              <div
+                class="h-8 flex justify-center items-center cell {{ $index == ltrim(date('d'), '0') - 1 ? 'w-9 text-red-500 bg-gray-50 shadow-red-500 shadow-3xl border-l-1 border-r-1 border-gray-400 today' : 'w-8 border-l-1 border-white' }}">
+                {{ $cell }}
               </div>
-            @endfor
+            @endforeach
           </div>
-        @endfor
+        @endforeach
+
       </div>
     </div>
   @else
