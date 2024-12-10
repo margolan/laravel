@@ -12,9 +12,12 @@ Route::get('/s/import', function () {
   return view('import');
 })->name('import');
 
-Route::get('/s', [ExcelController::class, 'index'])->name('index');
+Route::get('/s', [ExcelController::class, 's_index'])->name('s');
 
-Route::post('/s/import', [ExcelController::class, 'getData'])->name('getData');
-// Route::post('/s/import', [ExcelController::class, 'getDataTest'])->name('getDataTest');
+Route::get('/k', [ExcelController::class, 'k_index'])->name('k');
+
+Route::post('/import', [ExcelController::class, 'getData'])->name('getData');
 
 Route::get('/s/confirm', [ExcelController::class, 'confirmData'])->name('confirmData');
+
+// Route::post('/s/import', [ExcelController::class, 'getDataTest'])->name('getDataTest');

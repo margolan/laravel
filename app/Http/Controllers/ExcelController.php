@@ -56,7 +56,7 @@ class ExcelController extends Controller
         return view('import', compact('lol'));
     }
 
-    public function index()
+    public function s_index()
     {
 
         if (Schema::hasTable('schedules')) {
@@ -75,22 +75,27 @@ class ExcelController extends Controller
             $complete_data[0][0] = 'No schedules table';
         }
 
-        $complete_key = [];
+        return view('s', ['complete_data' => $complete_data[0]]);
+    }
+
+    public function k_index()
+    {
+
+        $complete_data = [];
 
         if (Schema::hasTable('keys')) {
             if (DB::table('keys')->count()) {
                 $key = Key::latest()->get()->toArray();
                 foreach ($key[0] as $v) {
-                    // $decoded[$k][] = json_decode($v, true);
-                    array_push($complete_key, json_decode($v, true));
+                    array_push($complete_data, json_decode($v, true));
                 }
             } else {
-                $complete_key = 'No data in keys table';
+                $complete_data = 'No data in keys table';
             }
         } else {
-            $complete_key = 'No keys table';
+            $complete_data = 'No keys table';
         }
 
-        return view('s', ['complete_data' => $complete_data[0], 'complete_key' => $complete_key,]);
+        return view('k', ['complete_data' => $complete_data]);
     }
 }

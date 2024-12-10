@@ -1,6 +1,7 @@
 <div class="h-16 flex items-center justify-between border-b-1">
   <div class="lef">
-    <a href="{{ route('index') }}">График</a><span class="mx-3">|</span><a href="{{ route('import') }}">Загрузить
+    <a href="{{ route('s') }}">График</a><span class="mx-3">|</span><a href="{{ route('k') }}">Ключи</a><span
+      class="mx-3">|</span><a href="{{ route('import') }}">Загрузить
       график</a>
   </div>
   <div class="right ">

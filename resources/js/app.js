@@ -39,6 +39,40 @@ cell.forEach(e => {
   }
 })
 
+const search = document.querySelector('.search');
+const found = document.querySelector('.found');
+
+search.addEventListener('input', function (e) {
+  setTimeout(function () {
+    const query = e.target.value.toLowerCase();
+    let matches = 0;
+    let found_cell;
+    cell.forEach(el => {
+      const cellText = el.textContent.toLowerCase();
+      if (query && cellText.includes(query)) {
+        matches++;
+        found.textContent = matches;
+        found_cell = el;
+        el.classList.add('dark:text-red-500')
+      } else {
+        found.textContent = matches;
+        el.classList.add('dark:text-white')
+      }
+    });
+    if (matches == 1) {
+      window.scrollTo(0, found_cell.offsetTop - 180)
+    }
+  }, 500)
+})
+
+window.addEventListener('scroll', e => {
+  if (window.scrollY > 200) {
+    search.parentElement.classList.add('fixed', 'top-0')
+  } else {
+    search.parentElement.classList.remove('fixed', 'top-0')
+  }
+})
+
 // let today = document.querySelector('.today').getBoundingClientRect();
 // document.body.prepend(document.createElement('div'))
 // document.body.firstChild.classList.add('today_box', 'w-10', 'h-10', 'border-2', 'border-red-500', 'relative');
