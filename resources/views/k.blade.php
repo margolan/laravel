@@ -15,8 +15,9 @@
 
   @if (isset($complete_data[1]['Город']))
     <div class="wrap_search w-full">
-      <input type="search" class="search w-full sm:w-96 mt-9 dark:bg-gray-200 dark:text-black py-3 px-6 rounded-2xl">
-      <span class="found w-8 inline-block relative -left-11 text-green-800 font-bold"></span>
+      <input type="search" class="search w-full max-w-[500px] mt-9 dark:bg-gray-200 dark:text-black py-3 px-6 rounded-2xl">
+      <span class="found w-8 inline-block relative -left-20 text-green-800 font-bold"></span>
+      <div class="scroll_up w-14 h-14 border-1"></div>
     </div>
     <div class="wrap w-full flex-col mt-12">
       @for ($a = 1; $a < 7; $a++)
@@ -28,7 +29,8 @@
                 {{-- <div class="flex-col min-w-max first:w-48 last:w-max"> --}}
                 <div class="flex-col min-w-max">
                   @for ($c = 0; $c < count($data[$b]); $c++)
-                    <div class="cell border-t-1 border-r-1 border-b-1 flex px-4 h-8 items-center w-full">
+                    <div row="{{ $a }}{{ $c }}"
+                      class="cell {{ $a }}{{ $c }} border-t-1 border-r-1 border-b-1 flex px-4 h-8 items-center w-full">
                       {{ $data[$b][$c] }}
                       @if ($b == 0 && $c != 0)
                         <span

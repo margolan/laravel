@@ -53,23 +53,30 @@ search.addEventListener('input', function (e) {
         matches++;
         found.textContent = matches;
         found_cell = el;
-        el.classList.add('dark:text-red-500')
       } else {
         found.textContent = matches;
-        el.classList.add('dark:text-white')
       }
     });
     if (matches == 1) {
-      window.scrollTo(0, found_cell.offsetTop - 180)
+      window.scrollTo(0, found_cell.offsetTop - 180);
+      cell.forEach(el => {
+        if (el.getAttribute('row') == found_cell.getAttribute('row')) {
+          el.classList.remove('dark:text-white');
+          el.classList.add('dark:text-red-500');
+        } else {
+          el.classList.remove('dark:red-500');
+          el.classList.add('dark:text-white');
+        }
+      })
     }
   }, 500)
 })
 
 window.addEventListener('scroll', e => {
   if (window.scrollY > 200) {
-    search.parentElement.classList.add('fixed', 'top-0')
+    // search.parentElement.classList.add('fixed', 'top-0')
   } else {
-    search.parentElement.classList.remove('fixed', 'top-0')
+    // search.parentElement.classList.remove('fixed', 'top-0')
   }
 })
 
