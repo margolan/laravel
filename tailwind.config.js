@@ -11,6 +11,9 @@ export default {
       borderWidth: {
         '1': '1px'
       },
+      boxShadow: {
+        '3xl': '0px 0px 10px #ffffff88',
+      }
     },
   },
   plugins: [],

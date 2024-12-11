@@ -41,6 +41,7 @@ cell.forEach(e => {
 
 const search = document.querySelector('.search');
 const found = document.querySelector('.found');
+const scroll_up = document.querySelector('.scroll_up');
 
 search.addEventListener('input', function (e) {
   setTimeout(function () {
@@ -73,12 +74,10 @@ search.addEventListener('input', function (e) {
 })
 
 window.addEventListener('scroll', e => {
-  if (window.scrollY > 200) {
-    // search.parentElement.classList.add('fixed', 'top-0')
-  } else {
-    // search.parentElement.classList.remove('fixed', 'top-0')
-  }
+  window.scrollY > 200 ? scroll_up.classList.remove('hidden') : scroll_up.classList.add('hidden')
 })
+
+scroll_up.addEventListener('click', () => { window.scrollTo(0, 0); })
 
 // let today = document.querySelector('.today').getBoundingClientRect();
 // document.body.prepend(document.createElement('div'))
