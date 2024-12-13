@@ -2,13 +2,14 @@
 
 use App\Http\Controllers\ExcelController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
 
 
 Route::get('/', function () {
   return view('welcome');
 })->name('welcome');
 
-Route::get('/s/import', function () {
+Route::get('/import', function () {
   return view('import');
 })->name('import');
 
@@ -18,6 +19,7 @@ Route::get('/k', [ExcelController::class, 'k_index'])->name('k');
 
 Route::post('/import', [ExcelController::class, 'getData'])->name('getData');
 
-Route::get('/s/confirm', [ExcelController::class, 'confirmData'])->name('confirmData');
+// Route::get('/confirm', [ExcelController::class, 'confirmData'])->name('confirmData');
 
-// Route::post('/s/import', [ExcelController::class, 'getDataTest'])->name('getDataTest');
+Route::get('/test', [ExcelController::class, 'getDataTest'])->name('test');
+// Route::post('/test', [ExcelController::class, 'getDataTest'])->name('test');

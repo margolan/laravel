@@ -17,18 +17,23 @@ class ExcelController extends Controller
 
     public function getDataTest(Request $request)
     {
-        if ($request->hasFile('file')) {
+        // if ($request->hasFile('file')) {
 
-            $spreadsheet = IOFactory::load($request->file('file'));
+        //     $spreadsheet = IOFactory::load($request->file('file'));
 
-            $xi = new ExcelImport();
+        //     $xi = new ExcelImport();
 
-            $data = $xi->importTest($spreadsheet);
+        //     $data = $xi->importTest($spreadsheet);
 
-            return view('test', ['data' => $data]);
-        } else {
-            return redirect()->back()->with('error', 'Файл не выбран');
-        }
+        //     return view('test', ['data' => $data]);
+        // } else {
+        //     return redirect()->back()->with('error', 'Файл не выбран');
+        // }
+
+        $data = $request->all();
+
+        return view('test', compact('data'));
+        // return view('test', ['data' => $data]);
     }
 
 

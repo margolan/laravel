@@ -2,7 +2,7 @@
   <div class="lef">
     <a href="{{ route('s') }}">График</a><span class="mx-3">|</span><a href="{{ route('k') }}">Ключи</a><span
       class="mx-3">|</span><a href="{{ route('import') }}">Загрузить
-      график</a>
+      график</a><span class="mx-3">|</span><a href="{{ route('test') }}">.</a>
   </div>
   <div class="right ">
     <div class="theme-toggle cursor-default">&#127761;</div>

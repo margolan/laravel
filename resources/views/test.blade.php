@@ -4,18 +4,15 @@
 
 @section('content')
 
+  <form action="{{ route('test') }}" method="get" class="text-black mt-10">
+    @csrf
+    <input type="text" name="input_text">
+    {{-- <button type="submit">Enter</button> --}}
+  </form>
+
+
   @if (isset($data))
     @php
-
-      // if ($lol['type'] === 'schedule') {
-      //     echo "It's schedule!";
-      // } else {
-      //     echo "It's key!";
-      // }
-
-      // $bla = $lol->get(0)?->get(0)?->get(4);
-
-      // echo $bla;
 
       echo '<pre>';
       print_r($data);
