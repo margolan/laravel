@@ -22,4 +22,4 @@ Route::post('/import', [ExcelController::class, 'getData'])->name('getData');
 // Route::get('/confirm', [ExcelController::class, 'confirmData'])->name('confirmData');
 
 Route::get('/test', [ExcelController::class, 'getDataTest'])->name('test');
-// Route::post('/test', [ExcelController::class, 'getDataTest'])->name('test');
+Route::post('/test', [ExcelController::class, 'getDataTest'])->name('test');

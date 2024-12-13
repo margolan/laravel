@@ -4,9 +4,11 @@
 
 @section('content')
 
-  <form action="{{ route('test') }}" method="get" class="text-black mt-10">
+  <form action="{{ route('test') }}" method="post" class="text-black mt-10">
     @csrf
     <input type="text" name="input_text">
+    <input type="radio" name="name_radio" value="first">1
+    <input type="radio" name="name_radio" checked value="second">2
     {{-- <button type="submit">Enter</button> --}}
   </form>
 
