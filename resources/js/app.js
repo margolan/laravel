@@ -21,7 +21,7 @@ if (savedTheme === 'dark') {
   htmlElement.classList.add('dark');
 }
 
-// ==================== Misc ====================
+// ==================== Days Styles ====================
 
 const cell = document.querySelectorAll('.cell');
 
@@ -38,6 +38,9 @@ cell.forEach(e => {
     e.classList.add(...cellStyle[text].split(' '));
   }
 })
+
+// ==================== Keys ====================
+
 
 const search = document.querySelector('.search');
 const found = document.querySelector('.found');
@@ -82,18 +85,7 @@ if (search) {
 
 }
 
-
-
-// let today = document.querySelector('.today').getBoundingClientRect();
-// document.body.prepend(document.createElement('div'))
-// document.body.firstChild.classList.add('today_box', 'w-10', 'h-10', 'border-2', 'border-red-500', 'relative');
-// document.body.firstChild.style.top = `${today.top}px`;
-// document.body.firstChild.style.left = `${today.left}px`;
-
-
-
-// console.log(today);
-
+// ==================== Import ====================
 
 document.querySelector('#file-upload').addEventListener('change', function () {
   const fileName = this.files[0]?.name || 'Файл не выбран';

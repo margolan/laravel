@@ -7,7 +7,7 @@
   <form action="{{ route('import') }}" enctype="multipart/form-data" method="post" class="w-96 my-5">
     @csrf
     <div class="details flex bg-red-900 rounded-lg">
-      <div class="left w-28 justify-center pr-3 items-end flex flex-col bg-red-800 rounded-l-lg">
+      <div class="left w-28 border-r-1 justify-center pr-3 items-end flex flex-col bg-red-800 rounded-l-lg">
         <div class="w-max mt-5">Город:</div>
         <div class="w-max my-3">Дата:</div>
         <div class="w-max mb-5">Отдел:</div>
@@ -15,10 +15,10 @@
       <div class="right w-full pl-3 pr-5 flex flex-col">
         <select name="city" class="w-max mt-5 bg-red-900">
           <option class="bg-gray-800">Выбрать</option>
-          <option value="aktobe" class="bg-red-900">Актау</option>
-          <option value="oral" class="bg-red-900">Актобе</option>
+          <option value="aktau" class="bg-red-900">Актау</option>
+          <option value="aktobe" class="bg-red-900">Актобе</option>
           <option value="atyrau" class="bg-red-900">Атырау</option>
-          <option value="aktau" class="bg-red-900">Уральск</option>
+          <option value="oral" class="bg-red-900">Уральск</option>
         </select>
         <div class="date w-max my-3">
           <select name="month" class="bg-red-900">
@@ -50,13 +50,16 @@
         </select>
       </div>
     </div>
-    <div class="file w-full mt-5 bg-red-900 rounded-lg flex">
-      <div class="left w-full h-14 bg-red-800 rounded-l-lg flex justify-center items-center">
+    <div class="file w-full mt-5 flex">
+      <div class="left w-28 border-r-1 bg-red-800 rounded-l-lg flex justify-end items-center pr-3">Файл:</div>
+      <div class="right w-full h-14 bg-red-900 flex justify-around items-center pr-3 rounded-r-lg">
         <label for="file-upload" class="custom-label">Выберите файл</label>
         <input type="file" id="file-upload" name="file" hidden>
-      </div>
-      <div class="right w-full  border-l-2 flex justify-center">
-        <button type="submit">Отправить</button>
+        <button type="submit"><svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 8 14">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="m1 13 5.7-5.326a.909.909 0 0 0 0-1.348L1 1" />
+          </svg></button>
       </div>
     </div>
   </form>
