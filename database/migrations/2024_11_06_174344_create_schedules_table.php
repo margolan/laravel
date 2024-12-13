@@ -17,12 +17,12 @@ return new class extends Migration
             $table->text('names');
             $table->text('data');
             $table->text('dates');
-            $table->text('month');
+            $table->text('date');
+            $table->text('city');
+            $table->text('department');
             $table->text('var1')->nullable();
             $table->text('var2')->nullable();
             $table->text('var3')->nullable();
-            $table->text('var4')->nullable();
-            $table->text('var5')->nullable();
             $table->timestamps();
         });
     }

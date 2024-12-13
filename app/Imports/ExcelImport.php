@@ -63,7 +63,7 @@ class ExcelImport
 
             array_push($complete_data['dates'], array_values(array_filter($array[$anchor[0] - 2]))); // Days
             array_push($complete_data['dates'], array_values(array_filter($array[$anchor[0] - 1]))); // Dates
-            array_push($complete_data['month'], $array[1][4]); // Month
+            array_push($complete_data['month'], mb_convert_case($array[1][4], MB_CASE_LOWER, 'UTF-8')); // Month
 
             for ($a = 0; $a < count($anchor); $a++) {
                 $temp = [];

@@ -12,10 +12,11 @@ class Schedule extends Model
         'data',
         'dates',
         'month',
+        'date',
+        'city',
+        'department',
         'var1',
         'var2',
-        'var3',
-        'var4',
-        'var5'
+        'var3'
     ];
 }

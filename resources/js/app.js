@@ -43,41 +43,46 @@ const search = document.querySelector('.search');
 const found = document.querySelector('.found');
 const scroll_up = document.querySelector('.scroll_up');
 
-search.addEventListener('input', function (e) {
-  setTimeout(function () {
-    const query = e.target.value.toLowerCase();
-    let matches = 0;
-    let found_cell;
-    cell.forEach(el => {
-      const cellText = el.textContent.toLowerCase();
-      if (query && cellText.includes(query)) {
-        matches++;
-        found.textContent = matches;
-        found_cell = el;
-      } else {
-        found.textContent = matches;
-      }
-    });
-    if (matches == 1) {
-      window.scrollTo(0, found_cell.offsetTop - 180);
+if (search) {
+  search.addEventListener('input', function (e) {
+    setTimeout(function () {
+      const query = e.target.value.toLowerCase();
+      let matches = 0;
+      let found_cell;
       cell.forEach(el => {
-        if (el.getAttribute('row') == found_cell.getAttribute('row')) {
-          el.classList.remove('dark:text-white');
-          el.classList.add('dark:text-red-500');
+        const cellText = el.textContent.toLowerCase();
+        if (query && cellText.includes(query)) {
+          matches++;
+          found.textContent = matches;
+          found_cell = el;
         } else {
-          el.classList.remove('dark:red-500');
-          el.classList.add('dark:text-white');
+          found.textContent = matches;
         }
-      })
-    }
-  }, 500)
-})
+      });
+      if (matches == 1) {
+        window.scrollTo(0, found_cell.offsetTop - 180);
+        cell.forEach(el => {
+          if (el.getAttribute('row') == found_cell.getAttribute('row')) {
+            el.classList.remove('dark:text-white');
+            el.classList.add('dark:text-red-500');
+          } else {
+            el.classList.remove('dark:red-500');
+            el.classList.add('dark:text-white');
+          }
+        })
+      }
+    }, 500)
+  })
 
-window.addEventListener('scroll', e => {
-  window.scrollY > 200 ? scroll_up.classList.remove('hidden') : scroll_up.classList.add('hidden')
-})
+  window.addEventListener('scroll', e => {
+    window.scrollY > 200 ? scroll_up.classList.remove('hidden') : scroll_up.classList.add('hidden')
+  })
 
-scroll_up.addEventListener('click', () => { window.scrollTo(0, 0); })
+  scroll_up.addEventListener('click', () => { window.scrollTo(0, 0); })
+
+}
+
+
 
 // let today = document.querySelector('.today').getBoundingClientRect();
 // document.body.prepend(document.createElement('div'))
@@ -88,3 +93,9 @@ scroll_up.addEventListener('click', () => { window.scrollTo(0, 0); })
 
 
 // console.log(today);
+
+
+document.querySelector('#file-upload').addEventListener('change', function () {
+  const fileName = this.files[0]?.name || 'Файл не выбран';
+  document.querySelector('.custom-label').textContent = fileName;
+});
