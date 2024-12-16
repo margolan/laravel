@@ -19,7 +19,7 @@ return new class extends Migration
             $table->text('dates');
             $table->text('date');
             $table->text('city');
-            $table->text('department');
+            $table->text('depart');
             $table->text('var1')->nullable();
             $table->text('var2')->nullable();
             $table->text('var3')->nullable();

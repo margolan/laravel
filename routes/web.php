@@ -9,18 +9,22 @@ Route::get('/', function () {
   return view('welcome');
 })->name('welcome');
 
-Route::get('/import', function () {
-  return view('import');
-})->name('import');
+Route::get('s/import', function () {
+  return view('s_import');
+})->name('s_import');
 
-Route::get('/s', [ExcelController::class, 's_index'])->name('s');
+Route::get('k/import', function () {
+  return view('k_import');
+})->name('k_import');
 
-Route::get('/k', [ExcelController::class, 'k_index'])->name('k');
+Route::get('/s', [ExcelController::class, 's_index'])->name('s_index');
 
-// Route::post('/import', [ExcelController::class, 'getData'])->name('getData');
-Route::post('/import', [ExcelController::class, 'getDataTest'])->name('getData');
+Route::get('/k', [ExcelController::class, 'k_index'])->name('k_index');
 
-// Route::get('/confirm', [ExcelController::class, 'confirmData'])->name('confirmData');
+Route::post('s/import', [ExcelController::class, 's_import'])->name('s_import');
+
+
+
 
 Route::get('/test', [ExcelController::class, 'getDataTest'])->name('test');
 Route::post('/test', [ExcelController::class, 'getDataTest'])->name('test');

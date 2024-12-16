@@ -17,48 +17,82 @@ class ExcelController extends Controller
 
     public function getDataTest(Request $request)
     {
-        // if ($request->hasFile('file')) {
 
-        //     $spreadsheet = IOFactory::load($request->file('file'));
+        $data = $request->validate(
+            [
+                'city' => ['required', 'in:aktau,aktobe,atyrau,oral'],
+                'month' => ['required', 'integer', 'between:1,12'],
+                'year' => ['required', 'integer', 'in:2024,2025,2026'],
+                'depart' => ['required', 'in:pos,atm'],
+                'file' => ['required', 'mimes:xlsx,xls,csv', 'max:2048'],
+            ],
+            [
+                'city.required' => 'Выберите город',
+                'city.in' => 'Выберите город из списка',
+                'month.required' => 'Выберите месяц',
+                'month.integer' => 'Выберите месяц',
+                'month.between' => 'Месяц должен быть в диапазоне от 1 до 12',
+                'year.required' => 'Выберите год',
+                'year.integer' => 'Выберите год',
+                'year.in' => 'Выберите год из списка',
+                'depart.required' => 'Выберите отдел',
+                'depart.in' => 'Выберите отдел из списка',
+            ],
 
-        //     $xi = new ExcelImport();
+        );
 
-        //     $data = $xi->importTest($spreadsheet);
+        $spreadsheet = IOFactory::load($request->file('file'));
 
-        //     return view('test', ['data' => $data]);
-        // } else {
-        //     return redirect()->back()->with('error', 'Файл не выбран');
-        // }
+        $ExcelImport = new ExcelImport();
 
-        $data = $request->all();
+        $data = $ExcelImport->importTest($spreadsheet);
+
+        return view('test', ['data' => $data]);
+
+        // $data = $request->all();
+
 
         return view('test', compact('data'));
         // return view('test', ['data' => $data]);
     }
 
 
-    public function getData(Request $request)
-    {
-        if ($request->hasFile('file')) {
-
-            $spreadsheet = IOFactory::load($request->file('file'));
-
-            $ExcelImport = new ExcelImport();
-
-            $complete_data = $ExcelImport->import($spreadsheet);
-
-            return view('import', compact('complete_data'));
-        } else {
-            return redirect()->back()->with('error', 'Файл не выбран');
-        }
-    }
-
-    public function confirmData(Request $request)
+    public function s_import(Request $request)
     {
 
-        $lol = $request->get('id');
+        $request->validate(
+            [
+                'city' => ['required', 'in:aktau,aktobe,atyrau,oral'],
+                'month' => ['required', 'integer', 'between:1,12'],
+                'year' => ['required', 'integer', 'in:2024,2025,2026'],
+                'depart' => ['required', 'in:pos,atm'],
+                'file' => ['required', 'mimes:xlsx,xls,csv', 'max:2048'],
+            ],
+            [
+                'city.required' => 'Выберите город',
+                'city.in' => 'Выберите город из списка',
+                'month.required' => 'Выберите месяц',
+                'month.integer' => 'Выберите месяц',
+                'month.between' => 'Месяц должен быть в диапазоне от 1 до 12',
+                'year.required' => 'Выберите год',
+                'year.integer' => 'Выберите год',
+                'year.in' => 'Выберите год из списка',
+                'depart.required' => 'Выберите отдел',
+                'depart.in' => 'Выберите отдел из списка',
+            ],
+        );
 
-        return view('import', compact('lol'));
+        $spreadsheet = IOFactory::load($request->file('file'));
+
+        $ExcelImport = new ExcelImport();
+
+        $processed_data = $ExcelImport->getSchedule($spreadsheet, $request);
+
+
+
+        // $data = $request->all();
+
+        return view('s_import', ['processed_data' => $processed_data]);
     }
 
     public function s_index()
@@ -71,7 +105,6 @@ class ExcelController extends Controller
                     $value['names'] = json_decode($value['names'], true);
                     $value['data'] = json_decode($value['data'], true);
                     $value['dates'] = json_decode($value['dates'], true);
-                    $value['month'] = json_decode($value['month'], true);
                 }
             } else {
                 $complete_data[0][0] = 'No data in schedules table';

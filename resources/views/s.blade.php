@@ -12,10 +12,8 @@
     echo '</pre>';
 
   @endphp
-  {{-- {{ ltrim(date('D'), '0') }} --}}
   @if (isset($complete_data['names']))
-    <h1 class="p-3 my-3 text-2xl">
-      {{ $complete_data['month'][0] }}</h1>
+    <h1 class="p-3 my-3 text-2xl"></h1>
     <div class="wrap w-full inline-flex">
       <div class="names_column"> <!-- names start -->
         <div
