@@ -6,9 +6,9 @@
 
   @php
 
-    echo '<hr>';
+    echo substr($complete_data['date'], 0, 2);
     echo '<pre>';
-    // print_r($complete_key);
+    print_r($complete_data);
     echo '</pre>';
 
   @endphp

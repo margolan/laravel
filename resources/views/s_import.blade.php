@@ -23,15 +23,15 @@
         <div class="date w-max my-3">
           <select name="month" class="bg-red-900">
             <option class="bg-gray-800">Выбрать</option>
-            <option value="1" class="bg-red-900">Январь</option>
-            <option value="2" class="bg-red-900">Февраль</option>
-            <option value="3" class="bg-red-900">Март</option>
-            <option value="4" class="bg-red-900">Апрель</option>
-            <option value="5" class="bg-red-900">Май</option>
-            <option value="6" class="bg-red-900">Июнь</option>
-            <option value="7" class="bg-red-900">Июль</option>
-            <option value="8" class="bg-red-900">Август</option>
-            <option value="9" class="bg-red-900">Сентябрь</option>
+            <option value="01" class="bg-red-900">Январь</option>
+            <option value="02" class="bg-red-900">Февраль</option>
+            <option value="03" class="bg-red-900">Март</option>
+            <option value="04" class="bg-red-900">Апрель</option>
+            <option value="05" class="bg-red-900">Май</option>
+            <option value="06" class="bg-red-900">Июнь</option>
+            <option value="07" class="bg-red-900">Июль</option>
+            <option value="08" class="bg-red-900">Август</option>
+            <option value="09" class="bg-red-900">Сентябрь</option>
             <option value="10" class="bg-red-900">Октябрь</option>
             <option value="11" class="bg-red-900">Ноябрь</option>
             <option value="12" class="bg-red-900">Декабрь</option>

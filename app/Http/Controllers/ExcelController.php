@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Imports\ExcelImport;
 use App\Models\Schedule;
 use App\Models\Key;
+use App\Models\Test;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
@@ -18,42 +19,18 @@ class ExcelController extends Controller
     public function getDataTest(Request $request)
     {
 
-        $data = $request->validate(
-            [
-                'city' => ['required', 'in:aktau,aktobe,atyrau,oral'],
-                'month' => ['required', 'integer', 'between:1,12'],
-                'year' => ['required', 'integer', 'in:2024,2025,2026'],
-                'depart' => ['required', 'in:pos,atm'],
-                'file' => ['required', 'mimes:xlsx,xls,csv', 'max:2048'],
-            ],
-            [
-                'city.required' => 'Выберите город',
-                'city.in' => 'Выберите город из списка',
-                'month.required' => 'Выберите месяц',
-                'month.integer' => 'Выберите месяц',
-                'month.between' => 'Месяц должен быть в диапазоне от 1 до 12',
-                'year.required' => 'Выберите год',
-                'year.integer' => 'Выберите год',
-                'year.in' => 'Выберите год из списка',
-                'depart.required' => 'Выберите отдел',
-                'depart.in' => 'Выберите отдел из списка',
-            ],
+        $requests = $request->all();
 
-        );
+        $query = Schedule::query();
 
-        $spreadsheet = IOFactory::load($request->file('file'));
+        foreach ($request->all() as $column => $value) {
+            $query->where($column, $value);
+        }
 
-        $ExcelImport = new ExcelImport();
+        $data = $query->get();
+        $available_links = Schedule::select('city', 'date')->get();
 
-        $data = $ExcelImport->importTest($spreadsheet);
-
-        return view('test', ['data' => $data]);
-
-        // $data = $request->all();
-
-
-        return view('test', compact('data'));
-        // return view('test', ['data' => $data]);
+        return view('test', ['data' => $data, 'available_links' => $available_links, 'requests' => $requests]);
     }
 
 
@@ -63,8 +40,8 @@ class ExcelController extends Controller
         $request->validate(
             [
                 'city' => ['required', 'in:aktau,aktobe,atyrau,oral'],
-                'month' => ['required', 'integer', 'between:1,12'],
-                'year' => ['required', 'integer', 'in:2024,2025,2026'],
+                'month' => ['required', 'in:01,02,03,04,05,06,07,08,09,10,11,12'],
+                'year' => ['required', 'in:2024,2025,2026'],
                 'depart' => ['required', 'in:pos,atm'],
                 'file' => ['required', 'mimes:xlsx,xls,csv', 'max:2048'],
             ],
@@ -72,10 +49,8 @@ class ExcelController extends Controller
                 'city.required' => 'Выберите город',
                 'city.in' => 'Выберите город из списка',
                 'month.required' => 'Выберите месяц',
-                'month.integer' => 'Выберите месяц',
-                'month.between' => 'Месяц должен быть в диапазоне от 1 до 12',
+                'month.in' => 'Месяц должен быть в диапазоне от 1 до 12',
                 'year.required' => 'Выберите год',
-                'year.integer' => 'Выберите год',
                 'year.in' => 'Выберите год из списка',
                 'depart.required' => 'Выберите отдел',
                 'depart.in' => 'Выберите отдел из списка',
