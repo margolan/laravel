@@ -6,14 +6,25 @@
 
   @php
 
-    echo substr($complete_data['date'], 0, 2);
+    // echo substr($complete_data['date'], 0, 2);
     echo '<pre>';
-    print_r($complete_data);
+    // print_r($complete_data);
     echo '</pre>';
 
   @endphp
+
+  @if (empty($available_links))
+    No tables at all
+  @else
+    @foreach ($available_links as $item)
+      <a href="?city={{ $item->city }}&date={{ $item->date }}">{{ $item->city }} /
+        {{ $item->date }}</a> <span class=" last-of-type:hidden">|</span>
+    @endforeach
+  @endif
+
+
   @if (isset($complete_data['names']))
-    <h1 class="p-3 my-3 text-2xl"></h1>
+    <h1 class="p-3 my-3 text-2xl">{{ $complete_data['city'] }} - {{ $complete_data['date'] }}</h1>
     <div class="wrap w-full inline-flex">
       <div class="names_column"> <!-- names start -->
         <div

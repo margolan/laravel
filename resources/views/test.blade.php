@@ -4,33 +4,29 @@
 
 @section('content')
 
-  @if (isset($data))
-    {{-- @if ($all->isEmpty())
-      No data
-    @else
-      Has data
-    @endif --}}
-
-    {{-- @foreach ($data->pluck('city') as $city)
-      {{ $city }}
-    @endforeach --}}
+  @if (isset($available_links))
 
     @foreach ($available_links as $item)
       <a href="?city={{ $item->city }}&date={{ $item->date }}">{{ $item->city }} /
         {{ \Carbon\Carbon::parse($item->date)->format('m.Y') }}</a> <span class=" last-of-type:hidden">|</span>
     @endforeach
+  @endif
 
-    {{-- <a href="?city={{ $cell }}&date={{ $cell }}"></a> --}}
 
-    @php
+  @if ($data)
+    @if (empty($data))
+      No data
+    @else
+      @php
 
-      echo '<pre>';
-      // print_r($available_links);
-      // print_r($requests);
-      print_r($data);
-      echo '</pre>';
+        echo '<pre>';
+        // print_r($available_links);
+        // print_r($requests);
+        print_r($data);
+        echo '</pre>';
 
-    @endphp
+      @endphp
+    @endif
   @endif
 
 @endsection

@@ -27,7 +27,7 @@ class ExcelController extends Controller
             $query->where($column, $value);
         }
 
-        $data = $query->get();
+        $data = $query->get()->toArray();
         $available_links = Schedule::select('city', 'date')->get();
 
         return view('test', ['data' => $data, 'available_links' => $available_links, 'requests' => $requests]);
@@ -70,12 +70,23 @@ class ExcelController extends Controller
         return view('s_import', ['processed_data' => $processed_data]);
     }
 
-    public function s_index()
+    public function s_index(Request $request)
     {
 
         if (Schema::hasTable('schedules')) {
+
+            $available_links = Schedule::select('city', 'date')->get();
+
             if (DB::table('schedules')->count()) {
-                $complete_data = Schedule::all()->toArray();
+
+                $query = Schedule::query();
+
+                foreach ($request->all() as $column => $value) {
+                    $query->where($column, $value);
+                }
+
+                $complete_data = $query->orderby('date', 'desc')->get()->toArray();
+
                 foreach ($complete_data as &$value) {
                     $value['names'] = json_decode($value['names'], true);
                     $value['data'] = json_decode($value['data'], true);
@@ -86,9 +97,11 @@ class ExcelController extends Controller
             }
         } else {
             $complete_data[0][0] = 'No schedules table';
+            $available_links = '';
         }
 
-        return view('s', ['complete_data' => $complete_data[0]]);
+
+        return view('s', ['complete_data' => $complete_data[0], 'available_links' => $available_links]);
     }
 
     public function k_index()
