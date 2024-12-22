@@ -1,6 +1,6 @@
 @extends('layout.app')
 
-@section('title', 'Excel Import')
+@section('title', 'Загрузка Excel')
 
 @section('content')
 

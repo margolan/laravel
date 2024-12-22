@@ -23,6 +23,8 @@ Route::get('/k', [ExcelController::class, 'k_index'])->name('k_index');
 
 Route::post('s/import', [ExcelController::class, 's_import'])->name('s_import');
 
+Route::post('k/import', [ExcelController::class, 'k_import'])->name('k_import');
+
 
 
 

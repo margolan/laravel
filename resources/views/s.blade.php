@@ -1,79 +1,89 @@
 @extends('layout.app')
 
-@section('title', 'Главная Страница')
+@section('title', 'График работы')
 
 @section('content')
 
   @php
 
-    // echo substr($complete_data['date'], 0, 2);
-    echo '<pre>';
-    // print_r($complete_data);
-    echo '</pre>';
-
+    // echo substr($processed_data['date'], 0, 2);
+    // echo '<pre>';
+    // print_r($available_links);
+    // echo '</pre>';
   @endphp
 
-  @if (empty($available_links))
-    No tables at all
+  @if ($available_links->isEmpty())
+    <p>Нет графиков работ для отображения</p>
   @else
-    @foreach ($available_links as $item)
-      <a href="?city={{ $item->city }}&date={{ $item->date }}">{{ $item->city }} /
-        {{ $item->date }}</a> <span class=" last-of-type:hidden">|</span>
-    @endforeach
+    <div class="links my-4 flex flex-wrap">
+      @foreach ($available_links as $city => $dates)
+        <div class="links__group my-1 border-1 border-stone-400 rounded-lg flex">
+          <div class="links__group__city w-min bg-stone-900 rounded-l-lg px-3 py-1">{{ ucfirst($city) }}:</div>
+          <div class="links__group__date rounded-r-lg px-3 py-1">
+            @foreach ($dates->pluck('date') as $date)
+              <a href="?city={{ $city }}&date={{ $date }}"
+                class="hover:text-blue-300">{{ str_replace(substr($date, 2, 2), '/', $date) }}</a>
+            @endforeach
+          </div>
+        </div>
+        <div class="spacer w-5"></div>
+      @endforeach
+    </div>
   @endif
 
 
-  @if (isset($complete_data['names']))
-    <h1 class="p-3 my-3 text-2xl">{{ $complete_data['city'] }} - {{ $complete_data['date'] }}</h1>
-    <div class="wrap w-full inline-flex">
-      <div class="names_column"> <!-- names start -->
-        <div
-          class="names_header w-32 h-16 flex items-center pl-5 rounded-tl-lg dark:text-gray-700 font-semibold dark:bg-gray-200">
-          Имя
-        </div>
-        @for ($a = 0; $a < count($complete_data['names']); $a++)
-          <div
-            class="names w-32 h-8 flex items-center pl-5 dark:text-gray-700 last:rounded-bl-lg odd:dark:bg-gray-200 even:dark:bg-white">
-            {{ explode(' ', $complete_data['names'][$a])[1] }}
-          </div>
-        @endfor
-      </div> <!-- names finish -->
-      <div class="data_column w-min overflow-x-auto rounded-r-lg font-semibold">
-        <div class="dates_row">
-          <div class="day_row inline-flex dark:bg-gray-200 dark:text-gray-700">
-            @foreach ($complete_data['dates'][0] as $index => $day)
-              <div
-                class="h-8 flex justify-center items-center cell {{ $index == ltrim(date('d'), '0') - 1 ? 'w-9 text-red-500 bg-gray-200 shadow-gray-500 shadow-lg border-r-1 border-l-2 border-gray-100 today' : 'w-8 border-l-1 border-white' }}">
-                {{ $day }} <!-- days -->
-              </div>
-            @endforeach
-          </div>
-          <div class="date_row inline-flex dark:bg-gray-200 dark:text-gray-700">
-            @foreach ($complete_data['dates'][1] as $index => $date)
-              <div
-                class="h-8 flex justify-center items-center cell {{ $index == ltrim(date('d'), '0') - 1 ? 'w-9 text-red-500 bg-gray-200 shadow-gray-500 shadow-lg border-r-1 border-l-2 border-gray-100 today' : 'w-8 border-l-1 border-white' }}">
-                {{ $date }} <!-- dates -->
-              </div>
-            @endforeach
-          </div>
-        </div>
-        @foreach ($complete_data['data'] as $data_rows)
-          <div class="data_row inline-flex dark:text-gray-700 odd:dark:bg-gray-200 even:dark:bg-white">
-            @foreach ($data_rows as $index => $cell)
-              <div
-                class="h-8 flex justify-center items-center cell {{ $index == ltrim(date('d'), '0') - 1 ? 'w-9 text-red-500 bg-gray-200 shadow-gray-500 shadow-lg border-r-1 border-l-1 border-gray-100 today' : 'w-8 border-l-1 border-white' }}">
-                {{ $cell }}
-              </div>
-            @endforeach
-          </div>
-        @endforeach
-
-      </div>
-    </div>
+  @if (empty($processed_data))
+    <p>Не найден график работ для текущего месяца</p>
   @else
-    <p class="my-3">
-      {{ $complete_data[0] }}
-    </p>
+    @foreach ($processed_data as $depart)
+      <h1 class="p-3 my-3 text-2xl">{{ strtoupper($depart['depart']) }} / {{ ucfirst($depart['city']) }} /
+        {{ str_replace(substr($depart['date'], 2, 2), '/', $depart['date']) }}
+      </h1>
+      <div class="wrap w-full inline-flex">
+        <div class="names_column"> <!-- names start -->
+          <div
+            class="names_header w-32 h-16 flex items-center pl-5 rounded-tl-lg dark:text-gray-700 font-semibold dark:bg-gray-200">
+            Имя
+          </div>
+          @for ($a = 0; $a < count($depart['names']); $a++)
+            <div
+              class="names w-32 h-8 flex items-center pl-5 dark:text-gray-700 last:rounded-bl-lg odd:dark:bg-gray-200 even:dark:bg-white">
+              {{ explode(' ', $depart['names'][$a])[1] }}
+            </div>
+          @endfor
+        </div> <!-- names finish -->
+        <div class="data_column w-min overflow-x-auto rounded-r-lg font-semibold">
+          <div class="dates_row">
+            <div class="day_row inline-flex dark:bg-gray-200 dark:text-gray-700">
+              @foreach ($depart['dates'][0] as $index => $day)
+                <div
+                  class="h-8 flex justify-center items-center cell {{ $index == ltrim(date('d'), '0') - 1 ? 'w-9 text-red-500 bg-gray-200 shadow-red-500 shadow-lg border-r-1 border-l-1 border-red-400 today' : 'w-8 border-l-1 border-white' }}">
+                  {{ $day }} <!-- days -->
+                </div>
+              @endforeach
+            </div>
+            <div class="date_row inline-flex dark:bg-gray-200 dark:text-gray-700">
+              @foreach ($depart['dates'][1] as $index => $date)
+                <div
+                  class="h-8 flex justify-center items-center cell {{ $index == ltrim(date('d'), '0') - 1 ? 'w-9 text-red-500 bg-gray-200 shadow-red-500 shadow-lg border-r-1 border-l-1 border-red-400 today' : 'w-8 border-l-1 border-white' }}">
+                  {{ $date }} <!-- dates -->
+                </div>
+              @endforeach
+            </div>
+          </div>
+          @foreach ($depart['data'] as $data_rows)
+            <div class="data_row inline-flex dark:text-gray-700 odd:dark:bg-gray-200 even:dark:bg-white">
+              @foreach ($data_rows as $index => $cell)
+                <div
+                  class="h-8 flex justify-center items-center cell {{ $index == ltrim(date('d'), '0') - 1 ? 'w-9 text-red-500 bg-gray-200 shadow-red-500 shadow-lg border-r-1 border-l-1 border-red-400 today' : 'w-8 border-l-1 border-white' }}">
+                  {{ $cell }}
+                </div>
+              @endforeach
+            </div>
+          @endforeach
+        </div>
+      </div>
+    @endforeach
   @endif
 
 @endsection

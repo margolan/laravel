@@ -59,7 +59,6 @@ class ExcelImport
 
         array_push($processed_data['dates'], array_values(array_filter($spreadsheet[$anchor[0] - 2]))); // Days
         array_push($processed_data['dates'], array_values(array_filter($spreadsheet[$anchor[0] - 1]))); // Dates
-        // array_push($processed_data['month'], mb_convert_case($spreadsheet[1][4], MB_CASE_LOWER, 'UTF-8')); // Month
 
         for ($a = 0; $a < count($anchor); $a++) {
             $temp = [];

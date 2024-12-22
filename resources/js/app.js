@@ -26,9 +26,9 @@ if (savedTheme === 'dark') {
 const cell = document.querySelectorAll('.cell');
 
 const cellStyle = {
-  "+": "dark:text-red-500 font-bold",
-  "-": "dark:text-blue-500 font-bold",
-  "D": "text-sm dark:text-red-500",
+  "+": "dark:text-orange-500 font-bold",
+  "-": "dark:text-purple-500 font-bold",
+  "D": "text-sm dark:text-orange-500",
   "O": "text-sm dark:text-gray-500 dark:bg-[url('/assets/cell_bg.png')]",
 };
 

@@ -27,7 +27,10 @@ class ExcelController extends Controller
             $query->where($column, $value);
         }
 
-        $data = $query->get()->toArray();
+        $data = $query->orderby('date', 'desc')->get()->toArray();
+
+        // $data = $query->get()->toArray();
+
         $available_links = Schedule::select('city', 'date')->get();
 
         return view('test', ['data' => $data, 'available_links' => $available_links, 'requests' => $requests]);
@@ -63,65 +66,91 @@ class ExcelController extends Controller
 
         $processed_data = $ExcelImport->getSchedule($spreadsheet, $request);
 
-
-
-        // $data = $request->all();
-
         return view('s_import', ['processed_data' => $processed_data]);
     }
 
     public function s_index(Request $request)
     {
 
+        $processed_data = [];
+
         if (Schema::hasTable('schedules')) {
 
-            $available_links = Schedule::select('city', 'date')->get();
+            $available_links = Schedule::select('city', 'date')->distinct()->orderby('city', 'asc')->orderby('date', 'asc')->get()->groupBy('city');
 
             if (DB::table('schedules')->count()) {
 
                 $query = Schedule::query();
 
-                foreach ($request->all() as $column => $value) {
-                    $query->where($column, $value);
+                if (!empty($request->all())) {
+                    foreach ($request->all() as $column => $value) {
+                        $query->where($column, $value);
+                    }
+                    $processed_data = $query->orderby('date', 'desc')->get()->toArray();
+                } else {
+                    $current_month_year = date('mY');
+                    $processed_data = $query->where('city', 'aktobe')->where('date', $current_month_year)->get()->toArray();
                 }
 
-                $complete_data = $query->orderby('date', 'desc')->get()->toArray();
-
-                foreach ($complete_data as &$value) {
+                foreach ($processed_data as &$value) {
                     $value['names'] = json_decode($value['names'], true);
                     $value['data'] = json_decode($value['data'], true);
                     $value['dates'] = json_decode($value['dates'], true);
                 }
-            } else {
-                $complete_data[0][0] = 'No data in schedules table';
             }
-        } else {
-            $complete_data[0][0] = 'No schedules table';
-            $available_links = '';
         }
 
 
-        return view('s', ['complete_data' => $complete_data[0], 'available_links' => $available_links]);
+        return view('s', ['processed_data' => $processed_data, 'available_links' => $available_links]);
     }
 
-    public function k_index()
+    public function k_import(Request $request)
     {
 
-        $complete_data = [];
+        $request->validate(
+            [
+                'file' => ['required', 'mimes:xlsx,xls,csv', 'max:2048'],
+            ],
+        );
+
+        $spreadsheet = IOFactory::load($request->file('file'));
+
+        $ExcelImport = new ExcelImport();
+
+        $processed_data = $ExcelImport->getKey($spreadsheet, $request);
+
+        return view('k_import', ['processed_data' => $processed_data]);
+    }
+
+    public function k_index(Request $request)
+    {
+
+        $processed_data = [];
 
         if (Schema::hasTable('keys')) {
+
+            $available_links = Key::select('created_at', 'id')->get();
+
             if (DB::table('keys')->count()) {
-                $key = Key::latest()->get()->toArray();
-                foreach ($key[0] as $v) {
-                    array_push($complete_data, json_decode($v, true));
+
+                $query = Key::query();
+
+                if (!empty($request->all())) {
+
+                    $query->where('id', $request->input('id'));
+
+                    $key = $query->get()->toArray();
+                } else {
+
+                    $key[0] = $query->latest('created_at')->first()->toArray();
                 }
-            } else {
-                $complete_data = 'No data in keys table';
+
+                foreach ($key[0] as $v) {
+                    array_push($processed_data, json_decode($v, true));
+                }
             }
-        } else {
-            $complete_data = 'No keys table';
         }
 
-        return view('k', ['complete_data' => $complete_data]);
+        return view('k', ['processed_data' => $processed_data, 'available_links' => $available_links]);
     }
 }
