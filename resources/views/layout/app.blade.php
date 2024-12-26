@@ -12,7 +12,7 @@
 
   <div class="wrap p-3">
 
-    @include('layout.head')
+    @include('layout.schedule_header')
 
     @yield('content')
 
