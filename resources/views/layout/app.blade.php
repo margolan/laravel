@@ -8,7 +8,7 @@
   <title>@yield('title')</title>
 </head>
 
-<body class="bg-gray-100 dark:bg-stone-800 dark:text-white">
+<body class="bg-gray-100 bg-gradient-to-r dark:from-teal-950  dark:via-rose-950 dark:to-cyan-950 dark:text-white">
 
   <div class="wrap p-3">
 
