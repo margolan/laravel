@@ -4,6 +4,8 @@
 
 @section('content')
 
+  @include('layout.schedule_header')
+
   @php
 
     // echo substr($processed_data['date'], 0, 2);

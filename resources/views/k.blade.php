@@ -4,6 +4,9 @@
 
 @section('content')
 
+  @include('layout.key_header')
+
+
   @php
 
     // echo '<hr>';

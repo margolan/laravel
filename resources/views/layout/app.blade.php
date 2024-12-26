@@ -12,8 +12,6 @@
 
   <div class="wrap p-3">
 
-    @include('layout.schedule_header')
-
     @yield('content')
 
   </div>
