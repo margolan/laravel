@@ -3,7 +3,8 @@
     <a href="{{ route('s_index') }}">График</a><span class="mx-3">|</span><a href="{{ route('k_index') }}">Ключи</a><span
       class="mx-3">|</span><a href="{{ route('s_import') }}">Загрузить
       график</a><span class="mx-3">|</span><a href="{{ route('k_import') }}">Загрузить
-      ключи</a><span class="mx-3">|</span><a href="{{ route('test') }}">test</a>
+      ключи</a><span class="mx-3">|</span><a href="{{ route('test') }}">test</a><span class="mx-3">|</span><a
+      href="{{ route('auth') }}">Авторизация</a>
   </div>
   <div class="right ">
     <div class="theme-toggle cursor-default">&#127761;</div>
