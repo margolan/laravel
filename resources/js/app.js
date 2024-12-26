@@ -17,10 +17,10 @@ if (document.querySelector('.theme-toggle')) {
   });
 }
 
-const savedTheme = localStorage.getItem('theme');
-if (savedTheme === 'dark') {
-  htmlElement.classList.add('dark');
-}
+// const savedTheme = localStorage.getItem('theme');
+// if (savedTheme === 'dark') {
+//   htmlElement.classList.add('dark');
+// }
 
 // ==================== Days Styles ====================
 
@@ -67,11 +67,28 @@ if (search) {
         window.scrollTo(0, found_cell.offsetTop - 180);
         cell.forEach(el => {
           if (el.getAttribute('row') == found_cell.getAttribute('row')) {
-            el.classList.remove('dark:text-white');
-            el.classList.add('dark:text-red-500');
+
+            el.classList.remove(...('bg-0 text-white font-normal').split(' '));
+            el.classList.add(...('bg-white text-black font-semibold').split(' '));
+
+            // el.classList.remove('hidden');
+            // el.classList.add('block');
+
+
+            // el.classList.remove('dark:text-white');
+            // el.classList.add('dark:text-red-500');
+
           } else {
-            el.classList.remove('dark:red-500');
-            el.classList.add('dark:text-white');
+
+            el.classList.remove(...('bg-white text-black font-semibold').split(' '))
+            el.classList.add(...('bg-0 text-white font-normal').split(' '));
+
+            // el.classList.remove('block');
+            // el.classList.add('hidden');
+
+
+            // el.classList.remove('dark:red-500');
+            // el.classList.add('dark:text-white');
           }
         })
       }
