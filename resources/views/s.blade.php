@@ -36,9 +36,14 @@
     <p>Не найден график работ для текущего месяца</p>
   @else
     @foreach ($processed_data as $depart)
-      <h1 class="p-3 my-3 text-2xl">{{ strtoupper($depart['depart']) }} / {{ ucfirst($depart['city']) }} /
-        {{ str_replace(substr($depart['date'], 2, 2), '/', $depart['date']) }}
-      </h1>
+      <div class="p-3 my-3 dark:text-stone-800 text-lg font-semibold">
+        <span class="bg-stone-200 px-8 rounded-md inline-flex -skew-x-12"><span
+            class="skew-x-12">{{ strtoupper($depart['depart']) }}</span></span>
+        <span class="bg-stone-200 px-8 rounded-md inline-flex -skew-x-12"><span
+            class="skew-x-12">{{ ucfirst($depart['city']) }}</span></span>
+        <span class="bg-stone-200 px-8 rounded-md inline-flex -skew-x-12"><span
+            class="skew-x-12">{{ str_replace(substr($depart['date'], 2, 2), '/', $depart['date']) }}</span></span>
+      </div>
       <div class="wrap w-full inline-flex">
         <div class="names_column"> <!-- names start -->
           <div
