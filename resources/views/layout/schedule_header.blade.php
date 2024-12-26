@@ -5,6 +5,6 @@
     </div>
   </div>
   <div>
-    <h2 class="pl-5 text-2xl font-serif">График</h2>
+    <a href="/s" class="pl-5 text-2xl font-serif">График</a>
   </div>
 </div>

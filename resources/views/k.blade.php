@@ -31,7 +31,7 @@
     <p>Нет загруженных ключей</p>
   @else
     <div class="wrap_search w-full">
-      <span class="found pr-2 inline-block absolute left-7 top-[124px] text-green-800 font-bold"></span>
+      <span class="found pr-2 inline-block absolute left-7 top-[190px] text-green-800 font-bold"></span>
       <input type="search"
         class="search w-full max-w-[500px] mt-9 dark:bg-gray-200 dark:text-black py-3 pl-14 rounded-2xl">
       <div class="scroll_up w-14 h-14 border-1 bg-white fixed bottom-5 right-5 shadow-3xl hidden cursor-pointer">
