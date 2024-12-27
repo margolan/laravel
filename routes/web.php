@@ -10,9 +10,9 @@ Route::get('/', function () {
   return view('welcome');
 })->name('welcome');
 
-Route::get('auth', function () {
-  return view('auth');
-})->name('auth');
+Route::get('login', function () {
+  return view('login');
+})->name('login');
 
 Route::get('s/import', function () {
   return view('s_import');
@@ -30,7 +30,7 @@ Route::post('s/import', [ExcelController::class, 's_import'])->name('s_import');
 
 Route::post('k/import', [ExcelController::class, 'k_import'])->name('k_import');
 
-Route::post('auth', [AuthController::class, 'auth'])->name('auth');
+Route::post('login', [AuthController::class, 'auth'])->name('login');
 
 
 

@@ -10,8 +10,20 @@
     </div>
   @endsession
 
+  @if (isset($auth))
+    @php
+      echo '<pre>';
+      print_r($auth);
+      echo '</pre>';
+    @endphp
+  @else
+    No Auth data
+  @endif
+
+
+
   <div class="py-5">
-    <form action="{{ route('auth') }}" method="post"
+    <form action="{{ route('login') }}" method="post"
       class="w-80 h-56 justify-center items-center rounded-lg border-1 flex flex-col dark:text-black">
       @csrf
       <input type="text" name="login" placeholder="Login" class="my-1 px-4 py-1 rounded-md">

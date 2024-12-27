@@ -12,6 +12,9 @@
 
   <div class="wrap p-3">
 
+    @if (Auth::check())
+      @include('layout.head')
+    @endif
     @yield('content')
 
   </div>
