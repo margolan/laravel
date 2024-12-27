@@ -10,7 +10,7 @@
 
 <body class="bg-gray-100 bg-gradient-to-r dark:from-teal-950  dark:via-rose-950 dark:to-cyan-950 dark:text-white">
 
-  <div class="wrap p-3">
+  <div class="wrap h-screen px-3">
 
     @if (Auth::check())
       @include('layout.head')

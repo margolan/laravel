@@ -4,13 +4,13 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ExcelController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
-use PharIo\Manifest\AuthorCollection;
+// use PharIo\Manifest\AuthorCollection;
+
+// Route::get('/', function () {
+//   return view('welcome');
+// })->name('welcome');
 
 Route::get('/', function () {
-  return view('welcome');
-})->name('welcome');
-
-Route::get('login', function () {
   return view('login');
 })->name('login');
 
@@ -30,7 +30,7 @@ Route::post('s/import', [ExcelController::class, 's_import'])->name('s_import');
 
 Route::post('k/import', [ExcelController::class, 'k_import'])->name('k_import');
 
-Route::post('login', [AuthController::class, 'auth'])->name('login');
+Route::post('/', [AuthController::class, 'auth'])->name('login');
 
 
 

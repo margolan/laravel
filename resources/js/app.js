@@ -94,3 +94,12 @@ if (document.querySelector('#file-upload')) {
     document.querySelector('.custom-label').textContent = fileName;
   });
 }
+
+// ==================== Burger Menu ====================
+
+document.querySelector('.burger')?.addEventListener('click', function () {
+  this.classList.toggle('h-16');
+  this.classList.toggle('bg-stone-900');
+  document.querySelector('.icon_burger').classList.toggle('hidden');
+  document.querySelector('.icon_cross').classList.toggle('hidden');
+});
