@@ -12,7 +12,7 @@ export default {
         '1': '1px'
       },
       boxShadow: {
-        '3xl': '0px 0px 10px #ffffff88',
+        '3xl': '5px 5px 10px',
       }
     },
   },

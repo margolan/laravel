@@ -103,3 +103,8 @@ document.querySelector('.burger')?.addEventListener('click', function () {
   document.querySelector('.icon_burger').classList.toggle('hidden');
   document.querySelector('.icon_cross').classList.toggle('hidden');
 });
+
+// ==================== Auth ====================
+
+document.querySelector('.login')?.addEventListener('click', function () { document.querySelector('.auth_form').classList.toggle('-left-72') })
+document.querySelector('.register')?.addEventListener('click', function () { document.querySelector('.auth_form').classList.toggle('-left-72') })

@@ -14,24 +14,27 @@
     // echo '</pre>';
   @endphp
 
-  @if ($available_links->isEmpty())
-    <p>Нет графиков работ для отображения</p>
-  @else
-    <div class="links my-4 flex flex-wrap">
-      @foreach ($available_links as $city => $dates)
-        <div class="links__group my-1 border-1 border-stone-400 rounded-lg flex">
-          <div class="links__group__city w-min bg-stone-900 rounded-l-lg px-3 py-1">{{ ucfirst($city) }}:</div>
-          <div class="links__group__date rounded-r-lg px-3 py-1">
-            @foreach ($dates->pluck('date') as $date)
-              <a href="?city={{ $city }}&date={{ $date }}"
-                class="hover:text-blue-300">{{ str_replace(substr($date, 2, 2), '/', $date) }}</a>
-            @endforeach
+  @if (isset($available_links))
+    @if ($available_links->isEmpty())
+      <p>Нет графиков работ для отображения</p>
+    @else
+      <div class="links my-4 flex flex-wrap">
+        @foreach ($available_links as $city => $dates)
+          <div class="links__group my-1 border-1 border-stone-400 rounded-lg flex">
+            <div class="links__group__city w-min bg-stone-900 rounded-l-lg px-3 py-1">{{ ucfirst($city) }}:</div>
+            <div class="links__group__date rounded-r-lg px-3 py-1">
+              @foreach ($dates->pluck('date') as $date)
+                <a href="?city={{ $city }}&date={{ $date }}"
+                  class="hover:text-blue-300">{{ str_replace(substr($date, 2, 2), '/', $date) }}</a>
+              @endforeach
+            </div>
           </div>
-        </div>
-        <div class="spacer w-5"></div>
-      @endforeach
-    </div>
+          <div class="spacer w-5"></div>
+        @endforeach
+      </div>
+    @endif
   @endif
+
 
 
   @if (empty($processed_data))

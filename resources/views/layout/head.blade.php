@@ -41,6 +41,13 @@
       </li>
       <li><a href="{{ route('k_import') }}" class="block sm:inline px-4 py-2 bg-stone-900 hover:bg-stone-800">UL
           Key</a> </li>
+      <li class="sm:block hidden">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" class="w-4 h-4 current-fill"
+          viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M12 5v0m0 7v0m0 7v0m0-13a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
+        </svg>
+      </li>
       <li><a href="{{ route('test') }}" class="block sm:inline px-4 py-2 bg-stone-900 hover:bg-stone-800">Test</a>
       </li>
       <li class="sm:block hidden">
@@ -50,7 +57,8 @@
             d="M12 5v0m0 7v0m0 7v0m0-13a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
         </svg>
       </li>
-      <li><a href="{{ route('login') }}" class="block sm:inline px-4 py-2 bg-stone-900 hover:bg-stone-800">Login</a>
+      <li>
+        <a href="{{ route('logout') }}" class="block sm:inline px-4 py-2 bg-stone-900 hover:bg-stone-800">Logout</a>
       </li>
     </ul>
   </div>

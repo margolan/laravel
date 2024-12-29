@@ -24,6 +24,41 @@ class AuthController extends Controller
 
         $auth = Auth::id();
 
-        return view('login', ['processed_data' => $processed_data, 'auth' => $auth]);
+        return redirect()->back();
+
+        // return view('/', ['processed_data' => $processed_data, 'auth' => $auth]);
+    }
+
+    public function register(Request $request)
+    {
+
+        $inputs = $request->validate(
+            [
+                'login' => ['required', 'min:3', 'alpha_num', 'unique:users,login'],
+                'email' => ['required', 'email', 'unique:users,email'],
+                'password' => ['required', 'min:8', 'max:255', 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$/', 'confirmed']
+            ],
+            [
+                'login.required' => 'Поле логин обязательное',
+                'login.min' => 'Минимальное значение логина 3 символа',
+                'login.alpha_num' => 'Только латинские символы и цифры',
+                'login.unique' => 'Логин уже занят',
+                'email.required' => 'Поле email обязательное',
+                'email.unique' => 'Email уже занят',
+                'password.required' => 'Пароль обязательное',
+                'password.min' => 'Минимальная длина пароля 8 символов',
+                'password.max' => 'Максимальная длина пароля 255 символов',
+                'password.regex' => 'Пароль должен содержать минимум одну строчную букву, одну заглавную букву, одну цифру и один специальный символ',
+            ]
+        );
+
+        $processed_data = [];
+    }
+
+    public function logout()
+    {
+        Auth::logout();
+
+        return redirect()->back();
     }
 }
