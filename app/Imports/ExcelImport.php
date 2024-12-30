@@ -5,16 +5,64 @@ namespace App\Imports;
 use App\Models\Key;
 use App\Models\Schedule;
 use App\Models\Test;
+use Maatwebsite\Excel\Concerns\WithLimit;
 
 class ExcelImport
 {
 
-    public function importTest($spreadsheet)
+    public function importTest($request, $data)
     {
 
+        $sheet = $data->getActiveSheet();
+
+        foreach ($sheet->getRowIterator() as $rowIndex => $rowValue) {
+            $cellIterator = $rowValue->getCellIterator();
+            $cellIterator->setIterateOnlyExistingCells(true);
+            foreach ($cellIterator as $cell) {
+                if ($cell->getValue() === 'сервис инженер') {
+                    $processed_data['anchor'][] = $rowIndex;
+                }
+            }
+        }
+
+        if (empty($processed_data['anchor'])) {
+            return redirect()->back()->with('error', "Слово 'сервис инженер' не найдено");
+        }
+
+        foreach ($processed_data['anchor'] as $index) {
+            $processed_data['names'][] = $sheet->getCell('B' . $index)->getValue();
+            // foreach()
+        }
+        $lol = [];
+        // $lol = $sheet->getCell('E5')->getValue();
+        $lol = cal_days_in_month(CAL_GREGORIAN, $request->month, $request->year);
+
+        // return [$coord, $anchor, $color, $data];
+        return [$lol, $processed_data, $data];
 
 
-        // return $data;
+
+
+
+
+
+
+
+        // foreach ($sheet->getRowIterator() as $rowIndex => $rowValue) {
+        //     $cellIterator = $rowValue->getCellIterator();
+
+        //     foreach ($cellIterator as $cell) {
+        //         if ($cell->getValue() === 'сервис инженер') {
+        //             $processed_data['anchor'][] = $rowIndex;
+        //             // $style = $sheet->getStyle($cell->getCoordinate());
+        //             // $coord = $cell->getValue($cell->getCoordinate());
+        //             // $color[] =  $style->getFill()->getStartColor()->getARGB();
+        //         }
+        //     }
+        // }
+
+
+
     }
 
 
@@ -43,67 +91,75 @@ class ExcelImport
             $spreadsheet = $sheet->toArray();
         }
 
-        $processed_data = ['names' => [], 'data' => [], 'dates' => [], 'month' => [], 'var1' => [], 'var2' => [], 'var3' => [], 'var4' => [], 'var5' => []];
+        $processed_data = $spreadsheet;
 
-        $anchor = [];
+        // $processed_data = ['names' => [], 'data' => [], 'dates' => [], 'month' => [], 'var1' => [], 'var2' => [], 'var3' => [], 'var4' => [], 'var5' => []];
 
-        foreach ($spreadsheet as $k => $v) {
-            foreach ($v as $v1) {
-                if ($v1 == 'сервис инженер') {
-                    array_push($anchor, $k);
-                    array_push($processed_data['names'], $spreadsheet[$k][1]);
-                }
-            }
-        }
+        // $anchor = [];
+
+        // foreach ($spreadsheet as $k => $v) {
+        //     foreach ($v as $v1) {
+        //         if ($v1 == 'сервис инженер') {
+        //             array_push($anchor, $k);
+        //             array_push($processed_data['names'], $spreadsheet[$k][1]);
+        //         }
+        //     }
+        // }
+
+        // if (empty($anchor)) {
+        //     return $dataToStore[] = 'Сервис инженеры не найдены';
+        // }
 
 
-        array_push($processed_data['dates'], array_values(array_filter($spreadsheet[$anchor[0] - 2]))); // Days
-        array_push($processed_data['dates'], array_values(array_filter($spreadsheet[$anchor[0] - 1]))); // Dates
+        // array_push($processed_data['dates'], array_values(array_filter($spreadsheet[$anchor[0] - 2]))); // Days
+        // array_push($processed_data['dates'], array_values(array_filter($spreadsheet[$anchor[0] - 1]))); // Dates
 
-        for ($a = 0; $a < count($anchor); $a++) {
-            $temp = [];
-            for ($i = 0; $i < count($processed_data['dates'][0]); $i++) {
+        // for ($a = 0; $a < count($anchor); $a++) {
+        //     $temp = [];
+        //     for ($i = 0; $i < count($processed_data['dates'][0]); $i++) {
 
-                $cellValue = $spreadsheet[$anchor[$a]][$i + 4];
+        //         $cellValue = $spreadsheet[$anchor[$a]][$i + 4];
 
-                if (preg_match('/\p{Cyrillic}/u', $cellValue)) {
-                    if (preg_match('/[Оо]/u', $cellValue)) {
-                        array_push($temp, 'O');
-                    } elseif (preg_match('/[Вв]/u', $cellValue)) {
-                        array_push($temp, '-');
-                    }
-                } elseif (preg_match('/\p{Latin}/u', $cellValue)) {
-                    if (preg_match('/[Oo]/', $cellValue)) {
-                        array_push($temp, 'O');
-                    } elseif (preg_match('/[Bb]/', $cellValue)) {
-                        array_push($temp, '-');
-                    }
-                } elseif ($cellValue == '8:00' && $spreadsheet[$anchor[$a] + 1][$i + 4] == '9:00') {
-                    array_push($temp, '+');
-                } elseif ($cellValue == '8:00' && $spreadsheet[$anchor[$a] + 1][$i + 4] == '12:00') {
-                    array_push($temp, 'D');
-                } else {
-                    array_push($temp, $cellValue);
-                }
-            }
-            array_push($processed_data['data'], $temp);
-        }
+        //         if (preg_match('/\p{Cyrillic}/u', $cellValue)) {
+        //             if (preg_match('/[Оо]/u', $cellValue)) {
+        //                 array_push($temp, 'O');
+        //             } elseif (preg_match('/[Вв]/u', $cellValue)) {
+        //                 array_push($temp, '-');
+        //             }
+        //         } elseif (preg_match('/\p{Latin}/u', $cellValue)) {
+        //             if (preg_match('/[Oo]/', $cellValue)) {
+        //                 array_push($temp, 'O');
+        //             } elseif (preg_match('/[Bb]/', $cellValue)) {
+        //                 array_push($temp, '-');
+        //             }
+        //         } elseif ($cellValue == '8:00' && $spreadsheet[$anchor[$a] + 1][$i + 4] == '9:00') {
+        //             array_push($temp, '+');
+        //         } elseif ($cellValue == '8:00' && $spreadsheet[$anchor[$a] + 1][$i + 4] == '12:00') {
+        //             array_push($temp, 'D');
+        //         } else {
+        //             array_push($temp, $cellValue);
+        //         }
+        //     }
+        //     array_push($processed_data['data'], $temp);
+        // }
 
-        $dataToStore = [];
+        // $dataToStore = [];
 
-        foreach ($processed_data as $key => $value) {
-            if (!empty($value)) {
-                $dataToStore[$key] = json_encode($value, JSON_UNESCAPED_UNICODE);
-            }
-        }
+        // foreach ($processed_data as $key => $value) {
+        //     if (!empty($value)) {
+        //         $dataToStore[$key] = json_encode($value, JSON_UNESCAPED_UNICODE);
+        //     }
+        // }
 
-        $dataToStore['date'] = $request->input('month') . $request->input('year');
-        $dataToStore['city'] = $request->input('city');
-        $dataToStore['depart'] = $request->input('depart');
+        // $dataToStore['date'] = $request->input('month') . $request->input('year');
+        // $dataToStore['city'] = $request->input('city');
+        // $dataToStore['depart'] = $request->input('depart');
 
-        Schedule::create($dataToStore);
+        // Schedule::create($dataToStore);
 
-        return $dataToStore;
+        // return $dataToStore;
+
+        return $processed_data;
     }
 
     public function getKey($spreadsheet)

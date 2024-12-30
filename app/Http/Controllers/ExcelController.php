@@ -64,9 +64,11 @@ class ExcelController extends Controller
 
         $ExcelImport = new ExcelImport();
 
-        $processed_data = $ExcelImport->getSchedule($spreadsheet, $request);
+        // $processed_data = $ExcelImport->getSchedule($spreadsheet, $request);
+        $processed_data = $ExcelImport->importTest($request, $spreadsheet);
 
-        return view('s_import', ['processed_data' => $processed_data]);
+        // return view('s_import', ['processed_data' => $processed_data]);
+        return view('test', ['processed_data' => $processed_data]);
     }
 
     public function s_index(Request $request)
