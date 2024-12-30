@@ -19,26 +19,50 @@ class ExcelImport
             $cellIterator = $rowValue->getCellIterator();
             $cellIterator->setIterateOnlyExistingCells(true);
             foreach ($cellIterator as $cell) {
-                if ($cell->getValue() === 'сервис инженер') {
-                    $processed_data['anchor'][] = $rowIndex;
-                }
+                $processed_data['data'][] = $cell->getValue();
+            }
+            if ($cell->getValue() != 'сервис инженер') {
+                array_pop($processed_data['data']);
             }
         }
 
-        if (empty($processed_data['anchor'])) {
-            return redirect()->back()->with('error', "Слово 'сервис инженер' не найдено");
-        }
+        // if (empty($processed_data['anchor'])) {
+        //     return redirect()->back()->with('error', "Слово 'сервис инженер' не найдено");
+        // }
 
-        foreach ($processed_data['anchor'] as $index) {
-            $processed_data['names'][] = $sheet->getCell('B' . $index)->getValue();
-            // foreach()
-        }
+        // foreach($sheet->getRowIterator() as $rowIndex => $value) {
+        //     $cellIterator = $value->$cellIterator();
+        //     $cellIterator->setIterateOnlyExistingCells(true);
+        //     foreach($cellIterator as $cell) {
+
+        //     }
+        // }
+
+
+        // foreach ($processed_data['anchor'] as $index) {
+
+        //     $row = $sheet->getRowIterator($index, ($index + 1))->current();
+        //     $cellIterator = $row->getCellIterator();
+        //     $cellIterator->setIterateOnlyExistingCells(true);
+
+        //     $cellIndexCount = 0;
+
+        //     foreach ($cellIterator as $cellValue) {
+        //         $cellIndexCount++;
+        //         // if ($cellIndexCount > 4 && $cellIndexCount < (cal_days_in_month(CAL_GREGORIAN, $request->month, $request->year) + 5)) {
+        //         $processed_data[$sheet->getCell('B' . $index)->getValue()]['data'][] = $cellValue->getValue();
+        //         // $processed_data[$sheet->getCell('B' . $index)->getValue()]['data_correct'][] = $cellValue->getValue();
+        //         // }
+        //     }
+        // }
+
+
         $lol = [];
         // $lol = $sheet->getCell('E5')->getValue();
         $lol = cal_days_in_month(CAL_GREGORIAN, $request->month, $request->year);
 
         // return [$coord, $anchor, $color, $data];
-        return [$lol, $processed_data, $data];
+        return [$lol, $processed_data];
 
 
 
