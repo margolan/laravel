@@ -18,17 +18,20 @@ class ExcelImport
         foreach ($sheet->getRowIterator() as $rowIndex => $rowValue) {
             $cellIterator = $rowValue->getCellIterator();
             $cellIterator->setIterateOnlyExistingCells(true);
+
             foreach ($cellIterator as $cell) {
-                $processed_data['data'][] = $cell->getValue();
-            }
-            if ($cell->getValue() != 'сервис инженер') {
-                array_pop($processed_data['data']);
+                if ($cell->getValue() === 'сервис инженер') {
+                    $processed_data['anchor'][] = $rowIndex;
+                    // $style = $sheet->getStyle($cell->getCoordinate());
+                    // $coord = $cell->getValue($cell->getCoordinate());
+                    // $color[] =  $style->getFill()->getStartColor()->getARGB();
+                }
             }
         }
 
-        // if (empty($processed_data['anchor'])) {
-        //     return redirect()->back()->with('error', "Слово 'сервис инженер' не найдено");
-        // }
+        if (!isset($processed_data)) {
+            $processed_data['error'] = 'Error!';
+        }
 
         // foreach($sheet->getRowIterator() as $rowIndex => $value) {
         //     $cellIterator = $value->$cellIterator();
@@ -39,27 +42,45 @@ class ExcelImport
         // }
 
 
-        // foreach ($processed_data['anchor'] as $index) {
+        foreach ($processed_data['anchor'] as $index) {
 
-        //     $row = $sheet->getRowIterator($index, ($index + 1))->current();
-        //     $cellIterator = $row->getCellIterator();
-        //     $cellIterator->setIterateOnlyExistingCells(true);
+            $row = $sheet->getRowIterator($index, $index)->current();
+            $cellIterator = $row->getCellIterator();
+            $cellIterator->setIterateOnlyExistingCells(true);
 
-        //     $cellIndexCount = 0;
+            $cellIndexCount = 0;
 
-        //     foreach ($cellIterator as $cellValue) {
-        //         $cellIndexCount++;
-        //         // if ($cellIndexCount > 4 && $cellIndexCount < (cal_days_in_month(CAL_GREGORIAN, $request->month, $request->year) + 5)) {
-        //         $processed_data[$sheet->getCell('B' . $index)->getValue()]['data'][] = $cellValue->getValue();
-        //         // $processed_data[$sheet->getCell('B' . $index)->getValue()]['data_correct'][] = $cellValue->getValue();
-        //         // }
-        //     }
-        // }
+            foreach ($cellIterator as $cellValue) {
+                $cellIndexCount++;
+                if ($cellIndexCount > 4 && $cellIndexCount < (cal_days_in_month(CAL_GREGORIAN, $request->month, $request->year) + 5)) {
+
+                    $cellColor = $sheet->getStyle($cellValue->getCoordinate())->getFill()->getStartColor()->getRGB();
+
+
+                    if ($cellColor === 'FF0000') {
+                        $processed_data['data'][$sheet->getCell('B' . $index)->getValue()][] = 'K ' . $cellColor;
+                    } else if (str_contains($cellValue->getValue(), '=IF')) {
+                        $processed_data['data'][$sheet->getCell('B' . $index)->getValue()][] = '+ ' . $cellColor;
+                    } else if (str_contains($cellValue->getValue(), '0.33')) {
+                        $processed_data['data'][$sheet->getCell('B' . $index)->getValue()][] = 'D ' . $cellColor;
+                    } else if (preg_match('/\p{Cyrillic}/u', $cellValue) && preg_match('/[Оо]/u', $cellValue)) {
+                        $processed_data['data'][$sheet->getCell('B' . $index)->getValue()][] = 'O ' . $cellColor;
+                    } else if (preg_match('/\p{Latin}/u', $cellValue) && preg_match('/[Oo]/u', $cellValue)) {
+                        $processed_data['data'][$sheet->getCell('B' . $index)->getValue()][] = 'O ' . $cellColor;
+                    } else if (str_contains($cellValue->getValue(), ' ') || str_contains($cellValue->getValue(), null)) {
+                        $processed_data['data'][$sheet->getCell('B' . $index)->getValue()][] = '- ' . $cellColor;
+                    } else {
+                        $processed_data['data'][$sheet->getCell('B' . $index)->getValue()][] = $cellValue->getValue();
+                    }
+                }
+            }
+        }
 
 
         $lol = [];
-        // $lol = $sheet->getCell('E5')->getValue();
-        $lol = cal_days_in_month(CAL_GREGORIAN, $request->month, $request->year);
+        // $lol = $sheet->getCell('I5')->getValue();
+        $lol = $sheet->getStyle('AF33')->getFill()->getStartColor()->getARGB();
+        // $lol = cal_days_in_month(CAL_GREGORIAN, $request->month, $request->year);
 
         // return [$coord, $anchor, $color, $data];
         return [$lol, $processed_data];
