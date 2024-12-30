@@ -22,25 +22,13 @@ class ExcelImport
             foreach ($cellIterator as $cell) {
                 if ($cell->getValue() === 'сервис инженер') {
                     $processed_data['anchor'][] = $rowIndex;
-                    // $style = $sheet->getStyle($cell->getCoordinate());
-                    // $coord = $cell->getValue($cell->getCoordinate());
-                    // $color[] =  $style->getFill()->getStartColor()->getARGB();
                 }
             }
         }
 
         if (!isset($processed_data)) {
-            $processed_data['error'] = 'Error!';
+            return $processed_data['error'] = 'Error!';
         }
-
-        // foreach($sheet->getRowIterator() as $rowIndex => $value) {
-        //     $cellIterator = $value->$cellIterator();
-        //     $cellIterator->setIterateOnlyExistingCells(true);
-        //     foreach($cellIterator as $cell) {
-
-        //     }
-        // }
-
 
         foreach ($processed_data['anchor'] as $index) {
 
