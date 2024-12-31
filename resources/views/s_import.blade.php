@@ -64,19 +64,6 @@
     </div>
   </form>
 
-  @if ($errors->any())
-    @foreach ($errors->all() as $error)
-      {{ $error }}
-    @endforeach
-  @endif
-
-  @php
-
-  @endphp
-
-  @if (session('error'))
-    <p class="p-3">{{ session('error') }}</p>
-  @endif
   @if (isset($processed_data))
     @php
       echo '<pre>';

@@ -12,13 +12,6 @@
     // print_r($processed_data);
     // echo '</pre>';
   @endphp
-  @if (session('status'))
-    <div class="status w-max p-1 absolute right-2 top-2 border-1 rounded-full flex justify-center text-sm font-semibold">
-      <div class="w-max pl-5 p-1 bg-stone-300 text-emerald-800 rounded-full flex">{{ session('status') }}
-        <div class="cross w-6 ml-2 cursor-pointer rounded-full bg-red-600 text-white flex justify-center">X</div>
-      </div>
-    </div>
-  @endif
 
   @if (isset($available_links))
     @if ($available_links->isEmpty())
@@ -76,7 +69,7 @@
           <div class="data_column w-min overflow-x-auto rounded-r-lg font-semibold">
             <div class="dates_row">
               <div class="day_row inline-flex dark:bg-gray-200 dark:text-gray-700">
-                @foreach ($depart['dates'][0] as $index => $day)
+                @foreach ($depart['dates']['day'] as $index => $day)
                   <div
                     class="h-8 flex justify-center items-center cell {{ $index == ltrim(date('d'), '0') - 1 ? 'w-9 text-red-500 bg-gray-200 shadow-red-500 shadow-lg border-r-1 border-l-1 border-red-400 today' : 'w-8 border-l-1 border-white' }}">
                     {{ $day }} <!-- days -->
@@ -84,7 +77,7 @@
                 @endforeach
               </div>
               <div class="date_row inline-flex dark:bg-gray-200 dark:text-gray-700">
-                @foreach ($depart['dates'][1] as $index => $date)
+                @foreach ($depart['dates']['date'] as $index => $date)
                   <div
                     class="h-8 flex justify-center items-center cell {{ $index == ltrim(date('d'), '0') - 1 ? 'w-9 text-red-500 bg-gray-200 shadow-red-500 shadow-lg border-r-1 border-l-1 border-red-400 today' : 'w-8 border-l-1 border-white' }}">
                     {{ $date }} <!-- dates -->

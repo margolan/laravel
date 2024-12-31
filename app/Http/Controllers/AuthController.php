@@ -6,27 +6,21 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\Models\Schedule;
+use App\Models\Key;
 
 class AuthController extends Controller
 {
     public function auth(Request $request)
     {
 
-        $processed_data = [];
-
         $user = User::where('login', $request->login)->first();
         if ($user && Hash::check($request->password, $user->password)) {
             Auth::login($user);
-            $processed_data['pass'] = 'Auth Success!';
+            return redirect()->back()->with('status', 'Успешная авторизация');
         } else {
-            $processed_data['wrong'] = 'User not fount or password mismatch!';
+            return redirect()->back()->with('status', 'Неудачная авторизация. Проверьте логин и\или пароль');
         }
-
-        $auth = Auth::id();
-
-        return redirect()->back();
-
-        // return view('/', ['processed_data' => $processed_data, 'auth' => $auth]);
     }
 
     public function register(Request $request)
@@ -53,6 +47,20 @@ class AuthController extends Controller
         );
 
         $processed_data = [];
+    }
+
+    public function admin()
+    {
+        if (Auth::check()) {
+
+            $data['schedule'] = Schedule::select('id', 'city', 'depart', 'date')->get();
+            
+            $data['key'] = Key::select('id', 'created_at')->get();
+
+            return view('admin', ['data' => $data]);
+        } else {
+            return redirect()->back()->with('status', 'Вы не авторизованы');
+        }
     }
 
     public function logout()

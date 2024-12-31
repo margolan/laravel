@@ -19,24 +19,32 @@ class ExcelImport
 
         $sheet = $data->getActiveSheet();
 
+        function getCellText($cell) { // checkin for rich text
+            $text = $cell->getValue();
+            if ($text instanceof \PhpOffice\PhpSpreadsheet\RichText\RichText) {
+                return $text->getPlainText();
+            }
+            return $text;
+        }
+
         foreach ($sheet->getRowIterator() as $rowIndex => $rowValue) { // checking and collecting anchors by keywords
             $cellIterator = $rowValue->getCellIterator();
             $cellIterator->setIterateOnlyExistingCells(true);
 
             foreach ($cellIterator as $cell) {
-                if ($cell->getValue() === 'сервис инженер') {
-                    $anchor[] = $rowIndex;
+                if (getCellText($cell) === 'сервис инженер') {
+                    $processed_data['anchor'][] = $rowIndex;
                 }
             }
         }
 
-        if (!isset($anchor)) { // return if no anchors found
-            return $processed_data['error'] = "Сервис инженеры не найдены. Проверьте таблицу на наличие записи 'сервис инженер'";
+        if (!isset($processed_data['anchor'])) { // return if no anchors found
+            return redirect()->back()->with('status', "Сервис инженеры не найдены. Проверьте таблицу на наличие записи 'сервис инженер'");
         }
 
-        foreach ($anchor as $index => $value) {
+        foreach ($processed_data['anchor'] as $index => $value) {
 
-            $processed_data['names'][] = $sheet->getCell('B' . $value)->getValue(); // collecting names
+            $processed_data['names'][] = getCellText($sheet->getCell('B' . $value));
 
             $row = $sheet->getRowIterator($value, $value)->current();
             $cellIterator = $row->getCellIterator();
@@ -89,6 +97,8 @@ class ExcelImport
         Schedule::create($dataToStore);
 
         return $processed_data;
+
+        // return $sheet->getCell('B19')->getValue()->getPlainText();
     }
 
     // public function getSchedule($data, $request)

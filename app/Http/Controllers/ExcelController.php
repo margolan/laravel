@@ -43,6 +43,21 @@ class ExcelController extends Controller
             if ($record) {
                 $record->delete();
                 return redirect()->back()->with('status', 'Запись успешно удалена');
+            } else {
+                return redirect()->back()->with('status', 'Таблица не найдена');
+            }
+        } else {
+            return redirect()->back()->with('status', 'Вы не авторизованы для подобных действий');
+        }
+    }
+
+    public function k_delete(Request $request)
+    {
+        if (Auth::check()) {
+            $record = Key::find($request->id);
+            if ($record) {
+                $record->delete();
+                return redirect()->back()->with('status', 'Запись успешно удалена');
             }
         } else {
             return redirect()->back()->with('status', 'Вы не авторизованы для подобных действий');

@@ -24,6 +24,8 @@ Route::post('k/import', [ExcelController::class, 'k_import'])->name('k_import');
 
 Route::get('s/delete', [ExcelController::class, 's_delete'])->name('s_delete');
 
+Route::get('k/delete', [ExcelController::class, 'k_delete'])->name('k_delete');
+
 // ========================= Authorization =========================
 
 Route::get('/', function () {
@@ -36,7 +38,10 @@ Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::get('register', [AuthController::class, 'register'])->name('register');
 
+Route::get('admin', [AuthController::class, 'admin'])->middleware('auth')->name('admin');
+
 // ========================= Test =========================
 
 Route::get('/test', [ExcelController::class, 'getDataTest'])->middleware('auth')->name('test');
 Route::post('/test', [ExcelController::class, 'getDataTest'])->middleware('auth')->name('test');
+
