@@ -10,8 +10,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
 use PhpOffice\PhpSpreadsheet\IOFactory;
-
-use function Laravel\Prompts\table;
+use Illuminate\Support\Facades\Auth;
 
 class ExcelController extends Controller
 {
@@ -36,6 +35,19 @@ class ExcelController extends Controller
         return view('test', ['data' => $data, 'available_links' => $available_links, 'requests' => $requests]);
     }
 
+
+    public function s_delete(Request $request)
+    {
+        if (Auth::check()) {
+            $record = Schedule::find($request->id);
+            if ($record) {
+                $record->delete();
+                return redirect()->back()->with('status', 'Запись успешно удалена');
+            }
+        } else {
+            return redirect()->back()->with('status', 'Вы не авторизованы для подобных действий');
+        }
+    }
 
     public function s_import(Request $request)
     {
@@ -64,11 +76,11 @@ class ExcelController extends Controller
 
         $ExcelImport = new ExcelImport();
 
-        // $processed_data = $ExcelImport->getSchedule($spreadsheet, $request);
-        $processed_data = $ExcelImport->importTest($request, $spreadsheet);
+        $processed_data = $ExcelImport->getSchedule($spreadsheet, $request);
+        // $processed_data = $ExcelImport->importTest($request, $spreadsheet);
 
-        // return view('s_import', ['processed_data' => $processed_data]);
-        return view('test', ['processed_data' => $processed_data]);
+        return view('s_import', ['processed_data' => $processed_data]);
+        // return view('test', ['processed_data' => $processed_data]);
     }
 
     public function s_index(Request $request)

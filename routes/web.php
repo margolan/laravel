@@ -22,6 +22,8 @@ Route::post('s/import', [ExcelController::class, 's_import'])->name('s_import');
 
 Route::post('k/import', [ExcelController::class, 'k_import'])->name('k_import');
 
+Route::get('s/delete', [ExcelController::class, 's_delete'])->name('s_delete');
+
 // ========================= Authorization =========================
 
 Route::get('/', function () {

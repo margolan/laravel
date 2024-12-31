@@ -28,9 +28,10 @@ const cell = document.querySelectorAll('.cell');
 
 const cellStyle = {
   "+": "dark:text-orange-500 font-bold",
-  "-": "dark:text-purple-500 font-bold",
+  // "-": "dark:text-purple-500 font-bold",
   "D": "text-sm dark:text-orange-500",
   "O": "text-sm dark:text-gray-500 dark:bg-[url('/assets/cell_bg.png')]",
+  "K": "text-sm dark:text-red-500 dark:bg-[url('/assets/cell_bg.png')]",
 };
 
 cell.forEach(e => {
@@ -108,3 +109,7 @@ document.querySelector('.burger')?.addEventListener('click', function () {
 
 document.querySelector('.login')?.addEventListener('click', function () { document.querySelector('.auth_form').classList.toggle('-left-72') })
 document.querySelector('.register')?.addEventListener('click', function () { document.querySelector('.auth_form').classList.toggle('-left-72') })
+
+// ==================== Session Status ====================
+
+document.querySelector('.cross')?.addEventListener('click', function () { document.querySelector('.status').classList.add('hidden') })

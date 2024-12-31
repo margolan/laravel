@@ -5,6 +5,6 @@
     </div>
   </div>
   <div>
-    <a href="/k" class="pl-5 text-2xl font-serif">Ключи</a>
+    <a href="/" class="pl-5 text-2xl font-serif">Ключи</a>
   </div>
 </div>
