@@ -48,10 +48,6 @@
               class="skew-x-12">{{ ucfirst($depart['city']) }}</span></span>
           <span class="bg-stone-200 px-6 mx-1 rounded-md inline-flex -skew-x-12"><span
               class="skew-x-12">{{ str_replace(substr($depart['date'], 2, 2), '/', $depart['date']) }}</span></span>
-          @if (Auth::check())
-            <span class="w-6 h-6 border-1 inline-flex justify-center items-center text-white rounded-full text-sm font-semibold"><a
-                href="{{ route('s_delete') }}?id={{ $depart['id'] }}" class="w-5 h-5 flex justify-center items-center bg-red-600 rounded-full" title="Удалить запись">X</a></span>
-          @endif
         </div>
         <div class="w-full inline-flex">
           <div class="names_column"> <!-- names -->

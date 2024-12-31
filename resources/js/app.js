@@ -87,15 +87,6 @@ if (search) {
 
 }
 
-// ==================== Import ====================
-
-if (document.querySelector('#file-upload')) {
-  document.querySelector('#file-upload').addEventListener('change', function () {
-    const fileName = this.files[0]?.name || 'Файл не выбран';
-    document.querySelector('.custom-label').textContent = fileName;
-  });
-}
-
 // ==================== Burger Menu ====================
 
 document.querySelector('.burger')?.addEventListener('click', function () {
@@ -113,3 +104,4 @@ document.querySelector('.register')?.addEventListener('click', function () { doc
 // ==================== Session Status ====================
 
 document.querySelector('.cross')?.addEventListener('click', function () { document.querySelector('.status').classList.add('hidden') })
+document.querySelector('.cross') ? setTimeout(() => { document.querySelector('.status').classList.add('hidden') }, 5000) : '';

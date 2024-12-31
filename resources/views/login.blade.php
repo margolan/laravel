@@ -50,21 +50,7 @@
         </div>
       </div>
     @endif
-
-
-    @if (isset($processed_data))
-      <div class="pt-5">
-        @if (empty($processed_data))
-          No data
-        @else
-          @php
-            echo '<pre>';
-            print_r($processed_data);
-            echo '</pre>';
-          @endphp
-      </div>
-    @endif
   </div>
-  @endif
+
 
 @endsection

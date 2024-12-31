@@ -6,13 +6,13 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 
 
-Route::get('s/import', function () {
-  return view('s_import');
-})->name('s_import');
+// Route::get('s/import', function () {
+//   return view('s_import');
+// })->name('s_import');
 
-Route::get('k/import', function () {
-  return view('k_import');
-})->name('k_import');
+// Route::get('k/import', function () {
+//   return view('k_import');
+// })->name('k_import');
 
 Route::get('s', [ExcelController::class, 's_index'])->name('s_index');
 
@@ -28,9 +28,9 @@ Route::get('k/delete', [ExcelController::class, 'k_delete'])->name('k_delete');
 
 // ========================= Authorization =========================
 
-Route::get('/', function () {
-  return view('login');
-})->name('login');
+// Route::get('/', function () {
+//   return view('login');
+// })->name('login');
 
 Route::post('/', [AuthController::class, 'auth'])->name('login');
 
@@ -42,6 +42,6 @@ Route::get('admin', [AuthController::class, 'admin'])->middleware('auth')->name(
 
 // ========================= Test =========================
 
-Route::get('/test', [ExcelController::class, 'getDataTest'])->middleware('auth')->name('test');
-Route::post('/test', [ExcelController::class, 'getDataTest'])->middleware('auth')->name('test');
+// Route::get('test', [ExcelController::class, 'getDataTest'])->middleware('auth')->name('test');
+Route::post('test', [ExcelController::class, 'getDataTest'])->middleware('auth')->name('test');
 

@@ -17,7 +17,7 @@ class AuthController extends Controller
         $user = User::where('login', $request->login)->first();
         if ($user && Hash::check($request->password, $user->password)) {
             Auth::login($user);
-            return redirect()->back()->with('status', 'Успешная авторизация');
+            return redirect()->route('admin')->with('status', 'Успешная авторизация');
         } else {
             return redirect()->back()->with('status', 'Неудачная авторизация. Проверьте логин и\или пароль');
         }

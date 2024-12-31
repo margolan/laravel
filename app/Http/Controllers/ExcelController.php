@@ -94,7 +94,7 @@ class ExcelController extends Controller
         $processed_data = $ExcelImport->getSchedule($spreadsheet, $request);
         // $processed_data = $ExcelImport->importTest($request, $spreadsheet);
 
-        return view('s_import', ['processed_data' => $processed_data]);
+        return view('/admin', ['processed_data' => $processed_data]);
         // return view('test', ['processed_data' => $processed_data]);
     }
 
@@ -148,7 +148,7 @@ class ExcelController extends Controller
 
         $processed_data = $ExcelImport->getKey($spreadsheet, $request);
 
-        return view('k_import', ['processed_data' => $processed_data]);
+        return view('admin', ['processed_data' => $processed_data]);
     }
 
     public function k_index(Request $request)
