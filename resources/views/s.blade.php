@@ -76,7 +76,7 @@
           <div class="data_column w-min overflow-x-auto rounded-r-lg font-semibold">
             <div class="dates_row">
               <div class="day_row inline-flex dark:bg-gray-200 dark:text-gray-700">
-                @foreach ($depart['dates']['day'] as $index => $day)
+                @foreach ($depart['dates']['0'] as $index => $day)
                   <div
                     class="h-8 flex justify-center items-center cell {{ $index == ltrim(date('d'), '0') - 1 ? 'w-9 text-red-500 bg-gray-200 shadow-red-500 shadow-lg border-r-1 border-l-1 border-red-400 today' : 'w-8 border-l-1 border-white' }}">
                     {{ $day }} <!-- days -->
@@ -84,7 +84,7 @@
                 @endforeach
               </div>
               <div class="date_row inline-flex dark:bg-gray-200 dark:text-gray-700">
-                @foreach ($depart['dates']['date'] as $index => $date)
+                @foreach ($depart['dates']['1'] as $index => $date)
                   <div
                     class="h-8 flex justify-center items-center cell {{ $index == ltrim(date('d'), '0') - 1 ? 'w-9 text-red-500 bg-gray-200 shadow-red-500 shadow-lg border-r-1 border-l-1 border-red-400 today' : 'w-8 border-l-1 border-white' }}">
                     {{ $date }} <!-- dates -->
