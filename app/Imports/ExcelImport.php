@@ -6,12 +6,16 @@ use App\Models\Key;
 use App\Models\Schedule;
 use App\Models\Test;
 use Maatwebsite\Excel\Concerns\WithLimit;
+use Illuminate\Support\Facades\App;
+
 
 class ExcelImport
 {
 
     public function importTest($request, $data)
     {
+
+        App::setLocale('ru');
 
         $sheet = $data->getActiveSheet();
 
@@ -27,7 +31,7 @@ class ExcelImport
         }
 
         if (!isset($processed_data)) {
-            return $processed_data['error'] = 'Error!';
+            return $processed_data['error'] = "Сервис инженеры не найдены. Проверьте таблицу на наличие записи 'сервис инженер'";
         }
 
         foreach ($processed_data['anchor'] as $index) {
@@ -67,8 +71,19 @@ class ExcelImport
 
         $lol = [];
         // $lol = $sheet->getCell('I5')->getValue();
-        $lol = $sheet->getStyle('AF33')->getFill()->getStartColor()->getARGB();
+        // $lol = $sheet->getStyle('AF33')->getFill()->getStartColor()->getARGB();
         // $lol = cal_days_in_month(CAL_GREGORIAN, $request->month, $request->year);
+
+
+        // for ($i = 0; $i < cal_days_in_month(CAL_GREGORIAN, $request->month, $request->year); $i++) {
+        //     // $locale[$lang]['dow'][date("w", mktime(0, 0, 0, $tables_month, $i, $tables_year))]
+        //     // $lol[] = ;
+        // }
+
+        // $lol = [__('messages.hi'),];
+        // dd(__('messages.hi'));
+
+
 
         // return [$coord, $anchor, $color, $data];
         return [$lol, $processed_data];
