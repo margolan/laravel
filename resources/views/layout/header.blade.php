@@ -1,4 +1,4 @@
-<div class="h-16 flex justify-between sm:items-center">
+<div class="h-16 flex justify-between sm:items-center @if(Route::currentRouteName() == 'index') absolute @endif ">
   <div class="left h-max flex justify-center items-center">
     <ul class="burger sm:inline-flex sm:items-center overflow-hidden h-16 sm:h-9 z-10 sm:bg-stone-900 sm:rounded-lg">
       <li class="px-4 pt-5 pb-5 sm:hidden">
@@ -17,7 +17,7 @@
       <li><a href="{{ route('k_index') }}"
           class="block sm:inline px-4 py-2 bg-stone-900 hover:bg-stone-800 hover:text-emerald-500">Key</a>
       </li>
-      <li><a href="{{ route('test_index') }}"
+      <li><a href="{{ route('test') }}"
           class="block sm:inline px-4 py-2 bg-stone-900 hover:bg-stone-800 hover:text-emerald-500">Test</a>
       </li>
       <li><a href="{{ route('auth_admin') }}"

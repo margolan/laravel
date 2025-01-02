@@ -105,3 +105,18 @@ document.querySelector('.register')?.addEventListener('click', function () { doc
 
 document.querySelector('.cross')?.addEventListener('click', function () { document.querySelector('.status').classList.add('hidden') })
 document.querySelector('.cross') ? setTimeout(() => { document.querySelector('.status').classList.add('hidden') }, 5000) : '';
+
+// ==================== Main Page ====================
+
+document.querySelectorAll('.link')?.forEach(function (e) {
+  e.addEventListener('click', function () {
+    let link_id = this.id;
+    document.querySelectorAll('.accordion').forEach(function (el) {
+      if(!el.classList.contains(link_id)) {
+        el.style.height = 0 + 'px'
+      } else {
+        el.style.height = innerHeight + 'px'
+      }
+    })
+  })
+});

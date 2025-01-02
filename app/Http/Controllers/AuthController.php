@@ -12,47 +12,56 @@ use App\Models\Key;
 class AuthController extends Controller
 {
 
-    public function auth()
-    {
-        return view('auth');
-    }
-
     public function login(Request $request)
     {
+
+        if($request->isMethod('get')) {
+            return view('auth.login');
+        }
 
         $user = User::where('login', $request->login)->first();
         if ($user && Hash::check($request->password, $user->password)) {
             Auth::login($user);
             return redirect()->route('auth_admin')->with('status', 'Успешная авторизация.');
         } else {
-            return redirect()->route('auth_index')->with('status', 'Неудачная авторизация. Проверьте логин и\или пароль.');
+            return redirect()->back()->with('status', 'Неудачная авторизация. Проверьте логин и\или пароль.');
         }
     }
 
     public function register(Request $request)
     {
 
-        $inputs = $request->validate(
+        if($request->isMethod('get')) {
+            return view('auth.register');
+        }
+
+        $valid = $request->validate(
             [
                 'login' => ['required', 'min:3', 'alpha_num', 'unique:users,login'],
                 'email' => ['required', 'email', 'unique:users,email'],
-                'password' => ['required', 'min:8', 'max:255', 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$/', 'confirmed']
+                'token' => ['required', 'alpha_num'],
+                'password' => ['required', 'min:8', 'max:255', 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$/', 'confirmed'],
             ],
             [
-                'login.required' => 'Поле логин обязательное',
-                'login.min' => 'Минимальное значение логина 3 символа',
-                'login.alpha_num' => 'Только латинские символы и цифры',
+                'login.required' => 'Логин не заполнен',
+                'login.min' => 'Логин: мин 3 символа',
+                'login.alpha_num' => 'Логин: только латинские символы и цифры',
                 'login.unique' => 'Логин уже занят',
-                'email.required' => 'Поле email обязательное',
+                'email.required' => 'Email не заполнен',
                 'email.unique' => 'Email уже занят',
-                'password.required' => 'Пароль обязательное',
-                'password.min' => 'Минимальная длина пароля 8 символов',
-                'password.max' => 'Максимальная длина пароля 255 символов',
-                'password.regex' => 'Пароль должен содержать минимум одну строчную букву, одну заглавную букву, одну цифру и один специальный символ',
+                'token.required' => 'Token не заполнен',
+                'token.alpha_num' => 'Token: только латинские символы и цифры',
+                'password.required' => 'Пароль не заполнен',
+                'password.min' => 'Пароль: мин 8 символов',
+                'password.max' => 'Пароль: макс 255 символов',
+                'password.regex' => 'Пароль: A-Z, a-z, 0-9, !@#$%^&*()-_=+[]{};:"|,.<>/?',
+                'password.confirmed' => 'Пароли не совпадают',
             ]
         );
 
-        $processed_data = [];
+
+        // return redirect()->back()->with('status', $processed_data);
+
     }
 
     public function admin(Request $request)
@@ -68,6 +77,6 @@ class AuthController extends Controller
     {
         Auth::logout();
 
-        return redirect()->route('auth_index')->with('status', 'Выполнен выход.');
+        return redirect()->back()->with('status', 'Выполнен выход.');
     }
 }

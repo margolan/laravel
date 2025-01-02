@@ -18,7 +18,7 @@ class AuthWithMessage
     {
 
         if (!Auth::check()) {
-            return redirect()->route('auth_index')->with('status', 'Требуется авторизация.');
+            return redirect()->route('login')->with('status', 'Требуется авторизация.');
         }
         return $next($request);
     }

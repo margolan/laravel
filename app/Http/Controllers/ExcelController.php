@@ -17,19 +17,12 @@ class ExcelController extends Controller
     public function getDataTest(Request $request)
     {
 
-        $requests = $request->all();
+        if ($request->isMethod('get')) {
+            
+            $processed_data['request'] = $request->all();
 
-        $query = Schedule::query();
-
-        foreach ($request->all() as $column => $value) {
-            $query->where($column, $value);
+            return view('test', ['processed_data' => $processed_data]);
         }
-
-        $data = $query->orderby('date', 'desc')->get()->toArray();
-
-        $available_links = Schedule::select('city', 'date')->get();
-
-        return view('test', ['data' => $data, 'available_links' => $available_links, 'requests' => $requests]);
     }
 
 
@@ -85,7 +78,6 @@ class ExcelController extends Controller
         $processed_data = $ExcelImport->getSchedule($spreadsheet, $request);
 
         return redirect()->route('auth_admin')->with('processed_data', $processed_data)->with('status', 'Запись успешно добавлена');
-
     }
 
     public function s_index(Request $request)
@@ -139,7 +131,6 @@ class ExcelController extends Controller
         $processed_data = $ExcelImport->getKey($spreadsheet, $request);
 
         return redirect()->route('auth_admin')->with('processed_data', $processed_data)->with('status', 'Запись успешно добавлена');
-
     }
 
     public function k_index(Request $request)

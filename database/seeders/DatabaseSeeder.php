@@ -16,7 +16,11 @@ class DatabaseSeeder extends Seeder
             'login' => 'admin',
             'email' => 'margulan@0x0.kz',
             'password' => '$2y$12$LuB3vDLHvthd/eRoRick8OJxKY3THkb.LuNb77bpm50nV12VoTbDq',
-            'role' => 'admin'
+            'role' => 'admin',
+            'depart' => 'admin',
+            'var1' => 'admin',
+            'var2' => 'admin',
+            'var3' => 'admin',
         ]);
     }
 }

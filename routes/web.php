@@ -5,11 +5,7 @@ use App\Http\Controllers\ExcelController;
 use App\Http\Middleware\AuthWithMessage;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
-
-Route::get('/', function () {
-  return view('welcome');
-})->name('welcome');
-
+use App\Http\Controllers\IndexController;
 
 Route::middleware(AuthWithMessage::class)->group(function () {
 
@@ -31,12 +27,17 @@ Route::middleware(AuthWithMessage::class)->group(function () {
 
   Route::get('/logout', [AuthController::class, 'logout'])->name('auth_logout'); // action
 
-  // ========================= Test =========================
-
-  Route::get('/test', [ExcelController::class, 'getDataTest'])->name('test_index');
-
-  Route::post('/test', [ExcelController::class, 'getDataTest'])->name('test');
 });
+
+
+// ========================= Main =========================
+
+
+
+Route::match(['get', 'post'], '/', [IndexController::class, 'index'])->name('index');
+
+
+// ========================= Authorization =========================
 
 
 Route::get('/s', [ExcelController::class, 's_index'])->name('s_index');
@@ -47,8 +48,10 @@ Route::get('/k', [ExcelController::class, 'k_index'])->name('k_index');
 // ========================= Authorization =========================
 
 
-Route::post('login', [AuthController::class, 'login'])->name('auth_login');  // action
+Route::match(['get', 'post'], '/login', [AuthController::class, 'login'])->name('login');
 
-Route::post('/register', [AuthController::class, 'register'])->name('auth_register');  // action
+Route::match(['get', 'post'], '/register', [AuthController::class, 'register'])->name('register');
 
-Route::get('/auth', [AuthController::class, 'auth'])->name('auth_index');
+// ========================= Test =========================
+
+Route::match(['get', 'post'], '/test', [ExcelController::class, 'getDataTest'])->name('test');

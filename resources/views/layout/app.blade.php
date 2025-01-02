@@ -8,7 +8,7 @@
   <title>@yield('title')</title>
 </head>
 
-<body class="bg-gray-100 bg-gradient-to-r dark:from-cyan-950 dark:to-emerald-950 dark:text-white">
+<body class="main_bg dark:text-white">
 
   @if (session('status'))
     <div class="status w-max p-1 absolute right-2 top-2 border-1 rounded-full flex justify-center text-sm font-semibold">
@@ -37,7 +37,9 @@
 
   </div>
 
-  @include('layout.footer')
+  @if (Route::currentRouteName() != 'index')
+    @include('layout.footer')
+  @endif
 
 </body>
 
