@@ -2,46 +2,53 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ExcelController;
+use App\Http\Middleware\AuthWithMessage;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 
+Route::get('/', function () {
+  return view('welcome');
+})->name('welcome');
 
-// Route::get('s/import', function () {
-//   return view('s_import');
-// })->name('s_import');
 
-// Route::get('k/import', function () {
-//   return view('k_import');
-// })->name('k_import');
+Route::middleware(AuthWithMessage::class)->group(function () {
 
-Route::get('s', [ExcelController::class, 's_index'])->name('s_index');
+  // Route::post('/s_import', [ExcelController::class, 's_import'])->name('s_import');  // action
 
-Route::get('k', [ExcelController::class, 'k_index'])->name('k_index');
+  // Route::post('/k_import', [ExcelController::class, 'k_import'])->name('k_import');  // action
 
-Route::post('s/import', [ExcelController::class, 's_import'])->name('s_import');
+  Route::get('/s/delete', [ExcelController::class, 's_delete'])->name('s_delete'); // action
 
-Route::post('k/import', [ExcelController::class, 'k_import'])->name('k_import');
+  Route::get('/k/delete', [ExcelController::class, 'k_delete'])->name('k_delete'); // action
 
-Route::get('s/delete', [ExcelController::class, 's_delete'])->name('s_delete');
+  // ========================= Authorization =========================
 
-Route::get('k/delete', [ExcelController::class, 'k_delete'])->name('k_delete');
+  Route::get('/admin', [AuthController::class, 'admin'])->name('auth_admin');
+
+  Route::post('/admin/s_import', [ExcelController::class, 's_import'])->name('s_import'); // action
+
+  Route::post('/admin/k_import', [ExcelController::class, 'k_import'])->name('k_import');  // action
+
+  Route::get('/logout', [AuthController::class, 'logout'])->name('auth_logout'); // action
+
+  // ========================= Test =========================
+
+  Route::get('/test', [ExcelController::class, 'getDataTest'])->name('test_index');
+
+  Route::post('/test', [ExcelController::class, 'getDataTest'])->name('test');
+});
+
+
+Route::get('/s', [ExcelController::class, 's_index'])->name('s_index');
+
+Route::get('/k', [ExcelController::class, 'k_index'])->name('k_index');
+
 
 // ========================= Authorization =========================
 
-// Route::get('/', function () {
-//   return view('login');
-// })->name('login');
 
-Route::post('/', [AuthController::class, 'auth'])->name('login');
+Route::post('login', [AuthController::class, 'login'])->name('auth_login');  // action
 
-Route::get('logout', [AuthController::class, 'logout'])->name('logout');
+Route::post('/register', [AuthController::class, 'register'])->name('auth_register');  // action
 
-Route::get('register', [AuthController::class, 'register'])->name('register');
-
-Route::get('admin', [AuthController::class, 'admin'])->middleware('auth')->name('admin');
-
-// ========================= Test =========================
-
-// Route::get('test', [ExcelController::class, 'getDataTest'])->middleware('auth')->name('test');
-Route::post('test', [ExcelController::class, 'getDataTest'])->middleware('auth')->name('test');
-
+Route::get('/auth', [AuthController::class, 'auth'])->name('auth_index');

@@ -37,8 +37,9 @@
       <span class="found pr-2 inline-block absolute left-7 top-[190px] text-green-800 font-bold"></span>
       <input type="search"
         class="search w-full max-w-[500px] mt-9 dark:bg-gray-200 dark:text-black py-3 pl-14 rounded-2xl">
-      <div class="scroll_up w-14 h-14 border-1 bg-white fixed bottom-5 right-5 shadow-3xl hidden cursor-pointer">
-        <div class="arrow w-0 h-0 border-x-8 border-x-transparent mx-auto mt-6 border-b-8 border-b-blue-500 ">
+      <div
+        class="scroll_up w-14 h-14 border-1 bg-white fixed bottom-5 right-5 shadow-2xl hidden flex justify-center cursor-pointer">
+        <div class="arrow w-6 h-6 border-t-8 border-l-8 border-t-emerald-800 border-l-sky-700 rotate-45 mt-5">
         </div>
       </div>
     </div>

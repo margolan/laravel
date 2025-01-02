@@ -11,15 +11,21 @@ use App\Models\Key;
 
 class AuthController extends Controller
 {
-    public function auth(Request $request)
+
+    public function auth()
+    {
+        return view('auth');
+    }
+
+    public function login(Request $request)
     {
 
         $user = User::where('login', $request->login)->first();
         if ($user && Hash::check($request->password, $user->password)) {
             Auth::login($user);
-            return redirect()->route('admin')->with('status', 'Успешная авторизация');
+            return redirect()->route('auth_admin')->with('status', 'Успешная авторизация.');
         } else {
-            return redirect()->back()->with('status', 'Неудачная авторизация. Проверьте логин и\или пароль');
+            return redirect()->route('auth_index')->with('status', 'Неудачная авторизация. Проверьте логин и\или пароль.');
         }
     }
 
@@ -49,24 +55,19 @@ class AuthController extends Controller
         $processed_data = [];
     }
 
-    public function admin()
+    public function admin(Request $request)
     {
-        if (Auth::check()) {
+        $data['schedule'] = Schedule::select('id', 'city', 'depart', 'date')->get();
 
-            $data['schedule'] = Schedule::select('id', 'city', 'depart', 'date')->get();
-            
-            $data['key'] = Key::select('id', 'created_at')->get();
+        $data['key'] = Key::select('id', 'created_at')->get();
 
-            return view('admin', ['data' => $data]);
-        } else {
-            return redirect()->back()->with('status', 'Вы не авторизованы');
-        }
+        return view('admin', ['data' => $data]);
     }
 
     public function logout()
     {
         Auth::logout();
 
-        return redirect()->back();
+        return redirect()->route('auth_index')->with('status', 'Выполнен выход.');
     }
 }

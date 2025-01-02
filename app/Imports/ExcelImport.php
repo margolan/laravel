@@ -98,7 +98,6 @@ class ExcelImport
 
         return $processed_data;
 
-        // return $sheet->getCell('B19')->getValue()->getPlainText();
     }
 
     // public function getSchedule($data, $request)

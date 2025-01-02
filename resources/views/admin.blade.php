@@ -6,27 +6,29 @@
   @isset($data)
 
     <div class="wrap_admin flex justify-center md:justify-normal flex-wrap gap-4 mt-5 mb-10">
-      <div class="min-w-80 h-max border-1 border-neutral-500 rounded-xl">
+      <div class="w-80 h-max border-1 border-neutral-500 rounded-xl">
         <img src="{{ asset('assets/schedule.webp') }}" alt="schedule" class="w-full h-52 object-cover rounded-t-xl">
         <div class="bg-neutral-900 rounded-b-xl px-5 pt-5 pb-16">
           <h2 class="text-xl mb-4 font-semibold">График работы</h2>
-          @foreach ($data['schedule'] as $cell)
+          @foreach ($data['schedule'] as $cellIndex => $cell)
             <div class="flex py-1 justify-between">
-              <span class="w-full bg-gradient-to-r dark:from-lime-700 dark:to-green-700 px-3 mr-1">•
+              <span
+                class="w-full bg-gradient-to-r dark:from-lime-700 dark:to-green-700 px-3 mr-1 flex items-center">{{ $cellIndex + 1 }}.
                 {{ str_replace(substr($cell->date, 2, 4), '.' . substr($cell->date, 2, 4), $cell->date) }}
-                / {{ $cell->city }} / {{ $cell->depart }}
+                {{ $cell->city }} {{ $cell->depart }}
               </span>
               <a href="{{ route('s_delete') }}?id={{ $cell['id'] }}"
-                class="bg-gradient-to-r dark:from-red-700 dark:to-rose-700 text-white text-sm px-4">Удалить</a>
+                class="bg-gradient-to-r dark:from-red-700 dark:to-rose-700 text-white text-sm px-4 flex items-center">Удалить</a>
             </div>
           @endforeach
 
           <div class="v_separator w-5/6 h-1 bg-gradient-to-r from-sky-800 to-teal-600 rounded-full mx-auto my-7"></div>
           <h2 class="text-xl mb-4 font-semibold">Загрузить график</h2>
-          <form action="{{ route('s_import') }}" enctype="multipart/form-data" method="post" class="max-w-full w-80 my-5">
+          <form action="{{ route('s_import') }}" enctype="multipart/form-data" method="post"
+            class="max-w-full min-w-full my-5">
             @csrf
             <div class="details flex bg-red-900 rounded-lg">
-              <div class="left w-28 border-r-1 justify-center py-3 pr-3 items-end flex flex-col bg-red-800 rounded-l-lg">
+              <div class="left w-24 border-r-1 justify-center py-3 pr-3 items-end flex flex-col bg-red-800 rounded-l-lg">
                 <div class="w-max">Город:</div>
                 <div class="w-max my-3">Дата:</div>
                 <div class="w-max">Отдел:</div>
@@ -77,17 +79,18 @@
         </div>
       </div>
 
-      <div class="min-w-80 h-max border-1 border-neutral-500 rounded-xl">
+      <div class="w-80 h-max border-1 border-neutral-500 rounded-xl">
         <img src="{{ asset('assets/keys.webp') }}" alt="keys" class="w-full h-52 object-cover rounded-t-xl">
         <div class="bg-neutral-900 rounded-b-xl px-5 pt-5 pb-16">
           <h2 class="text-xl mb-4 font-semibold">Ключи</h2>
-          @foreach ($data['key'] as $cell)
+          @foreach ($data['key'] as $cellIndex => $cell)
             <div class="flex py-1 justify-between">
-              <span class="w-full bg-gradient-to-r dark:from-lime-700 dark:to-green-700 px-3 mr-1">{{ $cell->id }} :
+              <span
+                class="w-full bg-gradient-to-r dark:from-lime-700 dark:to-green-700 px-3 mr-1 flex items-center">{{ $cellIndex + 1 }}.
                 {{ $cell->created_at }}
               </span>
               <a href="{{ route('k_delete') }}?id={{ $cell['id'] }}"
-                class="bg-gradient-to-r dark:from-red-700 dark:to-rose-700 text-white text-sm px-4">Удалить</a>
+                class="bg-gradient-to-r dark:from-red-700 dark:to-rose-700 text-white text-sm px-4 flex items-center">Удалить</a>
             </div>
           @endforeach
 
@@ -104,15 +107,18 @@
         </div>
       </div>
 
-      @if (isset($processed_data))
-        <div>
-          <h2 class="text-xl mb-4 font-semibold">Полученные данные</h2>
-          @php
-            echo '<pre>';
-            print_r($processed_data);
-            echo '</pre>';
-          @endphp
+      @if (session('processed_data'))
+        <div class="min-w-80 h-max border-1 border-neutral-500 rounded-xl">
+          <div class="bg-neutral-900 rounded-xl px-5 pt-5 pb-16 overflow-scroll">
+            <h2 class="text-xl mb-4 font-semibold">Полученные данные</h2>
+            @php
+              echo '<pre>';
+              print_r(session('processed_data'));
+              echo '</pre>';
+            @endphp
+          </div>
         </div>
+      @else
       @endif
 
     </div>

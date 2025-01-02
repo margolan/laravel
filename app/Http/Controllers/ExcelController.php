@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
 use PhpOffice\PhpSpreadsheet\IOFactory;
-use Illuminate\Support\Facades\Auth;
 
 class ExcelController extends Controller
 {
@@ -28,8 +27,6 @@ class ExcelController extends Controller
 
         $data = $query->orderby('date', 'desc')->get()->toArray();
 
-        // $data = $query->get()->toArray();
-
         $available_links = Schedule::select('city', 'date')->get();
 
         return view('test', ['data' => $data, 'available_links' => $available_links, 'requests' => $requests]);
@@ -38,29 +35,23 @@ class ExcelController extends Controller
 
     public function s_delete(Request $request)
     {
-        if (Auth::check()) {
-            $record = Schedule::find($request->id);
-            if ($record) {
-                $record->delete();
-                return redirect()->back()->with('status', 'Запись успешно удалена');
-            } else {
-                return redirect()->back()->with('status', 'Таблица не найдена');
-            }
+        $record = Schedule::find($request->id);
+        if ($record) {
+            $record->delete();
+            return redirect()->route('auth_admin')->with('status', 'Запись успешно удалена');
         } else {
-            return redirect()->back()->with('status', 'Вы не авторизованы для подобных действий');
+            return redirect()->route('auth_admin')->with('status', 'Таблица не найдена');
         }
     }
 
     public function k_delete(Request $request)
     {
-        if (Auth::check()) {
-            $record = Key::find($request->id);
-            if ($record) {
-                $record->delete();
-                return redirect()->back()->with('status', 'Запись успешно удалена');
-            }
+        $record = Key::find($request->id);
+        if ($record) {
+            $record->delete();
+            return redirect()->route('auth_admin')->with('status', 'Запись успешно удалена');
         } else {
-            return redirect()->back()->with('status', 'Вы не авторизованы для подобных действий');
+            return redirect()->route('auth_admin')->with('status', 'Таблица не найдена');
         }
     }
 
@@ -92,10 +83,9 @@ class ExcelController extends Controller
         $ExcelImport = new ExcelImport();
 
         $processed_data = $ExcelImport->getSchedule($spreadsheet, $request);
-        // $processed_data = $ExcelImport->importTest($request, $spreadsheet);
 
-        return view('/admin', ['processed_data' => $processed_data]);
-        // return view('test', ['processed_data' => $processed_data]);
+        return redirect()->route('auth_admin')->with('processed_data', $processed_data)->with('status', 'Запись успешно добавлена');
+
     }
 
     public function s_index(Request $request)
@@ -148,7 +138,8 @@ class ExcelController extends Controller
 
         $processed_data = $ExcelImport->getKey($spreadsheet, $request);
 
-        return view('admin', ['processed_data' => $processed_data]);
+        return redirect()->route('auth_admin')->with('processed_data', $processed_data)->with('status', 'Запись успешно добавлена');
+
     }
 
     public function k_index(Request $request)

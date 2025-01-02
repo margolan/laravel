@@ -17,18 +17,14 @@
       <li><a href="{{ route('k_index') }}"
           class="block sm:inline px-4 py-2 bg-stone-900 hover:bg-stone-800 hover:text-emerald-500">Key</a>
       </li>
-      <li><a href="{{ route('s_import') }}"
-          class="block sm:inline px-4 py-2 bg-stone-900 hover:bg-stone-800 hover:text-emerald-500">Schedule &#9998;</a> </li>
-      <li><a href="{{ route('k_import') }}"
-          class="block sm:inline px-4 py-2 bg-stone-900 hover:bg-stone-800 hover:text-emerald-500">Key &#9998;</a> </li>
-      <li><a href="{{ route('test') }}"
+      <li><a href="{{ route('test_index') }}"
           class="block sm:inline px-4 py-2 bg-stone-900 hover:bg-stone-800 hover:text-emerald-500">Test</a>
       </li>
-      <li><a href="{{ route('admin') }}"
+      <li><a href="{{ route('auth_admin') }}"
           class="block sm:inline px-4 py-2 bg-stone-900 hover:bg-stone-800 hover:text-emerald-500">Admin</a>
       </li>
       <li>
-        <a href="{{ route('logout') }}"
+        <a href="{{ route('auth_logout') }}"
           class="block sm:inline px-4 py-2 bg-stone-900 hover:bg-stone-800 hover:text-emerald-500">LogOut</a>
       </li>
     </ul>

@@ -5,11 +5,11 @@
 @section('content')
 
 
-  <div class="h-full flex items-center justify-center">
+  <div class="min-h-screen flex items-center justify-center">
     @if (!Auth::check())
-      <div class="w-72 h-[470px] overflow-hidden flex items-center">
+      <div class="w-72 h-full overflow-hidden flex items-center">
         <div class="auth_form w-max h-max relative flex items-center">
-          <form action="{{ route('login') }}" method="post"
+          <form action="{{ route('auth_login') }}" method="post"
             class="w-72 h-max py-10 px-9 border-l-4 border-emerald-600 justify-center rounded-lg flex flex-col dark:text-neutral-700 dark:bg-neutral-200">
             @csrf
             <div class="mb-6 flex justify-between text-xl font-semibold">
@@ -28,7 +28,7 @@
               class="mt-1 px-8 py-1 dark:bg-emerald-700 rounded-md hover:dark:bg-emerald-600 text-neutral-200">
             <a href="#" class="text-sm mt-4 text-right">Забыл пароль?</a>
           </form>
-          <form action="{{ route('register') }}" method="post"
+          <form action="{{ route('auth_register') }}" method="post"
             class="w-72 h-max py-10 px-9 border-r-4 border-emerald-600 justify-center rounded-lg flex flex-col dark:text-neutral-700 dark:bg-neutral-200">
             @csrf
             <div class="mb-6 flex justify-between text-xl font-semibold">
