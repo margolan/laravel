@@ -4,7 +4,7 @@
 
 @section('content')
 
-  <div class="w-full h-screen flex items-center justify-center">
+  <div class="w-full min-h-screen py-10 flex items-center justify-center">
 
     <div class="container w-80  rounded-lg bg-white text-neutral-900">
       <div class="header w-80 h-[450px] flex items-center flex-col justify-center">
@@ -33,7 +33,7 @@
         </div>
       </div>
       <div class="content bg-white overflow-hidden rounded-b-lg text-sm">
-        <div class="one accordion transition-all overflow-hidden">
+        <div style="height: 0px;" class="one accordion transition-all overflow-hidden">
           <section class="px-5 pb-10 rounded-b-lg">
             <div class="flex items-center mb-5">
               <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512">
@@ -48,11 +48,11 @@
               </svg>
               <span class="px-6 rounded-full bg-neutral-900 text-white flex items-center ml-4">О себе</span>
             </div>
-            <p>Я <b>веб-разработчик</b>, развивающийся по обеим <b>frond-end</b> и <b>back-end</b> направлениям. Ищу
-              команду
-              для повышения навыков,
-              предоставляя свои услуги для развития компании. Я мотивирован, нацелен на результат и слежу за последними
-              достижениями в сфере современных технологий.
+            <p>
+              Я <b>веб-разработчик</b>, увлечённый развитием как во <b>front-end</b>, так и в <b>back-end</b> разработке.
+              Ищу динамичную команду, где смогу совершенствовать свои навыки и вносить вклад в успех компании. С
+              нацеленностью на результат, я остаюсь мотивированным и слежу за последними достижениями в современных
+              технологиях, обеспечивая инновационные и эффективные решения в каждом проекте.
             </p>
           </section>
         </div>
@@ -87,13 +87,14 @@
             </ul>
             <p class="mb-3"><b>Ссылки</b></p>
             <ul class="ml-4 list-disc list-outside">
-              <li>Резюме на <a href="https://aktobe.hh.kz/applicant/resumes/view?resume=8caa6c69ff01f0a1860039ed1f4533597a4b74"
+              <li>Резюме на <a
+                  href="https://aktobe.hh.kz/applicant/resumes/view?resume=8caa6c69ff01f0a1860039ed1f4533597a4b74"
                   target="_blank"
                   class="text-emerald-900 decoration-emerald-800 decoration-1 underline-offset-4 decoration-dashed hover:bg-gradient-to-r hover:from-emerald-700 hover:to-sky-700 hover:text-white px-1 underline font-semibold">Head
                   Hunter</a></li>
               <li>Скачать можно в виде <a
                   class="text-emerald-900 decoration-emerald-800 decoration-1 underline-offset-4 decoration-dashed hover:bg-gradient-to-r hover:from-emerald-700 hover:to-sky-700 hover:text-white px-1 underline font-semibold"
-                  href="{{ asset('/assets/dcv.pdf') }}">PDF-файла</a></li>
+                  href="{{ asset('/assets/cv.pdf') }}">PDF-файла</a></li>
             </ul>
           </section>
         </div>
@@ -127,9 +128,8 @@
                 фильтраций, и других работ;</li>
               <li><b>PostgreSQL</b> + <b>PHP</b> – использую для проекта <a href="https://margolan.kz/g" target="_blank"
                   class="text-emerald-900 decoration-emerald-800 decoration-1 underline-offset-4 decoration-dashed hover:bg-gradient-to-r hover:from-emerald-700 hover:to-sky-700 hover:text-white px-1 underline font-semibold">График
-                  Работ</a>. В нем я на PHP реализовал Админ Панель, форму регистрации пользователей, отчет посещения и
-                прочее без,
-                фреймворков и CMS;</li>
+                  Работ</a>. В нем я на PHP реализовал Админ Панель, форму регистрации пользователей, отчет посещения без фреймворков и CMS. В настоящий момент проект не поддерживается в связи с переходом на фреймворк Laravel. Его реализацию можно увидеть <a href="https://0x0.kz/s" target="_blank"
+                class="text-emerald-900 decoration-emerald-800 decoration-1 underline-offset-4 decoration-dashed hover:bg-gradient-to-r hover:from-emerald-700 hover:to-sky-700 hover:text-white px-1 underline font-semibold">здесь</a>;</li>
               <li><b>Laravel</b> + <b>Tailwind CSS</b>– текущий сайт реализован на основе этих продуктов. Кроме текущей
                 лэндинг-страницы имеются <a href="https://0x0.kz/s" target="_blank"
                   class="text-emerald-900 decoration-emerald-800 decoration-1 underline-offset-4 decoration-dashed hover:bg-gradient-to-r hover:from-emerald-700 hover:to-sky-700 hover:text-white px-1 underline font-semibold">График
@@ -140,7 +140,8 @@
             <ul class="ml-4 list-disc list-outside">
               <li>На момент 01.2024 изучаю и применяю на практике <b>Laravel</b> и <b>Bootstrap</b>;<br>
                 <p class="italic my-1"><b>UPD:</b> на момент 01.2024 продолжаю изучать и использую <b>Laravel</b> и
-                  <b>Tailwind CSS</b>;</p>
+                  <b>Tailwind CSS</b>;
+                </p>
               </li>
               <li>В перспективе изучение <b>Vue</b>, <b>Bitrex</b>, и старый, но актульаный <b>jQuery</b>.</li>
               <li>PHP &lt;3 </span> </li>
