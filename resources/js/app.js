@@ -112,10 +112,14 @@ document.querySelectorAll('.link')?.forEach(function (e) {
   e.addEventListener('click', function () {
     let link_id = this.id;
     document.querySelectorAll('.accordion').forEach(function (el) {
-      if(!el.classList.contains(link_id)) {
+      if (!el.classList.contains(link_id)) {
         el.style.height = 0 + 'px'
       } else {
-        el.style.height = innerHeight + 'px'
+        if (el.style.height == 0 + 'px') {
+          el.style.height = el.scrollHeight + 'px'
+        } else {
+          el.style.height = 0 + 'px'
+        }
       }
     })
   })
