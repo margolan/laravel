@@ -1,11 +1,15 @@
 {
+  "public/assets/wow_bg.jpg": {
+    "file": "assets/wow_bg-AnCphf2S.jpg",
+    "src": "public/assets/wow_bg.jpg"
+  },
   "resources/css/app.css": {
-    "file": "assets/app-fCz4yOmp.css",
+    "file": "assets/app-Cn9r5Z3b.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
   "resources/js/app.js": {
-    "file": "assets/app-BabV-IW9.js",
+    "file": "assets/app-DFZDli4z.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true
