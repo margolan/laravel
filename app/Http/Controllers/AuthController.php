@@ -15,23 +15,29 @@ class AuthController extends Controller
     public function login(Request $request)
     {
 
-        if($request->isMethod('get')) {
+        if ($request->isMethod('get')) {
             return view('auth.login');
         }
 
-        $user = User::where('login', $request->login)->first();
-        if ($user && Hash::check($request->password, $user->password)) {
-            Auth::login($user);
-            return redirect()->route('auth_admin')->with('status', 'Успешная авторизация.');
-        } else {
-            return redirect()->back()->with('status', 'Неудачная авторизация. Проверьте логин и\или пароль.');
+        $credentials = $request->validate([
+            'login' => ['required'],
+            'password' => ['required',],
+        ]);
+
+        if (Auth::attempt($credentials)) {
+
+            $request->session()->regenerate();
+
+            return redirect()->intended('admin');
         }
+
+        return back()->with('status', 'Неудачная авторизация. Проверьте логин и\или пароль.');
     }
 
     public function register(Request $request)
     {
 
-        if($request->isMethod('get')) {
+        if ($request->isMethod('get')) {
             return view('auth.register');
         }
 
