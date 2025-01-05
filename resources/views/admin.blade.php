@@ -1,10 +1,10 @@
 @extends('layout.app')
 
 @section('title', 'Где-то')
+
 @section('content')
 
   @isset($data)
-
     <div class="wrap_admin flex justify-center md:justify-normal flex-wrap gap-4 mt-5 mb-10">
       <div class="w-80 h-max border-1 border-neutral-500 rounded-xl">
         <img src="{{ asset('assets/schedule.webp') }}" alt="schedule" class="w-full h-52 object-cover rounded-t-xl">

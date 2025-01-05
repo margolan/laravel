@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Schedule;
 use App\Models\Key;
+use Illuminate\Support\Facades\Cookie;
 
 class AuthController extends Controller
 {
@@ -24,11 +25,15 @@ class AuthController extends Controller
             'password' => ['required',],
         ]);
 
-        if (Auth::attempt($credentials)) {
+        if (Auth::attempt($credentials, $request->rememberme)) {
 
             $request->session()->regenerate();
 
-            return redirect()->intended('admin');
+            $token = $request->user()->remember_token;
+
+            Cookie::queue('remember_token', $token, 10080); // 10080 минут (7 дней)
+
+            return redirect()->intended('admin')->with('status', 'Вы вошли.');
         }
 
         return back()->with('status', 'Неудачная авторизация. Проверьте логин и\или пароль.');
@@ -79,10 +84,14 @@ class AuthController extends Controller
         return view('admin', ['data' => $data]);
     }
 
-    public function logout()
+    public function logout(Request $request)
     {
         Auth::logout();
 
-        return redirect()->back()->with('status', 'Выполнен выход.');
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        return redirect('/')->with('status', 'Вы вышли.');
     }
 }

@@ -2,12 +2,12 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ExcelController;
-use App\Http\Middleware\AuthWithMessage;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\Http\Controllers\IndexController;
+use Illuminate\Auth\Middleware\Authenticate;
 
-Route::middleware(AuthWithMessage::class)->group(function () {
+Route::middleware('auth')->group(function () {
 
   // Route::post('/s_import', [ExcelController::class, 's_import'])->name('s_import');  // action
 
@@ -33,20 +33,11 @@ Route::middleware(AuthWithMessage::class)->group(function () {
 // ========================= Main =========================
 
 
-
 Route::match(['get', 'post'], '/', [IndexController::class, 'index'])->name('index');
-
-
-// ========================= Authorization =========================
-
 
 Route::get('/s', [ExcelController::class, 's_index'])->name('s_index');
 
 Route::get('/k', [ExcelController::class, 'k_index'])->name('k_index');
-
-
-// ========================= Authorization =========================
-
 
 Route::match(['get', 'post'], '/login', [AuthController::class, 'login'])->name('login');
 
