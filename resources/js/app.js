@@ -3,6 +3,7 @@ import './bootstrap';
 
 // ==================== Dark Theme ====================
 
+
 const htmlElement = document.documentElement;
 
 if (document.querySelector('.theme-toggle')) {
@@ -22,7 +23,9 @@ if (document.querySelector('.theme-toggle')) {
 //   htmlElement.classList.add('dark');
 // }
 
+
 // ==================== Days Styles ====================
+
 
 const cell = document.querySelectorAll('.cell');
 
@@ -41,6 +44,7 @@ cell.forEach(e => {
   }
 })
 
+
 // ==================== Keys ====================
 
 
@@ -50,44 +54,42 @@ const scroll_up = document.querySelector('.scroll_up');
 
 if (search) {
   search.addEventListener('input', function (e) {
-    setTimeout(function () {
-      const query = e.target.value.toLowerCase();
-      let matches = 0;
-      let found_cell;
-      cell.forEach(el => {
-        const cellText = el.textContent.toLowerCase();
-        if (query && cellText.includes(query)) {
-          matches++;
-          found.textContent = matches;
-          found_cell = el;
-        } else {
-          found.textContent = matches;
-        }
-      });
-      if (matches == 1) {
-        window.scrollTo(0, found_cell.offsetTop - 180);
-        cell.forEach(el => {
-          if (el.getAttribute('row') == found_cell.getAttribute('row')) {
-            el.classList.remove(...('bg-0 text-white font-normal').split(' '));
-            el.classList.add(...('bg-white text-black font-semibold').split(' '));
-          } else {
-            el.classList.remove(...('bg-white text-black font-semibold').split(' '))
-            el.classList.add(...('bg-0 text-white font-normal').split(' '));
-          }
-        })
+
+    const query = e.target.value.toLowerCase();
+    let matches = 0;
+
+    cell.forEach(el => {
+      const cellText = el.textContent.toLowerCase();
+      if (query && cellText.includes(query)) {
+        matches++;
+        found.textContent = matches;
+        el.parentElement.classList.remove('hidden')
+      } else {
+        found.textContent = matches;
+        el.parentElement.classList.add('hidden')
       }
-    }, 500)
+    });
+
+    if (!query) {
+
+      cell.forEach(el => {
+        el.parentElement.classList.remove('hidden')
+      });
+
+    }
   })
 
   window.addEventListener('scroll', e => {
-    window.scrollY > 200 ? scroll_up.classList.remove('hidden') : scroll_up.classList.add('hidden')
+    window.scrollY > 200 ? scroll_up.classList.remove('invisible') : scroll_up.classList.add('invisible')
   })
 
   scroll_up.addEventListener('click', () => { window.scrollTo(0, 0); })
 
 }
 
+
 // ==================== Burger Menu ====================
+
 
 document.querySelector('.burger')?.addEventListener('click', function () {
   this.classList.toggle('h-16');
@@ -96,7 +98,9 @@ document.querySelector('.burger')?.addEventListener('click', function () {
   document.querySelector('.icon_cross').classList.toggle('hidden');
 });
 
+
 // ==================== Auth ====================
+
 
 document.querySelector('.login')?.addEventListener('click', function () { document.querySelector('.auth_form').classList.toggle('-left-72') })
 document.querySelector('.register')?.addEventListener('click', function () { document.querySelector('.auth_form').classList.toggle('-left-72') })
@@ -106,7 +110,9 @@ document.querySelector('.register')?.addEventListener('click', function () { doc
 document.querySelector('.cross')?.addEventListener('click', function () { document.querySelector('.status').classList.add('hidden') })
 document.querySelector('.cross') ? setTimeout(() => { document.querySelector('.status').classList.add('hidden') }, 5000) : '';
 
+
 // ==================== Main Page ====================
+
 
 document.querySelectorAll('.link')?.forEach(function (e) {
   e.addEventListener('click', function () {

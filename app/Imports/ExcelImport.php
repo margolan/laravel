@@ -19,7 +19,8 @@ class ExcelImport
 
         $sheet = $data->getActiveSheet();
 
-        function getCellText($cell) { // checkin for rich text
+        function getCellText($cell)
+        { // checkin for rich text
             $text = $cell->getValue();
             if ($text instanceof \PhpOffice\PhpSpreadsheet\RichText\RichText) {
                 return $text->getPlainText();
@@ -97,7 +98,6 @@ class ExcelImport
         Schedule::create($dataToStore);
 
         return $processed_data;
-
     }
 
     // public function getSchedule($data, $request)
@@ -183,31 +183,28 @@ class ExcelImport
     public function getKey($spreadsheet)
     {
 
-        $data = [];
-
         foreach ($spreadsheet->getAllSheets() as $sheet) {
-            $data[$sheet->getTitle()] = $sheet->toArray();
-        }
 
-        foreach ($data as $city => $data) {
-            foreach ($data as $v) {
-                $data_reindexed[$city][0][] = $v[0];
-                $data_reindexed[$city][1][] = $v[1];
-                $data_reindexed[$city][2][] = $v[2];
-            }
+            $emptyValuesRemoved = array_map(function ($subarray) {
+                return array_values(array_filter($subarray, function ($value) {
+                    return $value !== null;
+                }));
+            }, $sheet->toArray());
+
+            $noEmptyValuesArray[$sheet->getTitle()] = $emptyValuesRemoved;
         }
 
         $i = 1;
 
-        foreach ($data_reindexed as $key => $value) {
-            $data_to_insert['district' . $i] = json_encode([$key => $value], JSON_UNESCAPED_UNICODE);
+        foreach ($noEmptyValuesArray as $city => $data) {
+            $dataToInsert['district' . $i] = json_encode([$city => $data], JSON_UNESCAPED_UNICODE);
             $i++;
         }
 
-        $data_to_insert['confirmed'] = 'false';
+        $dataToInsert['confirmed'] = 'false';
 
-        Key::create($data_to_insert);
+        Key::create($dataToInsert);
 
-        return $data_to_insert;
+        return $dataToInsert;
     }
 }

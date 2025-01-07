@@ -18,7 +18,7 @@ class ExcelController extends Controller
     {
 
         if ($request->isMethod('get')) {
-            
+
             $processed_data['request'] = $request->all();
 
             return view('test', ['processed_data' => $processed_data]);
@@ -131,6 +131,7 @@ class ExcelController extends Controller
         $processed_data = $ExcelImport->getKey($spreadsheet, $request);
 
         return redirect()->route('auth_admin')->with('processed_data', $processed_data)->with('status', 'Запись успешно добавлена');
+        // return route('auth_admin', ['processed_data' => $processed_data, 'status' => 'Запись успешно добавлена']);
     }
 
     public function k_index(Request $request)
@@ -153,11 +154,15 @@ class ExcelController extends Controller
                     $key = $query->get()->toArray();
                 } else {
 
-                    $key[0] = $query->latest('created_at')->first()->toArray();
+                    $key = $query->latest('created_at')->first()->toArray();
                 }
 
-                foreach ($key[0] as $v) {
-                    array_push($processed_data, json_decode($v, true));
+                $processed_data = [];
+
+                foreach (['district1', 'district2', 'district3', 'district4', 'district5', 'district6'] as $district) {
+                    if (isset($key[$district])) {
+                        $processed_data = array_merge($processed_data, json_decode($key[$district], true));
+                    }
                 }
             }
         }
