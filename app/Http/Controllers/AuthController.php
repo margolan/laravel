@@ -29,10 +29,6 @@ class AuthController extends Controller
 
             $request->session()->regenerate();
 
-            $token = $request->user()->remember_token;
-
-            Cookie::queue('remember_token', $token, 10080); // 10080 минут (7 дней)
-
             return redirect()->intended('admin')->with('status', 'Вы вошли.');
         }
 
