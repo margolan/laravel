@@ -16,7 +16,7 @@
               <h1 class="underline underline-offset-8 decoration-2 decoration-emerald-600">
                 ВХОД</h1>
             </div>
-            <label for="login" class="text-sm py-1 font-semibold">Логин</label><input type="text" name="login"
+            <label for="name" class="text-sm py-1 font-semibold">Логин</label><input type="text" name="name"
               class="px-4 py-1 rounded-md">
             <label for="password" class="mt-4 py-1 font-semibold text-sm">Пароль</label><input type="password"
               name="password" class="px-4 py-1 rounded-md">

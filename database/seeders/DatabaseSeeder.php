@@ -13,7 +13,7 @@ class DatabaseSeeder extends Seeder
     {
 
         User::insert([
-            'login' => 'admin',
+            'name' => 'admin',
             'email' => 'margulan@0x0.kz',
             'password' => '$2y$12$LuB3vDLHvthd/eRoRick8OJxKY3THkb.LuNb77bpm50nV12VoTbDq',
             'role' => 'admin',

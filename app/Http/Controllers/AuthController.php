@@ -21,7 +21,7 @@ class AuthController extends Controller
         }
 
         $credentials = $request->validate([
-            'login' => ['required'],
+            'name' => ['required'],
             'password' => ['required',],
         ]);
 
@@ -44,16 +44,15 @@ class AuthController extends Controller
 
         $valid = $request->validate(
             [
-                'login' => ['required', 'min:3', 'alpha_num', 'unique:users,login'],
+                'name' => ['required', 'min:3', 'alpha_num'],
                 'email' => ['required', 'email', 'unique:users,email'],
                 'token' => ['required', 'alpha_num'],
                 'password' => ['required', 'min:8', 'max:255', 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$/', 'confirmed'],
             ],
             [
-                'login.required' => 'Логин не заполнен',
-                'login.min' => 'Логин: мин 3 символа',
-                'login.alpha_num' => 'Логин: только латинские символы и цифры',
-                'login.unique' => 'Логин уже занят',
+                'name.required' => 'Логин не заполнен',
+                'name.min' => 'Логин: мин 3 символа',
+                'name.alpha_num' => 'Логин: только латинские символы и цифры',
                 'email.required' => 'Email не заполнен',
                 'email.unique' => 'Email уже занят',
                 'token.required' => 'Token не заполнен',

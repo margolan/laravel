@@ -9,5 +9,5 @@
 }
 
 .main_bg {
-  background: linear-gradient(#0c0a0955 900px, #0c0a09ff 1200px), url('../../public/assets/wow_bg.jpg') no-repeat, #0c0a09;
+  background: url('../../public/assets/wow_bg.jpg') fixed bottom center;
 }
