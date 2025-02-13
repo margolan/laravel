@@ -9,5 +9,5 @@
 }
 
 .main_bg {
-  background: url('../../public/assets/wow_bg.jpg') fixed bottom center;
+  background: url('../../public/assets/wow_bg.jpg') no-repeat fixed bottom center;
 }
