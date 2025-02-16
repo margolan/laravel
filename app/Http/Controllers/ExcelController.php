@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
 use PhpOffice\PhpSpreadsheet\IOFactory;
+use Illuminate\Support\Facades\Cookie;
 
 class ExcelController extends Controller
 {
@@ -136,6 +137,12 @@ class ExcelController extends Controller
 
     public function k_index(Request $request)
     {
+
+        $cookie = Cookie::get('pincode');
+
+        if($cookie != true) {
+            return redirect()->route('auth_pincode')->with('status', 'Вы не авторизованы');
+        }
 
         $processed_data = [];
 

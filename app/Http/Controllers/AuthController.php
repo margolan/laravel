@@ -13,6 +13,29 @@ use Illuminate\Support\Facades\Cookie;
 class AuthController extends Controller
 {
 
+    public function pincode(Request $request)
+    {
+        if ($request->isMethod('get')) {
+
+            $cookie = Cookie::get('pincode');
+
+            if ($cookie == true) {
+                return redirect()->route('k_index')->with('status', 'Вы авторизованы.');
+            }
+
+            return view('auth.pincode');
+        }
+
+
+        $user = User::where('name', 'pincode')->first();
+
+        if (Hash::check($request->pincode, $user->password)) {
+            return redirect()->back()->with('status', 'Вы вошли.')->cookie('pincode', true, 60 * 24 * 7);
+        } else {
+            return redirect()->back()->with('status', 'Неудачная авторизация. Проверьте пинкод.');
+        }
+    }
+
     public function login(Request $request)
     {
 

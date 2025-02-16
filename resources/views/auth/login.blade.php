@@ -17,9 +17,9 @@
                 ВХОД</h1>
             </div>
             <label for="name" class="text-sm py-1 font-semibold">Логин</label><input type="text" name="name"
-              class="px-4 py-1 rounded-md">
+              class="px-4 py-1 rounded-md bg-white">
             <label for="password" class="mt-4 py-1 font-semibold text-sm">Пароль</label><input type="password"
-              name="password" class="px-4 py-1 rounded-md">
+              name="password" class="px-4 py-1 bg-white rounded-md">
             <div class="my-2"><input type="checkbox" name="rememberme" class=" accent-emerald-700 mr-3"><span
                 class="text-sm">Запомни меня</span>
             </div>

@@ -9,29 +9,25 @@ use Illuminate\Auth\Middleware\Authenticate;
 
 Route::middleware('auth')->group(function () {
 
-  // Route::post('/s_import', [ExcelController::class, 's_import'])->name('s_import');  // action
+  Route::get('/s/delete', [ExcelController::class, 's_delete'])->name('s_delete');
 
-  // Route::post('/k_import', [ExcelController::class, 'k_import'])->name('k_import');  // action
-
-  Route::get('/s/delete', [ExcelController::class, 's_delete'])->name('s_delete'); // action
-
-  Route::get('/k/delete', [ExcelController::class, 'k_delete'])->name('k_delete'); // action
+  Route::get('/k/delete', [ExcelController::class, 'k_delete'])->name('k_delete');
 
   // ========================= Authorization =========================
 
   Route::get('/admin', [AuthController::class, 'admin'])->name('auth_admin');
 
-  Route::post('/admin/s_import', [ExcelController::class, 's_import'])->name('s_import'); // action
+  Route::post('/admin/s_import', [ExcelController::class, 's_import'])->name('s_import');
 
-  Route::post('/admin/k_import', [ExcelController::class, 'k_import'])->name('k_import');  // action
+  Route::post('/admin/k_import', [ExcelController::class, 'k_import'])->name('k_import');
 
-  Route::get('/logout', [AuthController::class, 'logout'])->name('auth_logout'); // action
+  Route::get('/logout', [AuthController::class, 'logout'])->name('auth_logout');
 
 });
 
-
 // ========================= Main =========================
 
+Route::match(['get', 'post'], '/pincode', [AuthController::class, 'pincode'])->name('auth_pincode');
 
 Route::match(['get', 'post'], '/', [IndexController::class, 'index'])->name('index');
 

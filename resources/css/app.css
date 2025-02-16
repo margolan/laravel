@@ -1,13 +1,11 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@source "../views";
+@custom-variant dark (&:where(.dark, .dark *));
 
-@layer base {
-  /* a {
-    @apply underline;
-  } */
+.key {
+  @apply border-1 border-white w-14 h-14 flex rounded-full items-center justify-center text-3xl cursor-pointer hover:bg-stone-800 select-none;
 }
 
 .main_bg {
-  background: url('../../public/assets/wow_bg.jpg') no-repeat fixed bottom center;
+  background: url('../../public/assets/wow_bg.jpg') no-repeat fixed bottom / cover;
 }
