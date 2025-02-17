@@ -13,8 +13,6 @@ Route::middleware('auth')->group(function () {
 
   Route::get('/k/delete', [ExcelController::class, 'k_delete'])->name('k_delete');
 
-  // ========================= Authorization =========================
-
   Route::get('/admin', [AuthController::class, 'admin'])->name('auth_admin');
 
   Route::post('/admin/s_import', [ExcelController::class, 's_import'])->name('s_import');
@@ -24,8 +22,6 @@ Route::middleware('auth')->group(function () {
   Route::get('/logout', [AuthController::class, 'logout'])->name('auth_logout');
 
 });
-
-// ========================= Main =========================
 
 Route::match(['get', 'post'], '/pincode', [AuthController::class, 'pincode'])->name('auth_pincode');
 

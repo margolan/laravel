@@ -6,7 +6,7 @@
 
   @isset($data)
     <div class="wrap_admin flex justify-center md:justify-normal flex-wrap gap-4 mt-5 mb-10">
-      <div class="w-80 h-max border-1 border-neutral-500 rounded-xl">
+      <div class="w-96 h-max border-1 border-neutral-500 rounded-xl">
         <img src="{{ asset('assets/schedule.webp') }}" alt="schedule" class="w-full h-52 object-cover rounded-t-xl">
         <div class="bg-neutral-900 rounded-b-xl px-5 pt-5 pb-16">
           <h2 class="text-xl mb-4 font-semibold">График работы</h2>
@@ -71,15 +71,18 @@
                 </select>
               </div>
             </div>
-            <div class="file w-full mt-5 flex flex-col rounded-lg">
-              <input type="file" name="file" class="bg-red-700 rounded-t-lg py-3 text-center">
+            <div class="w-full mt-5 flex flex-col rounded-lg">
+              <div class="file_picker h-12 bg-red-700 rounded-t-lg py-3 text-center">
+                <span class="file_text">Выберите файл</span>
+                <input type="file" name="file" hidden>
+              </div>
               <input type="submit" value="Загрузить" class="bg-red-900 rounded-b-lg py-3">
             </div>
           </form>
         </div>
       </div>
 
-      <div class="w-80 h-max border-1 border-neutral-500 rounded-xl">
+      <div class="w-96 h-max border-1 border-neutral-500 rounded-xl">
         <img src="{{ asset('assets/keys.webp') }}" alt="keys" class="w-full h-52 object-cover rounded-t-xl">
         <div class="bg-neutral-900 rounded-b-xl px-5 pt-5 pb-16">
           <h2 class="text-xl mb-4 font-semibold">Ключи</h2>
@@ -99,8 +102,11 @@
           <form action="{{ route('k_import') }}" enctype="multipart/form-data" method="post"
             class="max-w-full w-full my-5">
             @csrf
-            <div class="file w-full mt-5 flex flex-col rounded-lg">
-              <input type="file" name="file" class="bg-red-700 rounded-t-lg py-3 text-center">
+            <div class="w-full mt-5 flex flex-col rounded-lg">
+              <div class="file_picker h-12 bg-red-700 rounded-t-lg py-3 text-center">
+                <span class="file_text">Выберите файл</span>
+                <input type="file" name="file" hidden>
+              </div>
               <input type="submit" value="Загрузить" class="bg-red-900 rounded-b-lg py-3">
             </div>
           </form>
@@ -122,6 +128,19 @@
       @endif
 
     </div>
+
+    <script>
+      const file = document.querySelectorAll('.file_picker');
+
+      file.forEach((file_el) => {
+        file_el.addEventListener('click', () => {
+          file_el.querySelector('input[type="file"]').click();
+        });
+        file_el.querySelector('input[type="file"]').addEventListener('change', (e) => {
+          file_el.querySelector('.file_text').textContent = e.target.files[0].name;
+        });
+      });
+    </script>
 
   @endisset
 
