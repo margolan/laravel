@@ -5,6 +5,7 @@ use App\Http\Controllers\ExcelController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\Http\Controllers\IndexController;
+use App\Http\Controllers\PasswordController;
 use Illuminate\Auth\Middleware\Authenticate;
 
 Route::middleware('auth')->group(function () {
@@ -34,6 +35,8 @@ Route::get('/k', [ExcelController::class, 'k_index'])->name('k_index');
 Route::match(['get', 'post'], '/login', [AuthController::class, 'login'])->name('login');
 
 Route::match(['get', 'post'], '/register', [AuthController::class, 'register'])->name('register');
+
+Route::match(['get', 'post'], '/forgot_password', [PasswordController::class, 'forgotPassword'])->name('forgot_password');
 
 // ========================= Test =========================
 
