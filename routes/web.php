@@ -36,7 +36,17 @@ Route::match(['get', 'post'], '/login', [AuthController::class, 'login'])->name(
 
 Route::match(['get', 'post'], '/register', [AuthController::class, 'register'])->name('register');
 
-Route::match(['get', 'post'], '/forgot_password', [PasswordController::class, 'forgotPassword'])->name('forgot_password');
+Route::match(['get', 'post'], '/password/request', [PasswordController::class, 'password_request'])->name('password.request');
+
+Route::match(['get', 'post'], '/password/reset/', [PasswordController::class, 'password_reset'])->name('password.reset');
+
+// Test mode
+
+// Route::get('password/reset', [PasswordController::class, 'showResetForm'])->name('password.request');
+// Route::post('password/email', [PasswordController::class, 'sendResetLinkEmail'])->name('password.email');
+// Route::post('password/reset', [PasswordController::class, 'reset'])->name('password.update');
+
+// Test mode
 
 // ========================= Test =========================
 
