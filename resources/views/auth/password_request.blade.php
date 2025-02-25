@@ -12,7 +12,7 @@
         <div class="form-group">
           <label for="email" class="w-full font-semibold">Email адрес</label>
           <input type="email" name="email" id="email"
-            class="border-1 w-full py-1 px-3 my-3 rounded-sm border-gray-300" placeholder="Введите свой email">
+            class="border-1 w-full py-1 px-3 my-3 rounded-sm border-gray-300">
         </div>
         <button type="submit" class="w-full py-1 px-3 text-white font-semibold bg-emerald-500 rounded-sm">Сбросить
           пароль</button>
