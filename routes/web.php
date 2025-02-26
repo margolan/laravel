@@ -5,6 +5,7 @@ use App\Http\Controllers\ExcelController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\Http\Controllers\IndexController;
+use App\Http\Controllers\KanbanController;
 use App\Http\Controllers\PasswordController;
 use Illuminate\Auth\Middleware\Authenticate;
 
@@ -51,3 +52,5 @@ Route::match(['get', 'post'], '/password/reset/', [PasswordController::class, 'p
 // ========================= Test =========================
 
 Route::match(['get', 'post'], '/test', [ExcelController::class, 'getDataTest'])->name('test');
+
+Route::match(['get', 'post'], '/kanban', [KanbanController::class, 'interact'])->name('kanban');
