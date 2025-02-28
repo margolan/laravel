@@ -27,6 +27,8 @@ Route::middleware('auth')->group(function () {
 
 Route::match(['get', 'post'], '/pincode', [AuthController::class, 'pincode'])->name('auth_pincode');
 
+Route::match(['get', 'post'], '/pincode/reset', [AuthController::class, 'pincode_reset'])->name('auth_pincode_reset');
+
 Route::match(['get', 'post'], '/', [IndexController::class, 'index'])->name('index');
 
 Route::get('/s', [ExcelController::class, 's_index'])->name('s_index');

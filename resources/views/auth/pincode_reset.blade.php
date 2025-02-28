@@ -4,6 +4,14 @@
 
 @section('content')
 
+  @if (isset($data))
+    @php
+      echo '<pre>';
+      print_r($data);
+      echo '</pre>';
+    @endphp
+  @endif
+
   <div class="h-screen flex justify-center items-center">
     <div
       class="w-64 text-white shadow-2xl shadow-black mx-auto flex flex-col bg-radial-[at_50%_25%] from-stone-700 to-stone-900 to-100% rounded-lg p-4">
@@ -25,11 +33,14 @@
         <div class="key">9</div>
         <div class="key">C</div>
         <div class="key">0</div>
-        <div class="w-14 h-14"></div>
+        <div class="key border-emerald-500 invisible">
+          <div class="w-3 h-3 border-emerald-500 border-r-2 border-t-2 rotate-45 -translate-x-[2px]"></div>
+        </div>
       </div>
-      <form action="{{ route('auth_pincode') }}" method="post">
+      <form action="{{ route('auth_pincode_reset') }}" method="post">
         @csrf
         <input type="text" name="pincode" hidden class="pincode border-1 text-white">
+        <input type="text" name="token" value="{{ $token ?? '' }}" hidden>
       </form>
     </div>
   </div>
@@ -47,22 +58,29 @@
             cell_el.textContent = '_';
           });
           pincode.value = '';
+          if (!key[11].classList.contains('invisible')) {
+            key[11].classList.add('invisible');
+          }
         } else {
           if (pincode.value.length < 4) {
             pincode.value += this.textContent;
             for (let i = 0; i < 4; i++) {
               if (cell[i].textContent === '_') {
-                cell[i].textContent = '*';
+                cell[i].textContent = this.textContent;
                 break;
               }
             }
             if (pincode.value.length === 4) {
-              document.querySelector('form').submit();
+              key[11].classList.remove('invisible');
             }
           }
         }
 
       });
+    });
+
+    key[11].addEventListener('click', function() {
+      document.querySelector('form').submit();
     });
   </script>
 

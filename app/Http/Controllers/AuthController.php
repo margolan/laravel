@@ -36,6 +36,29 @@ class AuthController extends Controller
         }
     }
 
+    public function pincode_reset(Request $request)
+    {
+
+        if ($request->isMethod('get')) {
+
+            return view('auth.pincode_reset', ['token' => $request->token]);
+        }
+
+        $token = $request->token;
+
+        $user = User::where('name', 'pincode')->first();
+
+        // $user->password = Hash::make($request->pincode);
+
+        // $user->save();
+
+        // return redirect()->route('auth_pincode_reset')->with('status', 'Пинкод изменен.');
+
+        $data = $request->all();
+
+        return view('auth.pincode_reset', compact('data'));
+    }
+
     public function login(Request $request)
     {
 

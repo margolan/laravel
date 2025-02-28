@@ -3,9 +3,16 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 .key {
-  @apply border-1 border-white w-14 h-14 flex rounded-full items-center justify-center text-3xl cursor-pointer hover:text-emerald-600 hover:shadow-sm select-none;
+  @apply border-1 w-14 h-14 flex rounded-full items-center justify-center text-3xl cursor-pointer hover:text-emerald-600 hover:shadow-sm select-none;
 }
 
 .main_bg {
   background: url('../../public/assets/wow_bg.jpg') no-repeat fixed bottom / cover;
+}
+
+@font-face {
+  font-family: 'roboto mono';
+  src: url('/resources/fonts/RobotoMono-VariableFont_wght.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
 }
