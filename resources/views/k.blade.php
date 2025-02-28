@@ -4,9 +4,6 @@
 
 @section('content')
 
-  @include('layout.key_header')
-
-
   @php
 
     // echo '<hr>';
@@ -17,6 +14,17 @@
     // print_r($processed_data);
     // echo '</pre>';
   @endphp
+
+  <div class="my-5 flex items-center text-lg drop-shadow-[0_3px_2px_rgba(0,0,0,0.8)]">
+    <h1
+      class="px-7 tracking-widest font-[roboto_mono] border-2 rounded-[12px] transition-all hover:drop-shadow-[0_3px_2px_rgba(50,50,50,0.6)]">
+      <a href="/">0x0.kz</a>
+    </h1>
+    <div class="w-2 h-2 border-t-2 border-r-2 rotate-45 mx-2"></div>
+    <h1 class="font-semibold transition-all hover:drop-shadow-[0_3px_2px_rgba(50,50,50,0.6)]"><a
+        href="{{ route('k_index') }}">Ключи</a></h1>
+  </div>
+
   @if ($available_links->isEmpty())
     <p>Нет вариантов ключей</p>
   @else
@@ -34,7 +42,8 @@
     <p>Нет загруженных ключей</p>
   @else
     <div class="wrap_search w-full relative">
-      <div class="found w-10 border-neutral-700 border-r-1 flex justify-center absolute text-neutral-900 left-3 top-12"></div>
+      <div class="found w-10 border-neutral-700 border-r-1 flex justify-center absolute text-neutral-900 left-3 top-12">
+      </div>
       <input type="search"
         class="search w-full max-w-[500px] mt-9 dark:bg-gray-200 dark:text-black py-3 pl-16 rounded-2xl">
     </div>

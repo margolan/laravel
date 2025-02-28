@@ -8,16 +8,9 @@
       "id": "2",
       "references": [],
       "title": "Complete password reset blade and controller"
-    },
-    {
-      "assignedTo": {
-        "name": "Margulan"
-      },
-      "creation_time": "2025-02-25T14:02:21.628Z",
-      "id": "1",
-      "references": [],
-      "title": "Remove header to S and K"
-    },
+    }
+  ],
+  "in-progress": [
     {
       "assignedTo": {
         "name": "Margulan"
@@ -28,7 +21,16 @@
       "title": "Make Kanban"
     }
   ],
-  "in-progress": [],
   "testing": [],
-  "done": []
+  "done": [
+    {
+      "assignedTo": {
+        "name": "Margulan"
+      },
+      "creation_time": "2025-02-25T14:02:21.628Z",
+      "id": "1",
+      "references": [],
+      "title": "Remove header in S and K views"
+    }
+  ]
 }

@@ -4,7 +4,7 @@
 
 @section('content')
 
-  @include('layout.schedule_header')
+
 
   @php
 
@@ -12,6 +12,16 @@
     // print_r($processed_data);
     // echo '</pre>';
   @endphp
+
+  <div class="my-5 flex items-center text-lg drop-shadow-[0_3px_2px_rgba(0,0,0,0.8)]">
+    <h1
+      class="px-7 tracking-widest font-[roboto_mono] border-2 rounded-[12px] transition-all hover:drop-shadow-[0_3px_2px_rgba(50,50,50,0.6)]">
+      <a href="/">0x0.kz</a>
+    </h1>
+    <div class="w-2 h-2 border-t-2 border-r-2 rotate-45 mx-2"></div>
+    <h1 class="font-semibold transition-all hover:drop-shadow-[0_3px_2px_rgba(50,50,50,0.6)]"><a
+        href="{{ route('s_index') }}">График</a></h1>
+  </div>
 
   @if (isset($available_links))
     @if ($available_links->isEmpty())
