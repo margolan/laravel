@@ -3,14 +3,14 @@
     "file": "assets/wow_bg-AnCphf2S.jpg",
     "src": "public/assets/wow_bg.jpg"
   },
-  "public/fonts/RobotoMono-VariableFont_wght.ttf": {
-    "file": "assets/RobotoMono-VariableFont_wght-Be6w_Krw.ttf",
-    "src": "public/fonts/RobotoMono-VariableFont_wght.ttf"
-  },
   "resources/css/app.css": {
-    "file": "assets/app-BQI7Ry6_.css",
+    "file": "assets/app-CSuJw_OT.css",
     "src": "resources/css/app.css",
     "isEntry": true
+  },
+  "resources/fonts/RobotoMono-VariableFont_wght.ttf": {
+    "file": "assets/RobotoMono-VariableFont_wght-Be6w_Krw.ttf",
+    "src": "resources/fonts/RobotoMono-VariableFont_wght.ttf"
   },
   "resources/js/app.js": {
     "file": "assets/app-CDPtaH1A.js",
