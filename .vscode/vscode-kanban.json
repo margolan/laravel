@@ -8,9 +8,7 @@
       "id": "2",
       "references": [],
       "title": "Complete password reset blade and controller"
-    }
-  ],
-  "in-progress": [
+    },
     {
       "assignedTo": {
         "name": "Margulan"
@@ -19,6 +17,44 @@
       "id": "3",
       "references": [],
       "title": "Make Kanban"
+    },
+    {
+      "assignedTo": {
+        "name": "Margulan"
+      },
+      "creation_time": "2025-02-28T12:37:41.717Z",
+      "id": "4",
+      "references": [],
+      "title": "reset pincode"
+    },
+    {
+      "assignedTo": {
+        "name": "Margulan"
+      },
+      "creation_time": "2025-02-28T12:38:01.229Z",
+      "id": "5",
+      "references": [],
+      "title": "reset pincode in admin"
+    }
+  ],
+  "in-progress": [
+    {
+      "assignedTo": {
+        "name": "Margulan"
+      },
+      "creation_time": "2025-02-28T13:24:14.486Z",
+      "id": "6",
+      "references": [],
+      "title": "add token base in admin"
+    },
+    {
+      "assignedTo": {
+        "name": "Margulan"
+      },
+      "creation_time": "2025-02-28T13:27:18.412Z",
+      "id": "7",
+      "references": [],
+      "title": "change admin view"
     }
   ],
   "testing": [],

@@ -32,9 +32,9 @@ class ExcelController extends Controller
         $record = Schedule::find($request->id);
         if ($record) {
             $record->delete();
-            return redirect()->route('auth_admin')->with('status', 'Запись успешно удалена');
+            return redirect()->route('admin_index')->with('status', 'Запись успешно удалена');
         } else {
-            return redirect()->route('auth_admin')->with('status', 'Таблица не найдена');
+            return redirect()->route('admin_index')->with('status', 'Таблица не найдена');
         }
     }
 
@@ -43,42 +43,48 @@ class ExcelController extends Controller
         $record = Key::find($request->id);
         if ($record) {
             $record->delete();
-            return redirect()->route('auth_admin')->with('status', 'Запись успешно удалена');
+            return redirect()->route('admin_index')->with('status', 'Запись успешно удалена');
         } else {
-            return redirect()->route('auth_admin')->with('status', 'Таблица не найдена');
+            return redirect()->route('admin_index')->with('status', 'Таблица не найдена');
         }
     }
 
     public function s_import(Request $request)
     {
 
-        $request->validate(
-            [
-                'city' => ['required', 'in:aktau,aktobe,atyrau,oral'],
-                'month' => ['required', 'in:01,02,03,04,05,06,07,08,09,10,11,12'],
-                'year' => ['required', 'in:2024,2025,2026'],
-                'depart' => ['required', 'in:pos,atm'],
-                'file' => ['required', 'mimes:xlsx,xls,csv', 'max:2048'],
-            ],
-            [
-                'city.required' => 'Выберите город',
-                'city.in' => 'Выберите город из списка',
-                'month.required' => 'Выберите месяц',
-                'month.in' => 'Месяц должен быть в диапазоне от 1 до 12',
-                'year.required' => 'Выберите год',
-                'year.in' => 'Выберите год из списка',
-                'depart.required' => 'Выберите отдел',
-                'depart.in' => 'Выберите отдел из списка',
-            ],
-        );
+        // $validated_data = $request->validate(
+        //     [
+        //         'city' => ['required', 'in:aktau,aktobe,atyrau,oral'],
+        //         'month' => ['required', 'in:01,02,03,04,05,06,07,08,09,10,11,12'],
+        //         'year' => ['required', 'in:2024,2025,2026'],
+        //         'depart' => ['required', 'in:pos,atm'],
+        //         // 'file' => ['required', 'mimes:xlsx,xls,csv'],
+        //     ],
+        //     [
+        //         'city.required' => 'Выберите город',
+        //         'city.in' => 'Выберите город из списка',
+        //         'month.required' => 'Выберите месяц',
+        //         'month.in' => 'Месяц должен быть в диапазоне от 1 до 12',
+        //         'year.required' => 'Выберите год',
+        //         'year.in' => 'Выберите год из списка',
+        //         'depart.required' => 'Выберите отдел',
+        //         'depart.in' => 'Выберите отдел из списка',
+        //         'file' => 'Выберите файл',
+        //     ],
+        // );
+
 
         $spreadsheet = IOFactory::load($request->file('file'));
 
         $ExcelImport = new ExcelImport();
 
-        $processed_data = $ExcelImport->getSchedule($spreadsheet, $request);
+        if ($request->excel == 'on') {
+            $processed_data = $ExcelImport->getScheduleExcel($spreadsheet, $request);
+        } else {
+            $processed_data = $ExcelImport->getSchedulePDF($spreadsheet, $request);
+        }
 
-        return redirect()->route('auth_admin')->with('processed_data', $processed_data)->with('status', 'Запись успешно добавлена');
+        return redirect()->route('admin_index')->with('processed_data', $processed_data)->with('status', 'Запись успешно добавлена');
     }
 
     public function s_index(Request $request)
@@ -131,8 +137,8 @@ class ExcelController extends Controller
 
         $processed_data = $ExcelImport->getKey($spreadsheet, $request);
 
-        return redirect()->route('auth_admin')->with('processed_data', $processed_data)->with('status', 'Запись успешно добавлена');
-        // return route('auth_admin', ['processed_data' => $processed_data, 'status' => 'Запись успешно добавлена']);
+        return redirect()->route('admin_index')->with('processed_data', $processed_data)->with('status', 'Запись успешно добавлена');
+        // return route('admin_index', ['processed_data' => $processed_data, 'status' => 'Запись успешно добавлена']);
     }
 
     public function k_index(Request $request)
@@ -140,7 +146,7 @@ class ExcelController extends Controller
 
         $cookie = Cookie::get('pincode');
 
-        if($cookie != true) {
+        if ($cookie != true) {
             return redirect()->route('auth_pincode')->with('status', 'Вы не авторизованы');
         }
 

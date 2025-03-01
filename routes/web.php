@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ExcelController;
 use Illuminate\Support\Facades\Route;
@@ -7,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\KanbanController;
 use App\Http\Controllers\PasswordController;
+use App\Http\Controllers\TokenController;
 use Illuminate\Auth\Middleware\Authenticate;
 
 Route::middleware('auth')->group(function () {
@@ -15,13 +17,17 @@ Route::middleware('auth')->group(function () {
 
   Route::get('/k/delete', [ExcelController::class, 'k_delete'])->name('k_delete');
 
-  Route::get('/admin', [AuthController::class, 'admin'])->name('auth_admin');
-
   Route::post('/admin/s_import', [ExcelController::class, 's_import'])->name('s_import');
 
   Route::post('/admin/k_import', [ExcelController::class, 'k_import'])->name('k_import');
 
   Route::get('/logout', [AuthController::class, 'logout'])->name('auth_logout');
+
+  Route::get('/admin', [AdminController::class, 'index'])->name('admin_index');
+  
+  Route::post('/admin/token/create', [AdminController::class, 'token_create'])->name('token_create');
+
+  Route::get('/admin/token/delete', [AdminController::class, 'token_delete'])->name('token_delete');
 
 });
 

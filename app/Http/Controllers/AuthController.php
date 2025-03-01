@@ -6,8 +6,6 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use App\Models\Schedule;
-use App\Models\Key;
 use Illuminate\Support\Facades\Cookie;
 
 class AuthController extends Controller
@@ -46,17 +44,18 @@ class AuthController extends Controller
 
         $token = $request->token;
 
+        if(empty($token)) {
+            return redirect()->route('auth_pincode_reset')->with('status', 'У вас нет права на смену пин-кода.');
+        }
+
         $user = User::where('name', 'pincode')->first();
 
-        // $user->password = Hash::make($request->pincode);
+        $user->password = Hash::make($request->pincode);
 
-        // $user->save();
+        $user->save();
 
-        // return redirect()->route('auth_pincode_reset')->with('status', 'Пинкод изменен.');
+        return redirect()->route('auth_pincode_reset')->with('status', 'Пинкод изменен.');
 
-        $data = $request->all();
-
-        return view('auth.pincode_reset', compact('data'));
     }
 
     public function login(Request $request)
@@ -114,15 +113,6 @@ class AuthController extends Controller
 
         // return redirect()->back()->with('status', $processed_data);
 
-    }
-
-    public function admin(Request $request)
-    {
-        $data['schedule'] = Schedule::select('id', 'city', 'depart', 'date')->get();
-
-        $data['key'] = Key::select('id', 'created_at')->get();
-
-        return view('admin', ['data' => $data]);
     }
 
     public function logout(Request $request)

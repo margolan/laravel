@@ -20,7 +20,7 @@
       <li><a href="{{ route('test') }}"
           class="block sm:inline px-4 py-2 bg-stone-900 hover:bg-stone-800 hover:text-emerald-500">Test</a>
       </li>
-      <li><a href="{{ route('auth_admin') }}"
+      <li><a href="{{ route('admin_index') }}"
           class="block sm:inline px-4 py-2 bg-stone-900 hover:bg-stone-800 hover:text-emerald-500">Admin</a>
       </li>
       <li>
