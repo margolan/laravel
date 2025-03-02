@@ -10,36 +10,27 @@
 
 <body class="main_bg dark:text-white">
 
+
   @if (session('status'))
-    <div class="status w-max p-1 absolute right-2 top-2 border-1 rounded-full flex justify-center text-sm font-semibold">
-      <div class="w-max pl-5 p-1 bg-emerald-900 text-white rounded-full flex justify-center items-center">
-        {{ session('status') }}
-        <div class="cross w-5 h-5 ml-2 cursor-pointer rounded-full bg-white text-white flex justify-center items-center">
-          <svg class="w-2 h-2 fill-emerald-800" fill="#000000" version="1.1" id="Layer_1"
-            xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512"
-            xml:space="preserve">
-            <polygon
-              points="512,59.076 452.922,0 256,196.922 59.076,0 0,59.076 196.922,256 0,452.922 59.076,512 256,315.076 452.922,512 
-             512,452.922 315.076,256 		" />
-          </svg>
-        </div>
-      </div>
+    <div
+      class="status max-w-64 absolute right-2 top-16 bg-black transition-all px-5 rounded-md py-1 text-sm text-right hover:bg-neutral-800 cursor-pointer">
+      <p>{{ session('status') }}</p>
     </div>
   @endif
 
-  <div class="wrap min-h-screen px-3">
+  <div class="min-h-screen flex flex-col">
 
-    @if (Auth::check())
-      @include('layout.header')
-    @endif
+    @include('layout.header')
 
-    @yield('content')
+    <div class="flex-1 flex flex-col justify-center px-3">
+      @yield('content')
+    </div>
+
+    @include('layout.footer')
 
   </div>
 
-  @if (Route::currentRouteName() != 'index')
-    @include('layout.footer')
-  @endif
+
 
 </body>
 

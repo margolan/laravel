@@ -12,7 +12,7 @@
     @endphp
   @endif
 
-  <div class="h-screen flex justify-center items-center">
+  <div class="flex items-center">
     <div
       class="w-64 text-white shadow-2xl shadow-black mx-auto flex flex-col bg-radial-[at_50%_25%] from-stone-700 to-stone-900 to-100% rounded-lg p-4">
       <div class="display w-full h-26 flex justify-center items-center text-3xl gap-3 text-emerald-500">

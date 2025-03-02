@@ -160,11 +160,13 @@ class ExcelController extends Controller
 
                 $query = Key::query();
 
-                if (!empty($request->all())) {
+                if (!empty($request->id)) {
 
-                    $query->where('id', $request->input('id'));
+                    $query->where('id', $request->id);
 
                     $key = $query->get()->toArray();
+
+                    $key = $key[0];
                 } else {
 
                     $key = $query->latest('created_at')->first()->toArray();

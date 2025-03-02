@@ -1,37 +1,39 @@
-<div class="h-16 flex justify-between sm:items-center @if(Route::currentRouteName() == 'index') absolute @endif ">
-  <div class="left h-max flex justify-center items-center">
-    <ul class="burger sm:inline-flex sm:items-center overflow-hidden h-16 sm:h-9 z-10 sm:bg-stone-900 sm:rounded-lg">
-      <li class="px-4 pt-5 pb-5 sm:hidden">
-        <svg class="icon_burger h-6 w-6 cursor-pointer fill-current   hover:text-emerald-500" viewBox="0 0 20 20"
-          xmlns="http://www.w3.org/2000/svg">
-          <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"></path>
-        </svg>
-        <svg class="icon_cross hidden h-7 w-7 cursor-pointer  hover:text-emerald-500" xmlns="http://www.w3.org/2000/svg"
-          fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-        </svg>
-      </li>
-      <li><a href="{{ route('s_index') }}"
-          class="block sm:inline px-4 py-2 bg-stone-900 hover:bg-stone-800 hover:text-emerald-500">Schedule</a>
-      </li>
-      <li><a href="{{ route('k_index') }}"
-          class="block sm:inline px-4 py-2 bg-stone-900 hover:bg-stone-800 hover:text-emerald-500">Key</a>
-      </li>
-      <li><a href="{{ route('test') }}"
-          class="block sm:inline px-4 py-2 bg-stone-900 hover:bg-stone-800 hover:text-emerald-500">Test</a>
-      </li>
-      <li><a href="{{ route('admin_index') }}"
-          class="block sm:inline px-4 py-2 bg-stone-900 hover:bg-stone-800 hover:text-emerald-500">Admin</a>
-      </li>
-      <li>
-        <a href="{{ route('auth_logout') }}"
-          class="block sm:inline px-4 py-2 bg-stone-900 hover:bg-stone-800 hover:text-emerald-500">LogOut</a>
-      </li>
-    </ul>
+<div class="h-14 py-3 pl-3 flex justify-between items-center bg-black text-white">
+  <div class="flex items-center text-lg drop-shadow-[0_3px_2px_rgba(0,0,0,0.8)]">
+    <h1
+      class="px-7 tracking-widest font-[roboto_mono] border-2 rounded-[12px] transition-all hover:drop-shadow-[0_3px_2px_rgba(50,50,50,0.6)]">
+      <a href="/">0x0.kz</a>
   </div>
-  <div class="right hidden">
-    <div class="h-full theme-toggle cursor-default items-center flex">
-      &#127761;
+  <div class="h-6 z-10">
+    <div class="nav flex max-h-6 bg-black gap-3 pr-5 pl-8 not-sm:pb-3 sm:flex-row flex-col items-end overflow-hidden transition-all">
+      <div class="menu cursor-pointer relative">
+        <div class="burger w-6 min-h-6 flex justify-around flex-col sm:hidden transition-all">
+          <div class="w-6 border-t-3"></div>
+          <div class="w-6 border-t-3"></div>
+          <div class="w-6 border-t-3"></div>
+        </div>
+        <div class="arrow w-6 min-h-6 flex-col sm:hidden opacity-0 absolute top-0 transition-all">
+          <div class="w-6 border-t-3 translate-y-3 rotate-45 absolute"></div>
+          <div class="w-6 border-t-3 translate-y-3 -rotate-45 absolute"></div>
+        </div>
+      </div>
+      <a href="{{ route('index') }}"
+        class="{{ request()->routeIs('index') ? 'underline underline-offset-4' : 'text-neutral-300' }}">Главная</a>
+      <a href="{{ route('s_index') }}"
+        class="{{ request()->routeIs('s_index') ? 'underline underline-offset-4' : 'text-neutral-300' }}">График</a>
+      <a href="{{ route('k_index') }}"
+        class="{{ request()->routeIs('k_index') ? 'underline underline-offset-4' : 'text-neutral-300' }}">Ключи</a>
+      <a href="{{ route('kanban') }}"
+        class="{{ request()->routeIs('kanban') ? 'underline underline-offset-4' : 'text-neutral-300' }}">Kanban</a>
+      @if (Auth::check())
+        <a href="{{ route('admin_index') }}"
+          class="{{ request()->routeIs('admin_index') ? 'underline underline-offset-4' : 'text-neutral-300' }}">Где-то</a>
+        <a href="{{ route('auth_logout') }}"
+          class="{{ request()->routeIs('auth_logout') ? 'underline underline-offset-4' : 'text-neutral-300' }}">Выйти</a>
+      @else
+        <a href="{{ route('login') }}"
+          class="{{ request()->routeIs('login') ? 'underline underline-offset-4' : 'text-neutral-300' }}">Войти</a>
+      @endif
     </div>
   </div>
 </div>

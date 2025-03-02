@@ -5,7 +5,7 @@
 @section('content')
 
 
-  <div class="min-h-screen flex items-center justify-center">
+  <div class="flex justify-center">
     @if (!Auth::check())
       <div class="w-72 h-full overflow-hidden flex items-center">
         <div class="auth_form w-max h-max relative flex items-center">

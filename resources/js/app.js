@@ -1,29 +1,6 @@
 import './bootstrap';
 
 
-// ==================== Dark Theme ====================
-
-
-const htmlElement = document.documentElement;
-
-if (document.querySelector('.theme-toggle')) {
-  document.querySelector('.theme-toggle').addEventListener('click', () => {
-    if (htmlElement.classList.contains('dark')) {
-      htmlElement.classList.remove('dark');
-      localStorage.setItem('theme', 'light');
-    } else {
-      htmlElement.classList.add('dark');
-      localStorage.setItem('theme', 'dark');
-    }
-  });
-}
-
-// const savedTheme = localStorage.getItem('theme');
-// if (savedTheme === 'dark') {
-//   htmlElement.classList.add('dark');
-// }
-
-
 // ==================== Days Styles ====================
 
 
@@ -91,24 +68,33 @@ if (search) {
 // ==================== Burger Menu ====================
 
 
-document.querySelector('.burger')?.addEventListener('click', function () {
-  this.classList.toggle('h-16');
-  this.classList.toggle('bg-stone-900');
-  document.querySelector('.icon_burger').classList.toggle('hidden');
-  document.querySelector('.icon_cross').classList.toggle('hidden');
+const menu = document.querySelector('.menu');
+const burger = document.querySelector('.burger');
+const nav = document.querySelector('.nav');
+const arrow = document.querySelector('.arrow');
+
+menu.addEventListener('click', () => {
+  nav.classList.toggle('max-h-6');
+  nav.classList.toggle('overflow-hidden');
+  nav.classList.toggle('max-h-screen');
+
+  burger.classList.toggle('rotate-180');
+  burger.classList.toggle('opacity-0');
+
+  arrow.classList.toggle('rotate-180');
+  arrow.classList.toggle('opacity-0');
 });
 
 
-// ==================== Auth ====================
-
-
-document.querySelector('.login')?.addEventListener('click', function () { document.querySelector('.auth_form').classList.toggle('-left-72') })
-document.querySelector('.register')?.addEventListener('click', function () { document.querySelector('.auth_form').classList.toggle('-left-72') })
-
 // ==================== Session Status ====================
 
-document.querySelector('.cross')?.addEventListener('click', function () { document.querySelector('.status').classList.add('hidden') })
-document.querySelector('.cross') ? setTimeout(() => { document.querySelector('.status').classList.add('hidden') }, 5000) : '';
+
+function hide_status() {
+  document.querySelector('.status')?.classList.add('opacity-0', 'translate-x-full')
+  setTimeout(() => { document.querySelector('.status')?.classList.add('hidden') }, 500);
+}
+setTimeout(() => { hide_status() }, 4000)
+document.querySelector('.status')?.addEventListener('click', hide_status);
 
 
 // ==================== Main Page ====================

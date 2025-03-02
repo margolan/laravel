@@ -4,7 +4,7 @@
 
 @section('content')
 
-  <div class="w-full min-h-screen py-10 flex items-center justify-center">
+  <div class="w-full flex items-center justify-center my-5">
 
     <div class="container w-80  rounded-lg bg-white text-neutral-900">
       <div class="header w-80 h-[450px] flex items-center flex-col justify-center">

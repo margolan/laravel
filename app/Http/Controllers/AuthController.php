@@ -30,7 +30,7 @@ class AuthController extends Controller
         if (Hash::check($request->pincode, $user->password)) {
             return redirect()->back()->with('status', 'Вы вошли.')->cookie('pincode', true, 60 * 24 * 7);
         } else {
-            return redirect()->back()->with('status', 'Неудачная авторизация. Проверьте пинкод.');
+            return redirect()->back()->with('status', 'Неверный пинкод.');
         }
     }
 
@@ -74,7 +74,7 @@ class AuthController extends Controller
 
             $request->session()->regenerate();
 
-            return redirect()->intended('admin')->with('status', 'Вы вошли.');
+            return redirect()->route('admin_index')->with('status', 'Вы вошли.');
         }
 
         return back()->with('status', 'Неудачная авторизация. Проверьте логин и\или пароль.');
@@ -123,6 +123,6 @@ class AuthController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('/')->with('status', 'Вы вышли.');
+        return redirect()->back()->with('status', 'Вы вышли.');
     }
 }

@@ -13,7 +13,10 @@
     @endphp
   @endif
 
-  <div class="wrap min-h-screen flex flex-wrap justify-center gap-5 text-neutral-900 py-5">
+
+  <h1 class="mx-auto text-3xl my-3 px-20 pb-2 bg-gradient-to-r from-transparent via-gray-900 to-transparent">В разработке...</h1>
+
+  <div class="flex flex-wrap justify-center gap-5 text-neutral-900 pb-5">
 
     <div class="todo w-85 border-t-6 border-orange-300 bg-white px-3">
 
