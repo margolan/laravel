@@ -10,7 +10,7 @@ class Kanban extends Model
         'title',
         'text',
         'priority',
-        'column',
+        'column', // todo, inprocess, testing, ready
         'author',
         'va1',
         'va2',

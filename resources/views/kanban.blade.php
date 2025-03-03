@@ -13,8 +13,16 @@
     @endphp
   @endif
 
+  @if ($errors->any())
+    @php
+      echo '<pre>';
+      print_r($errors->any());
+      echo '</pre>';
+    @endphp
+  @endif
 
-  <h1 class="mx-auto text-3xl my-3 px-20 pb-2 bg-gradient-to-r from-transparent via-gray-900 to-transparent">В разработке...</h1>
+  <h1 class="mx-auto text-2xl my-3 px-20 pb-2 bg-gradient-to-r from-transparent via-gray-900 to-transparent">В
+    разработке...</h1>
 
   <div class="flex flex-wrap justify-center gap-5 text-neutral-900 pb-5">
 
@@ -60,6 +68,8 @@
         </div>
       </div>
 
+      {{-- Input Form --}}
+
       <div class="border-1 border-neutral-300 bg-neutral-100 border-t-4 px-3 p-4 text-sm text-neutral-700">
         <form action="{{ route('kanban') }}" method="post">
           @csrf
@@ -68,9 +78,9 @@
             placeholder="Title">
           <textarea name="text" rows="4" class="w-full bg-white border-1 border-neutral-300 p-2 mb-3" placeholder="Text"></textarea>
           <select name="priority" class="w-full bg-white border-1 border-neutral-300 p-2 mb-3">
-            <option value="1" class="text-red-500">High Priority</option>
-            <option value="2" class="text-emerald-500" selected>No Priority</option>
-            <option value="3" class="text-green-500">Low Priority</option>
+            <option value="high" class="text-red-500">High Priority</option>
+            <option value="medium" class="text-emerald-500" selected>No Priority</option>
+            <option value="low" class="text-green-500">Low Priority</option>
           </select>
           <button type="submit" class="bg-neutral-800 text-white py-2 px-5 ">Add</button>
         </form>

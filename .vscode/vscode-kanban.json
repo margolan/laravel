@@ -13,31 +13,25 @@
       "assignedTo": {
         "name": "Margulan"
       },
-      "creation_time": "2025-02-26T12:40:51.678Z",
-      "id": "3",
-      "references": [],
-      "title": "Make Kanban"
-    },
-    {
-      "assignedTo": {
-        "name": "Margulan"
-      },
       "creation_time": "2025-02-28T12:37:41.717Z",
       "id": "4",
       "references": [],
       "title": "reset pincode"
-    },
+    }
+  ],
+  "in-progress": [
     {
       "assignedTo": {
         "name": "Margulan"
       },
-      "creation_time": "2025-02-28T12:38:01.229Z",
-      "id": "5",
+      "creation_time": "2025-02-26T12:40:51.678Z",
+      "id": "3",
       "references": [],
-      "title": "reset pincode in admin"
+      "title": "Make Kanban"
     }
   ],
-  "in-progress": [
+  "testing": [],
+  "done": [
     {
       "assignedTo": {
         "name": "Margulan"
@@ -55,10 +49,7 @@
       "id": "7",
       "references": [],
       "title": "change admin view"
-    }
-  ],
-  "testing": [],
-  "done": [
+    },
     {
       "assignedTo": {
         "name": "Margulan"
@@ -67,6 +58,15 @@
       "id": "1",
       "references": [],
       "title": "Remove header in S and K views"
+    },
+    {
+      "assignedTo": {
+        "name": "Margulan"
+      },
+      "creation_time": "2025-02-28T12:38:01.229Z",
+      "id": "5",
+      "references": [],
+      "title": "reset pincode in admin"
     }
   ]
 }
