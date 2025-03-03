@@ -118,7 +118,7 @@
       {{-- Tokens --}}
 
       <div class="w-96 h-max border-1 border-neutral-500 rounded-xl">
-        <img src="{{ asset('assets/token.jpg') }}" alt="keys" class="w-full h-52 object-cover rounded-t-xl">
+        <img src="{{ asset('assets/token.jpg') }}" alt="token" class="w-full h-52 object-cover rounded-t-xl">
         <div class="bg-neutral-900 rounded-b-xl px-5 pt-5 pb-16">
           <h2 class="text-xl mb-4 font-semibold">Токены</h2>
 
@@ -146,6 +146,24 @@
             <input type="submit"
               class="bg-gradient-to-r dark:from-red-700 dark:to-rose-700 text-white px-4 text-center my-1 cursor-pointer"
               value="Создать">
+          </form>
+
+        </div>
+      </div>
+
+      {{-- Pin change --}}
+
+      <div class="w-96 h-max border-1 border-neutral-500 rounded-xl">
+        <img src="{{ asset('assets/pincode.jpg') }}" alt="pincode" class="w-full h-52 object-cover rounded-t-xl">
+        <div class="bg-neutral-900 rounded-b-xl px-5 pt-5 pb-16">
+
+          <h2 class="text-xl mb-4 font-semibold">Пин-код</h2>
+          <form action="{{ route('admin_pincode_reset') }}" method="POST">
+            @csrf
+            <input type="text" name="pincode" maxlength="4" class="w-20 border-1 rounded-md px-3 mr-3">
+            <input type="submit"
+              class="bg-gradient-to-r dark:from-red-700 dark:to-rose-700 text-white px-4 text-center my-1 cursor-pointer"
+              value="Сменить">
           </form>
 
         </div>

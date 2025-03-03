@@ -36,6 +36,8 @@ Route::match(['get', 'post'], '/pincode', [AuthController::class, 'pincode'])->n
 
 Route::match(['get', 'post'], '/pincode/reset', [AuthController::class, 'pincode_reset'])->name('auth_pincode_reset');
 
+Route::post('/admin/pincode/reset', [AdminController::class, 'admin_pincode_reset'])->name('admin_pincode_reset');
+
 Route::match(['get', 'post'], '/', [IndexController::class, 'index'])->name('index');
 
 Route::get('/s', [ExcelController::class, 's_index'])->name('s_index');

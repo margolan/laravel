@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Hash;
 use App\Models\Token;
 use App\Models\Schedule;
 use App\Models\Key;
+use App\Models\User;
 
 class AdminController extends Controller
 {
@@ -25,7 +27,7 @@ class AdminController extends Controller
     public function token_create()
     {
 
-        $token = Str::random(40);
+        $token = Str::random(25);
 
         Token::create([
             'token' => $token,
@@ -34,11 +36,23 @@ class AdminController extends Controller
         return redirect()->route('admin_index')->with('status', 'Токен выпущен');
     }
 
-    public function token_delete(Request $request) {
+    public function token_delete(Request $request)
+    {
 
         Token::where('id', $request->id)->delete();
 
         return redirect()->route('admin_index')->with('status', 'Токен удален');
-        
+    }
+
+    public function admin_pincode_reset(Request $request)
+    {
+
+        $user = User::where('name', 'pincode')->first();
+
+        $user->password = Hash::make($request->pincode);
+
+        $user->save();
+
+        return redirect()->route('admin_index')->with('status', 'Пинкод сменён.');
     }
 }

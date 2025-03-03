@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Imports\ExcelImport;
 use App\Models\Schedule;
 use App\Models\Key;
-use App\Models\Test;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
@@ -144,10 +144,15 @@ class ExcelController extends Controller
     public function k_index(Request $request)
     {
 
+        $pincode = User::where('name', 'pincode')->first()->password;
+
         $cookie = Cookie::get('pincode');
 
-        if ($cookie != true) {
-            return redirect()->route('auth_pincode')->with('status', 'Вы не авторизованы');
+        if ($cookie != $pincode) {
+
+            Cookie::expire('pincode');
+
+            return redirect()->route('auth_pincode')->with('status', 'Вы не авторизованы.');
         }
 
         $processed_data = [];

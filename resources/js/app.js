@@ -90,7 +90,7 @@ menu.addEventListener('click', () => {
 
 
 function hide_status() {
-  document.querySelector('.status')?.classList.add('opacity-0', 'translate-x-full')
+  document.querySelector('.status')?.classList.add('opacity-0', 'translate-y-5')
   setTimeout(() => { document.querySelector('.status')?.classList.add('hidden') }, 500);
 }
 setTimeout(() => { hide_status() }, 4000)

@@ -13,22 +13,25 @@ class AuthController extends Controller
 
     public function pincode(Request $request)
     {
+
+        $hashed_pincode = User::where('name', 'pincode')->first()->password;
+
         if ($request->isMethod('get')) {
 
             $cookie = Cookie::get('pincode');
 
-            if ($cookie == true) {
+            if ($cookie == $hashed_pincode) {
+
                 return redirect()->route('k_index')->with('status', 'Вы авторизованы.');
             }
 
             return view('auth.pincode');
         }
-
-
+        
         $user = User::where('name', 'pincode')->first();
 
         if (Hash::check($request->pincode, $user->password)) {
-            return redirect()->back()->with('status', 'Вы вошли.')->cookie('pincode', true, 60 * 24 * 7);
+            return redirect()->back()->with('status', 'Вы вошли.')->cookie('pincode', $hashed_pincode, 60 * 24 * 7);
         } else {
             return redirect()->back()->with('status', 'Неверный пинкод.');
         }
