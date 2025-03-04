@@ -82,3 +82,10 @@ composer.json и composer.lock работают с PHP-зависимостям�
 migrate:fresh - удаляет все таблицы
 
 npm run dev Set-ExecutionPolicy RemoteSigned
+
+Symbols
+  Arrows
+    11164 left 11176
+    11165 top 11181
+    11166 right 11177
+    11167 down 11183

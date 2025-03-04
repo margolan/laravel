@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 class KanbanController extends Controller
 {
 
-    public function interact(Request $request)
+    public function index(Request $request)
     {
 
         if ($request->isMethod('post')) {
@@ -48,5 +48,15 @@ class KanbanController extends Controller
         $kanban = Kanban::all();
 
         return view('kanban', compact('kanban'));
+    }
+
+    public function interact(Request $request) {
+
+        $columns = ['todo', 'inprocess', 'testing', 'ready'];
+
+        $current_sticker = Kanban::where('id', $request->id)->first();
+
+        return redirect()->back()->with('test_data', $current_sticker);
+
     }
 }

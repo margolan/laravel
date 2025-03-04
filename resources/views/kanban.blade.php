@@ -14,6 +14,13 @@
     @endphp
   @endif
 
+  @if (session('test_data'))
+    @php
+      echo '<pre>';
+      print_r(session('test_data'));
+      echo '</pre>';
+    @endphp
+  @endif
   @if ($errors->any())
     @php
       echo '<pre>';
@@ -24,7 +31,7 @@
 
   <div class="flex flex-col my-3 text-neutral-200">
 
-    <h1 class="w-85 text-lg rounded-2xl my-3 py-3 bg-neutral-800 px-5">Канбан (в разработке...)</h1>
+    <h1 class="w-85 text-lg rounded-2xl my-3 py-3 bg-neutral-800 px-5"><a href="/kanban">Канбан (в разработке...)</a></h1>
 
     <div class="flex flex-wrap rounded-2xl gap-3">
       <div class="todo w-85 h-max px-3 bg-neutral-800 rounded-2xl">
@@ -46,9 +53,19 @@
                   {{ $item->text }}
                 </p>
               </div>
-              <div class="flex justify-end cursor-pointer">
-                <div class="px-5 cursor-pointer rounded-br-full">To the Right</div>
+
+              <div class="flex px-2 pb-2 justify-between">
+                @if ($item->column != 'todo')
+                  <a href="/kanban/move?id={{ $item->id }}&move=back"
+                    class="cursor-pointer hover:text-neutral-500 border-1 rounded-full px-[6px]">&#11164</a>
+                @endif
+                <span class="w-full"></span>
+                @if ($item->column != 'ready')
+                  <a href="/kanban/move?id={{ $item->id }}&move=forward"
+                    class="text-center cursor-pointer hover:text-neutral-500 border-1 rounded-full px-[6px]">&#11166</a>
+                @endif
               </div>
+
             </div>
           @endforeach
         @endif
