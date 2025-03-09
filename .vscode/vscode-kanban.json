@@ -19,7 +19,8 @@
       "title": "reset pincode"
     }
   ],
-  "in-progress": [
+  "in-progress": [],
+  "testing": [
     {
       "assignedTo": {
         "name": "Margulan"
@@ -30,7 +31,6 @@
       "title": "Make Kanban"
     }
   ],
-  "testing": [],
   "done": [
     {
       "assignedTo": {

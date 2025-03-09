@@ -33,7 +33,7 @@ class KanbanController extends Controller
                 ]
             );
 
-            $data['column'] = 'todo';
+            $data['status'] = 'Запланировано';
 
             if (Auth::check()) {
                 $data['author'] = Auth::user()->name;
@@ -42,21 +42,50 @@ class KanbanController extends Controller
             }
 
             Kanban::create($data);
-
         }
 
-        $kanban = Kanban::all();
+        $statuses = ['Запланировано', 'Выполняется', 'Проверка', 'Завершено'];
 
-        return view('kanban', compact('kanban'));
+        $kanban = Kanban::get()->groupBy('status')->toArray();
+
+        $data0 = [];
+
+        foreach ($statuses as $status) {
+            $data0[$status] = $kanban[$status] ?? [];
+        }
+
+        return view('kanban', ['kanban' => $data0]);
     }
 
-    public function interact(Request $request) {
+    public function interact(Request $request)
+    {
 
-        $columns = ['todo', 'inprocess', 'testing', 'ready'];
+        $statuses = ['Запланировано', 'Выполняется', 'Проверка', 'Завершено'];
 
         $current_sticker = Kanban::where('id', $request->id)->first();
 
-        return redirect()->back()->with('test_data', $current_sticker);
+        $sticker_position = array_search($current_sticker->status, $statuses);
 
+        if ($request->move === 'forward') {
+
+            if ($sticker_position != 3) {
+
+                $current_sticker->status = $statuses[$sticker_position + 1];
+            } else {
+                return back()->with('status', 'Ошибка');
+            }
+        } else if ($request->move === 'back') {
+
+            if ($sticker_position != 0) {
+
+                $current_sticker->status = $statuses[$sticker_position - 1];
+            } else {
+                return back()->with('status', 'Ошибка');
+            }
+        }
+
+        $current_sticker->save();
+
+        return redirect()->back()->with('test_data', 'done');
     }
 }

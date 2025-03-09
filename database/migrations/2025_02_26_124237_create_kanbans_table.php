@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('title');
             $table->string('text');
             $table->string('priority');
-            $table->string('column');
+            $table->string('status');
             $table->string('author');
             $table->string('va1')->nullable();
             $table->string('va2')->nullable();

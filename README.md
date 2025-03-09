@@ -50,6 +50,17 @@
   Сортирует коллекцию по ключу.
 
 
+  groupBy()
+  $kanban = Kanban::all()->groupBy('column');
+  @foreach ($kanban as $column => $item)
+    {{ $column }}
+    @foreach ($item as $task)
+      {{ $task->title }}
+    @endforeach
+  @endforeach
+
+
+
   count()
   $count = $collection->count();
   Возвращает количество элементов в коллекции.
