@@ -13,19 +13,18 @@
   @endphp
 
   @if (isset($kanban))
-
     {{-- @if (isset($kanban['Выполняется'])) --}}
     {{-- @foreach ($kanban as $column => $item) --}}
     {{-- <p>{{ $item[0]->count() }} </p> --}}
     @php
-        echo '<pre>';
-        // print_r($kanban);
-        echo '</pre>';
+      echo '<pre>';
+      // print_r($kanban);
+      echo '</pre>';
     @endphp
 
-      {{-- @foreach ($item as $task) --}}
-        {{-- <p>{{ $item[0]->count() }} </p> --}}
-      {{-- @endforeach --}}
+    {{-- @foreach ($item as $task) --}}
+    {{-- <p>{{ $item[0]->count() }} </p> --}}
+    {{-- @endforeach --}}
     {{-- @endforeach --}}
     {{-- @else --}}
     {{-- No Data --}}
@@ -73,34 +72,41 @@
               @foreach ($item as $task)
                 <div class="border-1 border-neutral-300 rounded-2xl mb-5">
                   <div class="p-4">
-                    <h2
-                      class="w-max mb-2 rounded-full px-4 py-1 {{ match ($task['priority']) {
-                          'high' => 'bg-rose-700',
-                          'low' => 'bg-emerald-700',
-                          'medium' => 'bg-fuchsia-700',
-                      } }}">
-                      {{ $task['title'] }}</h2>
+                    <div class="mb-2 flex justify-between">
+                      <h2
+                        class="w-max rounded-lg px-4 {{ match ($task['priority']) {
+                            'high' => 'bg-rose-700',
+                            'low' => 'bg-emerald-700',
+                            'medium' => 'bg-neutral-600',
+                        } }}">
+                        {{ $task['title'] }}</h2>
+                      <a href="/kanban/move?id={{ $task['id'] }}&remove" class="font-[roboto_mono] text-neutral-400 hover:text-white">x</a>
+                    </div>
+
                     <p class="indent-3">
                       {{ $task['text'] }}
                     </p>
                   </div>
 
-                  <div class="flex px-2 pb-2 justify-between">
+                  <div class="flex p-3 justify-between items-center">
                     @if ($task['status'] != 'Запланировано')
                       <a href="/kanban/move?id={{ $task['id'] }}&move=back"
-                        class="cursor-pointer hover:text-neutral-500 border-1 rounded-full px-[6px]">&#11164</a>
+                        class="cursor-pointer hover:border-r-white w-0 h-0 border-transparent border-6 border-r-10 border-r-neutral-500 block"></a>
                     @endif
-                    <span class="w-full"></span>
+                    <span class="w-full text-sm text-center">
+                      [ <a href="/kanban/move?id={{ $task['id'] }}&edit" class="hover:text-white text-neutral-400">
+                        изменить</a> ]
+                    </span>
                     @if ($task['status'] != 'Завершено')
                       <a href="/kanban/move?id={{ $task['id'] }}&move=forward"
-                        class="text-center cursor-pointer hover:text-neutral-500 border-1 rounded-full px-[6px]">&#11166</a>
+                        class="cursor-pointer hover:border-l-white w-0 h-0 border-transparent border-6 border-l-10 border-l-neutral-500 block"></a>
                     @endif
                   </div>
 
                 </div>
               @endforeach
             @else
-            <div class="p-4">Задач нет</div>
+              <div class="p-4">Задач нет</div>
             @endif
 
             @if ($status == 'Запланировано')
