@@ -102,7 +102,23 @@ class KanbanController extends Controller
         return redirect()->back()->with('status', 'Новая запись добавлена');
     }
 
-    public function kanban_edit() {
+    public function kanban_edit(Request $request) {
+
+        $kanban = Kanban::where('id', $request->id)->first();
+
+        $kanban->title = $request->title;
+        $kanban->text = $request->text;
+        $kanban->priority = $request->priority;
+        if (Auth::check()) {
+            $kanban['author'] = Auth::user()->name;
+        } else {
+            $kanban['author'] = 'Guest';
+        }
+
+        $kanban->save();
         
+        return redirect()->back()->with('status', 'Ззапись редактирована');
+
+
     }
 }

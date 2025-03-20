@@ -25,11 +25,10 @@ Route::middleware('auth')->group(function () {
   Route::get('/logout', [AuthController::class, 'logout'])->name('auth_logout');
 
   Route::get('/admin', [AdminController::class, 'index'])->name('admin_index');
-  
+
   Route::post('/admin/token/create', [AdminController::class, 'token_create'])->name('token_create');
 
   Route::get('/admin/token/delete', [AdminController::class, 'token_delete'])->name('token_delete');
-
 });
 
 Route::match(['get', 'post'], '/pincode', [AuthController::class, 'pincode'])->name('auth_pincode');
@@ -65,7 +64,11 @@ Route::match(['get', 'post'], '/password/reset/', [PasswordController::class, 'p
 Route::match(['get', 'post'], '/test', [TestController::class, 'test'])->name('test');
 
 Route::get('/kanban', [KanbanController::class, 'kanban_index'])->name('kanban_index');
-Route::get('/kanban/move', [KanbanController::class, 'kanban_move'])->name('kanban_move');
-Route::get('/kanban/remove', [KanbanController::class, 'kanban_remove'])->name('kanban_remove');
-Route::post('/kanban/add', [KanbanController::class, 'kanban_add'])->name('kanban_add');
-Route::get('/kanban/edit', [KanbanController::class, 'kanban_edit'])->name('kanban_edit');
+
+Route::middleware('auth')->group(function () {
+
+  Route::get('/kanban/move', [KanbanController::class, 'kanban_move'])->name('kanban_move');
+  Route::get('/kanban/remove', [KanbanController::class, 'kanban_remove'])->name('kanban_remove');
+  Route::post('/kanban/add', [KanbanController::class, 'kanban_add'])->name('kanban_add');
+  Route::post('/kanban/edit', [KanbanController::class, 'kanban_edit'])->name('kanban_edit');
+});

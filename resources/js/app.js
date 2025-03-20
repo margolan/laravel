@@ -1,6 +1,29 @@
 import './bootstrap';
 
 
+// ==================== Kanban Page ====================
+
+
+if (window.location.pathname === '/kanban') {
+
+  const sticker_edit = document.querySelector('.sticker_edit');
+
+  document.querySelectorAll('.edit').forEach((el) => {
+    el.addEventListener('click', function () {
+      sticker_edit.classList.remove('hidden');
+      document.body.classList.add('overflow-hidden');
+      sticker_edit.querySelector('input[name=title]').value = this.closest('.sticker').querySelector('h2').textContent.trim();
+      sticker_edit.querySelector('textarea').value = this.closest('.sticker').querySelector('p').textContent.trim();
+      sticker_edit.querySelector('input[name=id]').value = this.closest('.sticker').querySelector('a').id.trim();
+      console.log(this.closest('.sticker').querySelector('a').id.trim());
+    })
+  })
+
+  document.querySelector('.sticker_close').addEventListener('click', () => { sticker_edit.classList.add('hidden'); document.body.classList.remove('overflow-hidden'); })
+
+}
+
+
 // ==================== Days Styles ====================
 
 
