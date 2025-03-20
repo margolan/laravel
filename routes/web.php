@@ -64,6 +64,8 @@ Route::match(['get', 'post'], '/password/reset/', [PasswordController::class, 'p
 
 Route::match(['get', 'post'], '/test', [TestController::class, 'test'])->name('test');
 
-Route::match(['get', 'post'], '/kanban', [KanbanController::class, 'index'])->name('kanban');
-
-Route::get('/kanban/move', [KanbanController::class, 'interact'])->name('kanban_move');
+Route::get('/kanban', [KanbanController::class, 'kanban_index'])->name('kanban_index');
+Route::get('/kanban/move', [KanbanController::class, 'kanban_move'])->name('kanban_move');
+Route::get('/kanban/remove', [KanbanController::class, 'kanban_remove'])->name('kanban_remove');
+Route::post('/kanban/add', [KanbanController::class, 'kanban_add'])->name('kanban_add');
+Route::get('/kanban/edit', [KanbanController::class, 'kanban_edit'])->name('kanban_edit');

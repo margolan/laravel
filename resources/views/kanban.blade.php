@@ -12,7 +12,7 @@
     // echo array_values('ready', $temp);
   @endphp
 
-  @if (isset($kanban))
+  @if (isset($processed_data))
     {{-- @if (isset($kanban['Выполняется'])) --}}
     {{-- @foreach ($kanban as $column => $item) --}}
     {{-- <p>{{ $item[0]->count() }} </p> --}}
@@ -61,8 +61,8 @@
 
     <div class="flex flex-wrap rounded-2xl gap-3">
 
-      @if (isset($kanban))
-        @foreach ($kanban as $status => $item)
+      @if (isset($processed_data))
+        @foreach ($processed_data as $status => $item)
           <div class="todo w-85 h-max px-3 bg-neutral-800 rounded-2xl">
             <div class="header h-18 flex flex-col justify-center">
               <span class="font-semibold text-lg ml-5">{{ $status }} ({{ count($item) }})</span>
@@ -70,7 +70,7 @@
 
             @if (count($item))
               @foreach ($item as $task)
-                <div class="border-1 border-neutral-300 rounded-2xl mb-5">
+                <div class="sticker border-1 border-neutral-300 rounded-2xl mb-5">
                   <div class="p-4">
                     <div class="mb-2 flex justify-between">
                       <h2
@@ -80,7 +80,8 @@
                             'medium' => 'bg-neutral-600',
                         } }}">
                         {{ $task['title'] }}</h2>
-                      <a href="/kanban/move?id={{ $task['id'] }}&remove" class="font-[roboto_mono] text-neutral-400 hover:text-white">x</a>
+                      <a href="/kanban/remove?id={{ $task['id'] }}"
+                        class="font-[roboto_mono] text-neutral-400 hover:text-white">x</a>
                     </div>
 
                     <p class="indent-3">
@@ -94,7 +95,7 @@
                         class="cursor-pointer hover:border-r-white w-0 h-0 border-transparent border-6 border-r-10 border-r-neutral-500 block"></a>
                     @endif
                     <span class="w-full text-sm text-center">
-                      [ <a href="/kanban/move?id={{ $task['id'] }}&edit" class="hover:text-white text-neutral-400">
+                      [ <a href="/kanban/edit?id={{ $task['id'] }}" class="edit hover:text-white text-neutral-400">
                         изменить</a> ]
                     </span>
                     @if ($task['status'] != 'Завершено')
@@ -111,7 +112,7 @@
 
             @if ($status == 'Запланировано')
               <div class="border-1 border-neutral-300 rounded-2xl mb-5 px-3 p-4">
-                <form action="{{ route('kanban') }}" method="post">
+                <form action="{{ route('kanban_add') }}" method="post">
                   @csrf
                   <p class="py-3 font-semibold">Новый Стикер</p>
                   <input type="text" name="title" class="w-full rounded-md border-1 p-2 mb-3"
@@ -134,5 +135,15 @@
     </div>
 
   </div>
+
+
+
+
+  <script>
+    let kanban_edit = document.querySelectorAll('.edit');
+    let kanban_sticker = document.querySelectorAll('.sticker');
+
+    let retrieved_data = []
+  </script>
 
 @endsection

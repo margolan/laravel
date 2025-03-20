@@ -23,8 +23,8 @@
         class="{{ request()->routeIs('s_index') ? 'underline underline-offset-4' : 'text-neutral-300' }} hover:text-white">График</a>
       <a href="{{ route('k_index') }}"
         class="{{ request()->routeIs('k_index') ? 'underline underline-offset-4' : 'text-neutral-300' }} hover:text-white">Ключи</a>
-      <a href="{{ route('kanban') }}"
-        class="{{ request()->routeIs('kanban') ? 'underline underline-offset-4' : 'text-neutral-300' }} hover:text-white">Kanban</a>
+      <a href="{{ route('kanban_index') }}"
+        class="{{ request()->routeIs('kanban_index') ? 'underline underline-offset-4' : 'text-neutral-300' }} hover:text-white">Kanban</a>
       @if (Auth::check())
         <a href="{{ route('admin_index') }}"
           class="{{ request()->routeIs('admin_index') ? 'underline underline-offset-4' : 'text-neutral-300' }} hover:text-white">Где-то</a>
