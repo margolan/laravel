@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('role');
             $table->string('depart');
+            $table->string('city');
             $table->string('var1')->nullable();
             $table->string('var2')->nullable();
             $table->string('var3')->nullable();

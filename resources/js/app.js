@@ -1,27 +1,59 @@
 import './bootstrap';
 
+// ==================== Editor [kanban, admin] ====================
+
+
+const data_edit = document.querySelector('.data_edit');
+
+document.querySelectorAll('.edit').forEach((el) => {
+  el.addEventListener('click', function () {
+    document.body.classList.add('overflow-hidden');
+    data_edit.classList.remove('hidden');
+    if (window.location.pathname === '/kanban') init_kanban(this);
+    if (window.location.pathname === '/admin') init_admin(this);
+  })
+})
+
+document.querySelector('.sticker_close')?.addEventListener('click', () => { data_edit.classList.add('hidden'); document.body.classList.remove('overflow-hidden'); })
+
 
 // ==================== Kanban Page ====================
 
 
-if (window.location.pathname === '/kanban') {
 
-  const sticker_edit = document.querySelector('.sticker_edit');
-
-  document.querySelectorAll('.edit').forEach((el) => {
-    el.addEventListener('click', function () {
-      sticker_edit.classList.remove('hidden');
-      document.body.classList.add('overflow-hidden');
-      sticker_edit.querySelector('input[name=title]').value = this.closest('.sticker').querySelector('h2').textContent.trim();
-      sticker_edit.querySelector('textarea').value = this.closest('.sticker').querySelector('p').textContent.trim();
-      sticker_edit.querySelector('input[name=id]').value = this.closest('.sticker').querySelector('a').id.trim();
-      console.log(this.closest('.sticker').querySelector('a').id.trim());
-    })
-  })
-
-  document.querySelector('.sticker_close').addEventListener('click', () => { sticker_edit.classList.add('hidden'); document.body.classList.remove('overflow-hidden'); })
-
+function init_kanban(el) {
+  data_edit.querySelector('input[name=title]').value = el.closest('.sticker').querySelector('h2').textContent.trim();
+  data_edit.querySelector('textarea').value = el.closest('.sticker').querySelector('p').textContent.trim();
+  data_edit.querySelector('input[name=id]').value = el.closest('.sticker').querySelector('span').id.trim();
 }
+
+
+// ==================== Admin page ====================
+
+
+const file = document.querySelectorAll('.file_picker');
+
+file.forEach((file_el) => {
+  file_el.addEventListener('click', () => {
+    file_el.querySelector('input[type="file"]').click();
+  });
+  file_el.querySelector('input[type="file"]').addEventListener('change', (e) => {
+    file_el.querySelector('.file_text').textContent = e.target.files[0].name;
+  });
+});
+
+
+function init_admin(el) {
+  data_edit.querySelector('.username').textContent = el.children[0].textContent.trim();
+  data_edit.querySelector('input[name=email]').value = el.children[1].textContent.trim()
+  data_edit.querySelector('input[name=city]').value = el.children[2].textContent.trim();
+  data_edit.querySelector('input[name=depart]').value = el.children[3].textContent.trim();
+  data_edit.querySelector('input[name=role]').value = el.children[4].textContent.trim();
+  data_edit.querySelector('input[name=id]').value = el.id.trim();
+}
+
+
+
 
 
 // ==================== Days Styles ====================

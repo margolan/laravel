@@ -18,6 +18,7 @@ class User extends Authenticatable
         'password',
         'role',
         'depart',
+        'city',
         'var1',
         'var2',
         'var3',

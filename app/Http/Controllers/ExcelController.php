@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\Auth;
 
 class ExcelController extends Controller
 {
@@ -29,11 +30,25 @@ class ExcelController extends Controller
 
     public function s_delete(Request $request)
     {
-        $record = Schedule::find($request->id);
+
+        $record = Schedule::find($request->id)->first();
+
         if ($record) {
-            $record->delete();
-            return redirect()->route('admin_index')->with('status', 'Запись успешно удалена');
+
+            // $record->delete();
+            // return redirect()->route('admin_index')->with('status', 'Запись успешно удалена');
+
+            if ($record->city === Auth::user()->city) {
+                if ($record->depart === Auth::user()->depart) {
+                    return redirect()->route('admin_index')->with('status', 'Запись успешно удалена');
+                } else {
+                    return redirect()->route('admin_index')->with('status', 'Нельзя удалить запись другого подразделения');
+                }
+            } else {
+                return redirect()->route('admin_index')->with('status', 'Нельзя удалить запись другого города');
+            }
         } else {
+
             return redirect()->route('admin_index')->with('status', 'Таблица не найдена');
         }
     }

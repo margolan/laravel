@@ -4,12 +4,63 @@
 
 @section('content')
 
+
   @isset($data)
-    <div class="wrap_admin flex justify-center md:justify-normal flex-wrap gap-4 mt-5 mb-10">
+    <div class="wrap_admin md:container mx-auto md:columns-2 xl:columns-3 2xl:columns-4 gap-8 space-y-8 mt-5 mb-10">
+
+      {{-- User --}}
+
+      <div class="w-full max-w-110 h-max border-1 border-neutral-500 rounded-xl break-inside-avoid">
+        <img src="{{ asset('assets/users.jpg') }}" alt="token" class="w-full h-52 object-cover object-center rounded-t-xl">
+        <div class="bg-neutral-900 rounded-b-xl px-5 pt-5 pb-16">
+          <h2 class="text-xl mb-4 font-semibold">Пользователи</h2>
+          <p class="text-sm mb-2">Вы вошли как: {{ Auth::user()->name }}</p>
+
+          <div class="v_separator w-5/6 h-1 bg-gradient-to-r from-sky-800 to-teal-600 rounded-full mx-auto my-7"></div>
+          <table class="w-full table-auto text-xs">
+            <tr class="text-gray-200 uppercase bg-gray-700">
+              <td class="py-1 text-center">Имя</td>
+              <td class="text-center">Email</td>
+              <td class="text-center">Город</td>
+              <td class="text-center">Отдел</td>
+              <td class="text-center">Роль</td>
+            </tr>
+            @foreach ($data['users'] as $user)
+              <tr class="edit hover:bg-neutral-800 cursor-pointer" id="{{ $user->id }}">
+                <td class="py-1 text-center border-b border-gray-300">{{ $user->name }}</td>
+                <td class="text-center border-b border-gray-300">{{ $user->email }}</td>
+                <td class="text-center border-b border-gray-300">{{ $user->city ?? '-' }}</td>
+                <td class="text-center border-b border-gray-300">{{ $user->depart ?? '-' }}</td>
+                <td class="text-center border-b border-gray-300">{{ $user->role }}</td>
+              </tr>
+            @endforeach
+
+          </table>
+
+        </div>
+      </div>
+
+      {{-- Pin change --}}
+
+      <div class="w-full max-w-110 h-max border-1 border-neutral-500 rounded-xl break-inside-avoid">
+        <img src="{{ asset('assets/pincode.jpg') }}" alt="pincode" class="w-full h-52 object-cover rounded-t-xl">
+        <div class="bg-neutral-900 rounded-b-xl px-5 pt-5 pb-16">
+
+          <h2 class="text-xl mb-4 font-semibold">Пин-код</h2>
+          <form action="{{ route('admin_pincode_reset') }}" method="POST">
+            @csrf
+            <input type="text" name="pincode" maxlength="4" class="w-20 border-1 rounded-md px-3 mr-3">
+            <input type="submit"
+              class="bg-gradient-to-r dark:from-red-700 dark:to-rose-700 text-white px-4 text-center my-1 cursor-pointer"
+              value="Сменить">
+          </form>
+
+        </div>
+      </div>
 
       {{-- Schedules --}}
 
-      <div class="w-96 h-max border-1 border-neutral-500 rounded-xl">
+      <div class="w-full max-w-110 h-max border-1 border-neutral-500 rounded-xl break-inside-avoid">
         <img src="{{ asset('assets/schedule.jpg') }}" alt="schedule" class="w-full h-52 object-cover rounded-t-xl">
         <div class="bg-neutral-900 rounded-b-xl px-5 pt-5 pb-16">
           <h2 class="text-xl mb-4 font-semibold">График работы</h2>
@@ -73,7 +124,7 @@
             </div>
             <div class="w-full mt-5 flex flex-col rounded-lg">
               <div class="file_picker h-12 bg-red-700 rounded-t-lg py-3 text-center">
-                <span class="file_text">Выберите файл</span>
+                <span class="file_text cursor-pointer">Выберите файл</span>
                 <input type="file" name="file" hidden>
               </div>
               <input type="submit" value="Загрузить" class="bg-red-900 rounded-b-lg py-3">
@@ -84,7 +135,7 @@
 
       {{-- Keys --}}
 
-      <div class="w-96 h-max border-1 border-neutral-500 rounded-xl">
+      <div class="w-full max-w-110 h-max border-1 border-neutral-500 rounded-xl break-inside-avoid">
         <img src="{{ asset('assets/keys.jpg') }}" alt="keys" class="w-full h-52 object-cover rounded-t-xl">
         <div class="bg-neutral-900 rounded-b-xl px-5 pt-5 pb-16">
           <h2 class="text-xl mb-4 font-semibold">Ключи</h2>
@@ -106,7 +157,7 @@
             @csrf
             <div class="w-full mt-5 flex flex-col rounded-lg">
               <div class="file_picker h-12 bg-red-700 rounded-t-lg py-3 text-center">
-                <span class="file_text">Выберите файл</span>
+                <span class="file_text cursor-pointer">Выберите файл</span>
                 <input type="file" name="file" hidden>
               </div>
               <input type="submit" value="Загрузить" class="bg-red-900 rounded-b-lg py-3">
@@ -117,7 +168,7 @@
 
       {{-- Tokens --}}
 
-      <div class="w-96 h-max border-1 border-neutral-500 rounded-xl">
+      <div class="w-full max-w-110 h-max border-1 border-neutral-500 rounded-xl break-inside-avoid">
         <img src="{{ asset('assets/token.jpg') }}" alt="token" class="w-full h-52 object-cover rounded-t-xl">
         <div class="bg-neutral-900 rounded-b-xl px-5 pt-5 pb-16">
           <h2 class="text-xl mb-4 font-semibold">Токены</h2>
@@ -151,23 +202,7 @@
         </div>
       </div>
 
-      {{-- Pin change --}}
-
-      <div class="w-96 h-max border-1 border-neutral-500 rounded-xl">
-        <img src="{{ asset('assets/pincode.jpg') }}" alt="pincode" class="w-full h-52 object-cover rounded-t-xl">
-        <div class="bg-neutral-900 rounded-b-xl px-5 pt-5 pb-16">
-
-          <h2 class="text-xl mb-4 font-semibold">Пин-код</h2>
-          <form action="{{ route('admin_pincode_reset') }}" method="POST">
-            @csrf
-            <input type="text" name="pincode" maxlength="4" class="w-20 border-1 rounded-md px-3 mr-3">
-            <input type="submit"
-              class="bg-gradient-to-r dark:from-red-700 dark:to-rose-700 text-white px-4 text-center my-1 cursor-pointer"
-              value="Сменить">
-          </form>
-
-        </div>
-      </div>
+      {{-- Recieved Data --}}
 
       @if (session('processed_data'))
         <div class="min-w-80 h-max border-1 border-neutral-500 rounded-xl">
@@ -192,18 +227,34 @@
 
     </div>
 
-    <script>
-      const file = document.querySelectorAll('.file_picker');
+    {{-- Editing Menu --}}
 
-      file.forEach((file_el) => {
-        file_el.addEventListener('click', () => {
-          file_el.querySelector('input[type="file"]').click();
-        });
-        file_el.querySelector('input[type="file"]').addEventListener('change', (e) => {
-          file_el.querySelector('.file_text').textContent = e.target.files[0].name;
-        });
-      });
-    </script>
+    <div class="data_edit hidden">
+      <div class="w-full h-screen fixed top-0 left-0 flex items-center justify-center backdrop-blur-lg">
+        <div
+          class="w-85 border-1 border-neutral-300 bg-neutral-200 text-neutral-900 rounded-2xl shadow-2xl shadow-black px-5 py-4">
+          <div class="flex justify-between items-center">
+            <p class="py-3 mb-5 font-semibold">Редактировать <span class="username"></span></p>
+            <span class="sticker_close cursor-pointer text-neutral-600 hover:text-black">&#x2715;</span>
+          </div>
+          <div>
+            <form action="{{ route('user_edit') }}" method="POST">
+              @csrf
+              <label for="email">Email</label><input class="w-full rounded-md border-1 p-2 mb-3" type="email"
+                name="email">
+              <label for="city">City</label><input class="w-full rounded-md border-1 p-2 mb-3" type="text"
+                name="city">
+              <label for="depart">Deaprt</label><input class="w-full rounded-md border-1 p-2 mb-3" type="text"
+                name="depart">
+              <label for="role">Role</label><input class="w-full rounded-md border-1 p-2 mb-3" type="text"
+                name="role">
+                <input type="text" name="id" hidden>
+              <button type="submit" class="py-1 px-5 border-1 rounded-md">Изменить</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
 
   @endisset
 

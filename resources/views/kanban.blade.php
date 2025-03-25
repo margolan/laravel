@@ -14,7 +14,7 @@
 
   <div class="flex flex-col my-3 text-neutral-200">
 
-    <h1 class="w-85 text-lg rounded-2xl my-3 py-3 bg-neutral-800 px-5"><a href="/kanban">Канбан (в разработке...)</a></h1>
+    <h1 class="w-85 text-lg rounded-2xl my-3 py-3 bg-neutral-800 px-5"><a href="/kanban">Канбан</a></h1>
 
     <div class="flex flex-wrap rounded-2xl gap-3">
 
@@ -37,8 +37,8 @@
                             'medium' => 'bg-neutral-600',
                         } }}">
                         {{ $task['title'] }}</h2>
-                      <a href="/kanban/remove?id={{ $task['id'] }}" id="{{ $task['id'] }}"
-                        class="text-neutral-400 hover:text-white">&#x2715;</a>
+                      <span title="Удалить запись" id={{ $task['id'] }}
+                        class="text-neutral-400 hover:text-white">&#x2715;</span>
                     </div>
 
                     <p class="indent-3">
@@ -48,16 +48,16 @@
 
                   <div class="flex p-3 justify-between items-center">
                     @if ($task['status'] != 'Запланировано')
-                      <a href="/kanban/move?id={{ $task['id'] }}&move=back"
+                      <a href="/kanban/move?id={{ $task['id'] }}&move=back" title="Переместить влево"
                         class="cursor-pointer hover:border-r-white w-0 h-0 border-transparent border-6 border-r-10 border-r-neutral-500 block"></a>
                     @endif
                     <span class="w-full text-sm text-center">
-                      {{-- [ <a href="/kanban/edit?id={{ $task['id'] }}" class="edit hover:text-white text-neutral-400"> --}}
-                      [ <a href="#" class="edit hover:text-white text-neutral-400">
-                        изменить</a> ]
+                      [ <span title="Редактировать запись"
+                        class="edit hover:text-white text-neutral-400 cursor-pointer">изменить</span>
+                      ]
                     </span>
                     @if ($task['status'] != 'Завершено')
-                      <a href="/kanban/move?id={{ $task['id'] }}&move=forward"
+                      <a href="/kanban/move?id={{ $task['id'] }}&move=forward" title="Переместить вправо"
                         class="cursor-pointer hover:border-l-white w-0 h-0 border-transparent border-6 border-l-10 border-l-neutral-500 block"></a>
                     @endif
                   </div>
@@ -94,8 +94,8 @@
 
   </div>
 
-  <div class="sticker_edit hidden">
-    <div class="w-full h-screen absolute top-0 left-0 flex items-center justify-center backdrop-blur-lg">
+  <div class="data_edit hidden">
+    <div class="w-full h-screen fixed top-0 left-0 flex items-center justify-center backdrop-blur-lg">
       <div
         class="w-85 border-1 border-neutral-300 bg-neutral-200 text-neutral-900 rounded-2xl shadow-2xl shadow-black px-5 py-4">
         <form action="{{ route('kanban_edit') }}" method="post">

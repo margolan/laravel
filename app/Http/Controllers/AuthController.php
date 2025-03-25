@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Token;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -27,7 +28,7 @@ class AuthController extends Controller
 
             return view('auth.pincode');
         }
-        
+
         $user = User::where('name', 'pincode')->first();
 
         if (Hash::check($request->pincode, $user->password)) {
@@ -47,7 +48,7 @@ class AuthController extends Controller
 
         $token = $request->token;
 
-        if(empty($token)) {
+        if (empty($token)) {
             return redirect()->route('auth_pincode_reset')->with('status', 'У вас нет права на смену пин-кода.');
         }
 
@@ -58,7 +59,6 @@ class AuthController extends Controller
         $user->save();
 
         return redirect()->route('auth_pincode_reset')->with('status', 'Пинкод изменен.');
-
     }
 
     public function login(Request $request)
@@ -83,19 +83,21 @@ class AuthController extends Controller
         return back()->with('status', 'Неудачная авторизация. Проверьте логин и\или пароль.');
     }
 
-    public function register(Request $request)
+    public function register_proccess(Request $request)
     {
 
-        if ($request->isMethod('get')) {
-            return view('auth.register');
-        }
+        $token = Token::where('token', request('token'))->first();
 
         $valid = $request->validate(
             [
                 'name' => ['required', 'min:3', 'alpha_num'],
                 'email' => ['required', 'email', 'unique:users,email'],
-                'token' => ['required', 'alpha_num'],
-                'password' => ['required', 'min:8', 'max:255', 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$/', 'confirmed'],
+                'token' => ['required', function ($attr, $val, $fail) use ($token) {
+                    if (!$token || $token->used !== null) {
+                        $fail('Токен не найден или уже занят');
+                    }
+                }],
+                'password' => ['required', 'min:6', 'max:255', 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/', 'confirmed'],
             ],
             [
                 'name.required' => 'Логин не заполнен',
@@ -106,16 +108,36 @@ class AuthController extends Controller
                 'token.required' => 'Token не заполнен',
                 'token.alpha_num' => 'Token: только латинские символы и цифры',
                 'password.required' => 'Пароль не заполнен',
-                'password.min' => 'Пароль: мин 8 символов',
+                'password.min' => 'Пароль: мин 6 символов',
                 'password.max' => 'Пароль: макс 255 символов',
-                'password.regex' => 'Пароль: A-Z, a-z, 0-9, !@#$%^&*()-_=+[]{};:"|,.<>/?',
+                'password.regex' => 'Пароль: A-Z, a-z, 0-9',
                 'password.confirmed' => 'Пароли не совпадают',
             ]
         );
 
+        $token->used = 'Регистрация ' . $request->email;
+        $token->save();
 
-        // return redirect()->back()->with('status', $processed_data);
+        unset($valid['token']);
+        $valid['role'] = 'user';
+        $valid['depart'] = '-';
+        $valid['city'] = '-';
 
+        $user = User::create($valid);
+
+        if ($user) {
+            $status = 'Регистрация выполнена';
+            Auth::login($user);
+        } else {
+            $status = 'Что-то пошло не так';
+        }
+
+        return redirect()->route('admin_index')->with('status', $status);
+    }
+
+    public function register_index(Request $request)
+    {
+        return view('auth.register', ['token' => $request->token]);
     }
 
     public function logout(Request $request)

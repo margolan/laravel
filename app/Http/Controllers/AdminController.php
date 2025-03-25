@@ -15,6 +15,8 @@ class AdminController extends Controller
 
     public function index(Request $request)
     {
+        $data['users'] = User::all();
+
         $data['schedule'] = Schedule::select('id', 'city', 'depart', 'date')->get();
 
         $data['key'] = Key::select('id', 'created_at')->get();
@@ -54,5 +56,13 @@ class AdminController extends Controller
         $user->save();
 
         return redirect()->route('admin_index')->with('status', 'Пинкод сменён.');
+    }
+
+    public function user_edit(Request $request)
+    {
+
+        $user = User::where('email', $request->email)->first();
+
+        return redirect()->back()->with('processed_data', $user);
     }
 }

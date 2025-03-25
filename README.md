@@ -1,3 +1,23 @@
+Работа с базой
+
+  Rule::unique('users', 'email')->where('role', 'user')
+  проверить уникальность поля email таблицы users, где role = user
+
+  $user = User::create($valid);
+  добавляет в базу новую запись на базе валидации
+
+  Auth::attempt($credentials, $request->rememberme)
+  попытка авторизации по личным данным с функцией запомни меня
+
+  $user = User::where('id', $request->id)
+  Auth::login($user)
+  Авторизация
+  
+  Schedule::find($request->id)->first()
+
+
+
+
 Часто используемые методы коллекций
 
   all()
