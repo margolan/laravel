@@ -121,6 +121,7 @@
               </svg>
               <span class="px-6 rounded-full bg-neutral-900 text-white flex items-center ml-4">Опыт</span>
             </div>
+            <p class="mb-3"><b>Мой код на <a href="https://github.com/margolan/laravel" target="blank" class="text-emerald-900 decoration-emerald-800 decoration-1 underline-offset-4 decoration-dashed hover:bg-gradient-to-r hover:from-emerald-700 hover:to-sky-700 hover:text-white px-1 underline font-semibold">GitHub</a></b></p>
             <p class="mb-3"><b>Уже использую</b></p>
             <ul class="ml-4 mb-5 list-disc list-outside">
               <li><b>HTML</b>, <b>CSS</b> - уверенные знания верстки;</li>
