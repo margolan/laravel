@@ -13,6 +13,10 @@
     @endphp
   @endif
 
+  @if (session('status'))
+    <p>{{ session('status') }}</p>
+  @endif
+
   <div class="container w-full flex justify-center p-3">
     <div class="w-96 shadow-lg shadow-black py-4 px-6 bg-neutral-950/50">
       <h1 class="py-3 text-3xl">Trip Log</h1>

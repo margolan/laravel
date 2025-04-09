@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('waybills', function (Blueprint $table) {
+        Schema::create('trip_logs', function (Blueprint $table) {
             $table->id();
             $table->date('date');
             $table->string('order_number');

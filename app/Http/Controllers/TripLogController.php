@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\TripLog;
 use Illuminate\Http\Request;
 
 class TripLogController extends Controller
@@ -9,7 +10,9 @@ class TripLogController extends Controller
 
     public function index()
     {
-        return view('triplog.trip_log');
+        $data = TripLog::get();
+
+        return view('triplog.trip_log', compact('data'));
     }
 
     public function edit_show()
@@ -20,8 +23,13 @@ class TripLogController extends Controller
     public function edit_process(Request $request)
     {
 
-        $data = $request->all();
+        TripLog::create($request->all());
 
-        return redirect()->back()->with('data', $data);
+        $status = 'Данные внесены';
+
+        // $data = $request->all();
+
+        return redirect()->back()->with('status', $status);
+        // return redirect()->back()->with('data', $data);
     }
 }
