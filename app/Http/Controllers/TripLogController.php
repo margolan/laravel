@@ -10,7 +10,7 @@ class TripLogController extends Controller
 
     public function index()
     {
-        $data = TripLog::get();
+        $data = TripLog::orderBy('date')->get();
 
         return view('triplog.trip_log', compact('data'));
     }

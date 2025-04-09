@@ -5,57 +5,44 @@
 @section('content')
 
 
-    @isset($data)
-      <div class="wrap w-full">
+  @isset($data)
+    <div class="wrap w-full p-3">
 
-        <div class="wrap2 w-full flex">
+      <div class="wrap2 w-full flex flex-col gap-3 ">
 
-          <div class="date border-1">
-            <div class="border-1">Date</div>
-            @foreach ($data as $item)
-              <div class="border-1">{{ $item->date }}</div>
-            @endforeach
-          </div>
-
-          <div class="content overflow-x-scroll">
-            <div class="flex">
-              <div class="min-w-20 border-1">Номер заявки</div>
-              <div class="min-w-max p-3 border-1">Откуда</div>
-              <div class="min-w-max p-3 border-1">Куда</div>
-              <div class="min-w-max p-3 border-1">Цель</div>
-              <div class="min-w-max p-3 border-1">Результат</div>
-              <div class="min-w-max p-3 border-1">Километраж</div>
-              <div class="min-w-max p-3 border-1">Пробег за день</div>
-              <div class="min-w-max p-3 border-1">Заправка (Л)</div>
-              <div class="min-w-max p-3 border-1">Платные парковки</div>
-              <div class="min-w-max p-3 border-1">Пробег на момент заправки</div>
+        @foreach ($data as $item)
+          <div class="shadow-lg shadow-black p-3 bg-neutral-950/75">
+            <div class="text-lg font-bold py-2">Заявка: {{ $item->order_number }}</div>
+            <div class=""><span class="text-xs">Дата:</span> {{ $item->date }}</div>
+            <div class=""><span class="text-xs">Откуда:</span> {{ $item->from_address }}</div>
+            <div class=""><span class="text-xs">Куда:</span> {{ $item->to_address }}</div>
+            <div class=""><span class="text-xs">Причина:</span> {{ $item->trip_purpose }}</div>
+            <div class=""><span class="text-xs">Результат:</span> {{ $item->trip_result }}</div>
+            <div class=""><span class="text-xs">Километраж:</span>
+              {{ $item->start_end_mileage }}
             </div>
-            @foreach ($data as $item)
-              <div class="flex">
-                <div class="min-w-20 border-1">{{ $item->order_number }}</div>
-                <div class="in-w-max p-3 border-1">{{ $item->from_address }}</div>
-                <div class="in-w-max p-3 border-1">{{ $item->to_address }}</div>
-                <div class="in-w-max p-3 border-1">{{ $item->trip_purpose }}</div>
-                <div class="in-w-max p-3 border-1">{{ $item->trip_result }}</div>
-                <div class="in-w-max p-3 border-1">{{ $item->start_end_mileage }}</div>
-                <div class="in-w-max p-3 border-1">{{ $item->daily_mileage }}</div>
-                <div class="in-w-max p-3 border-1">{{ $item->fuel_amount }}</div>
-                <div class="in-w-max p-3 border-1">{{ $item->parking_fee }}</div>
-                <div class="in-w-max p-3 border-1">{{ $item->mileage_at_fueling }}</div>
-              </div>
-            @endforeach
+            <div class=""><span class="text-xs">Пробег за день:</span>
+              {{ $item->daily_mileage }}
+            </div>
+            <div class=""><span class="text-xs">Заправка (Л):</span> {{ $item->fuel_amount }}
+            </div>
+            <div class=""><span class="text-xs">Парковка:</span> {{ $item->parking_fee }}
+            </div>
+            <div class=""><span class="text-xs">Пробег на момент заправки:</span>
+              {{ $item->mileage_at_fueling }}</div>
           </div>
-
-        </div>
+        @endforeach
 
       </div>
 
-      @php
-        echo '<pre>';
-        // print_r($data);
-        echo '</pre>';
-      @endphp
-    @endisset
+    </div>
+
+    @php
+      echo '<pre>';
+      // print_r($data);
+      echo '</pre>';
+    @endphp
+  @endisset
 
 
 
