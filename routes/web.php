@@ -16,8 +16,9 @@ Route::match(['get', 'post'], '/', [IndexController::class, 'index'])->name('ind
 Route::get('/logout', [AuthController::class, 'logout'])->name('auth_logout');
 
 Route::get('/max', [TripLogController::class, 'index'])->name('triplog_index');
-Route::get('/max/edit', [TripLogController::class, 'edit_show'])->name('triplog_show');
-Route::post('/max/edit', [TripLogController::class, 'edit_process'])->name('triplog_edit');
+Route::post('/max', [TripLogController::class, 'edit'])->name('triplog_edit');
+Route::get('/max/add', [TripLogController::class, 'add_show'])->name('triplog_add_show');
+Route::post('/max/add', [TripLogController::class, 'add_process'])->name('triplog_add_process');
 
 
 Route::middleware('auth')->group(function () {
