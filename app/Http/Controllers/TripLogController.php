@@ -12,7 +12,16 @@ class TripLogController extends Controller
         return view('triplog.trip_log');
     }
 
-    public function edit(Request $request) {
+    public function edit_show()
+    {
+
         return view('triplog.trip_log_edit');
+    }
+    public function edit_process(Request $request)
+    {
+
+        $data = $request->all();
+
+        return redirect()->back()->with('data', $data);
     }
 }

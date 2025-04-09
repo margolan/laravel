@@ -123,12 +123,11 @@ if (search) {
 // ==================== Burger Menu ====================
 
 
-const menu = document.querySelector('.menu');
 const burger = document.querySelector('.burger');
 const nav = document.querySelector('.nav');
 const arrow = document.querySelector('.arrow');
 
-menu.addEventListener('click', () => {
+document.querySelector('.menu')?.addEventListener('click', () => {
   nav.classList.toggle('max-h-6');
   nav.classList.toggle('overflow-hidden');
   nav.classList.toggle('max-h-screen');
