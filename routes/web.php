@@ -10,11 +10,15 @@ use App\Http\Controllers\KanbanController;
 use App\Http\Controllers\PasswordController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\TokenController;
+use App\Http\Controllers\TripLogController;
 use Illuminate\Auth\Middleware\Authenticate;
 
 Route::match(['get', 'post'], '/', [IndexController::class, 'index'])->name('index');
 
 Route::get('/logout', [AuthController::class, 'logout'])->name('auth_logout');
+
+Route::get('/max', [TripLogController::class, 'index'])->name('triplog_index');
+Route::get('/max', [TripLogController::class, 'index'])->name('triplog_index');
 
 
 Route::middleware('auth')->group(function () {
