@@ -4,12 +4,10 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ExcelController;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Http\Request;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\KanbanController;
 use App\Http\Controllers\PasswordController;
 use App\Http\Controllers\TestController;
-use App\Http\Controllers\TokenController;
 use App\Http\Controllers\TripLogController;
 use Illuminate\Auth\Middleware\Authenticate;
 

@@ -4,7 +4,7 @@
     "src": "public/assets/wow_bg.jpg"
   },
   "resources/css/app.css": {
-    "file": "assets/app-BQ48PJzd.css",
+    "file": "assets/app-8u7v1LdH.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
@@ -13,7 +13,7 @@
     "src": "resources/fonts/RobotoMono-VariableFont_wght.ttf"
   },
   "resources/js/app.js": {
-    "file": "assets/app-BSVUzXxI.js",
+    "file": "assets/app-BXgDwouG.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true
