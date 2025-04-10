@@ -24,7 +24,7 @@
             <div class="flex py-2 justify-between">
               <div class="text-lg font-bold">Заявка: <span class="order_number">{{ $item->order_number }}</span> </div>
               <div><span class="edit_button cursor-pointer">&#x27f3;</span><span
-                  class="cursor-pointer text-sm ml-3">&#x2715;</span></div>
+                  class="delete_button cursor-pointer text-sm ml-3">&#x2715;</span></div>
             </div>
             <div><span class="text-xs">Дата:</span> <span class="date">{{ $item->date }}</span></div>
             <div><span class="text-xs">Откуда:</span> <span class="from_address">{{ $item->from_address }}</span></div>
@@ -110,6 +110,18 @@
         </div>
       </div>
 
+      <div class="delete_form hidden">
+        <div class="w-full h-screen flex justify-center items-center backdrop-blur-md fixed top-0 left-0">
+          <div class="w-full sm:w-110 shadow-lg shadow-black bg-neutral-950/75 p-10">
+            <span>Удалить заявку </span><span class="delete_order"></span>?
+            <div class="flex justify-center pt-5 gap-3">
+              <a href="" class="delete_confirm w-32 border-1 text-center cursor-default">Удалить</a>
+              <div class="delete_cancel w-32 border-1 text-center cursor-default bg-red-700">Отмена</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
 
     @php
@@ -121,47 +133,49 @@
 
   <script>
     const edit_form = document.querySelector('.edit_form');
-    const edit_button = document.querySelectorAll('.edit_button');
+    const delete_form = document.querySelector('.delete_form');
 
     document.querySelector('.edit_cancel').addEventListener('click', () => {
       edit_form.classList.add('hidden')
     });
 
+    document.querySelector('.delete_cancel').addEventListener('click', () => {
+      delete_form.classList.add('hidden')
+    });
+
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
         edit_form.classList.add('hidden')
+        delete_form.classList.add('hidden')
       }
     });
 
-
-    edit_button.forEach(el => {
+    document.querySelectorAll('.delete_button').forEach((el) => {
       el.addEventListener('click', () => {
+        delete_form.classList.remove('hidden')
+        // document.querySelector('.delete_confirm').href = `?deleteOrder=${}`
+        console.log(el.closest('.sticker').querySelector);
+      })
+    })
+
+
+    document.querySelectorAll('.edit_button').forEach(el => {
+      el.addEventListener('click', () => {
+
+        const form_names = ['order_number', 'date', 'from_address', 'to_address', 'trip_purpose',
+          'trip_result', 'start_end_mileage', 'daily_mileage', 'fuel_amount', 'parking_fee',
+          'mileage_at_fueling'
+        ]
+
         edit_form.classList.remove('hidden')
+
+        for (let i = 0; i < form_names.length; i++) {
+          edit_form.querySelector(`input[name=${form_names[i]}]`).value = el.closest('.sticker').querySelector(
+            `.${form_names[i]}`)?.textContent || '';
+        }
+
         edit_form.querySelector('input[name=order_hidden]').value = el.closest('.sticker')
           .querySelector('.order_number').textContent;
-        edit_form.querySelector('input[name=order_number]').value = el.closest('.sticker')
-          .querySelector('.order_number').textContent;
-        edit_form.querySelector('input[name=date]').value = el.closest('.sticker')
-          .querySelector('.date').textContent;
-        edit_form.querySelector('input[name=from_address]').value = el.closest('.sticker')
-          .querySelector('.from_address').textContent;
-        edit_form.querySelector('input[name=to_address]').value = el.closest('.sticker')
-          .querySelector('.to_address').textContent;
-        edit_form.querySelector('input[name=trip_purpose]').value = el.closest('.sticker')
-          .querySelector('.trip_purpose').textContent;
-        edit_form.querySelector('input[name=trip_result]').value = el.closest('.sticker')
-          .querySelector('.trip_result').textContent;
-
-        edit_form.querySelector('input[name=start_end_mileage]').value = el.closest('.sticker')
-          .querySelector('.start_end_mileage')?.textContent || '';
-        edit_form.querySelector('input[name=daily_mileage]').value = el.closest('.sticker')
-          .querySelector('.daily_mileage')?.textContent || '';
-        edit_form.querySelector('input[name=fuel_amount]').value = el.closest('.sticker')
-          .querySelector('.fuel_amount')?.textContent || '';
-        edit_form.querySelector('input[name=parking_fee]').value = el.closest('.sticker')
-          .querySelector('.parking_fee')?.textContent || '';
-        edit_form.querySelector('input[name=mileage_at_fueling]').value = el.closest('.sticker')
-          .querySelector('.mileage_at_fueling')?.textContent || '';
       })
     });
   </script>
