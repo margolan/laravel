@@ -5,10 +5,9 @@
 @section('content')
 
   @isset($data)
-    {{-- <div class="w-full h-screen flex justify-center items-center backdrop-blur-md fixed top-0 left-0"> --}}
     <div class="container w-full flex justify-center p-3">
       <div class="w-96 shadow-lg shadow-black py-4 px-6 bg-neutral-950/50">
-        <h1 class="ml-13 py-8 text-3xl">Изменить запись</h1>
+        <h1 class="py-8 text-3xl">Изменить запись</h1>
         <form action="{{ route('max.update', $data->order_number) }}" method="POST" class="flex flex-col gap-1">
           @csrf
           @method('PUT')

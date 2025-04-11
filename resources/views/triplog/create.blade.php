@@ -6,7 +6,7 @@
 
   <div class="container w-full flex justify-center p-3">
     <div class="w-96 shadow-lg shadow-black py-4 px-6 bg-neutral-950/50">
-      <h1 class="py-3 text-3xl">Новая запись</h1>
+      <h1 class="py-8 text-3xl">Новая запись</h1>
       <form action="{{ route('max.store') }}" method="POST" class="flex flex-col">
         @csrf
         <label for="date">Дата</label><input type="date" name="date" class="border-1 mb-3">
