@@ -1,3 +1,37 @@
+Что такое RESTful CRUD?
+  Действие	HTTP Метод	URL	Название маршрута	Описание
+  index	GET	/max	triplog.index	Показать список записей
+  create	GET	/max/create	triplog.create	Показать форму добавления
+  store	POST	/max	triplog.store	Обработать добавление
+  edit	GET	/max/{id}/edit	triplog.edit	Показать форму редактирования
+  update	PUT/PATCH	/max/{id}	triplog.update	Обновить данные
+  destroy	DELETE	/max/{id}	triplog.destroy	Удалить запись
+  show	GET	/max/{id}	triplog.show	Показать одну запись (необяз.)
+
+  class TripLogController extends Controller
+  {
+      public function index()      { /* показать все */ }
+      public function create()     { /* показать форму добавления */ }
+      public function store()      { /* сохранить новые данные */ }
+      public function edit($id)    { /* показать форму редактирования */ }
+      public function update(Request $r, $id) { /* обновить данные */ }
+      public function destroy($id) { /* удалить */ }
+      public function show($id)    { /* показать одну запись */ }
+  }
+
+  Как отправлять PUT и DELETE из формы?
+    <form action="{{ route('max.update', $item->id) }}" method="POST">
+      @csrf
+      @method('PUT')
+        ...
+    </form>
+
+    <form action="{{ route('max.destroy', $item->id) }}" method="POST">
+      @csrf
+      @method('DELETE')
+      <button>Удалить</button>
+    </form>
+
 Работа с базой
 
   Rule::unique('users', 'email')->where('role', 'user')
