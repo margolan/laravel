@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('trip_logs', function (Blueprint $table) {
             $table->id();
-            $table->date('date');
             $table->string('order_number');
             $table->string('from_address');
             $table->string('to_address'); 
@@ -24,7 +23,9 @@ return new class extends Migration
             $table->string('fuel_amount')->nullable();
             $table->string('parking_fee')->nullable();
             $table->integer('mileage_at_fueling')->nullable();
+            $table->string('archive')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

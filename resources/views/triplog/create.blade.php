@@ -4,12 +4,24 @@
 
 @section('content')
 
+  @if (session('data'))
+    {{-- {{ session('data')->order_number }}; --}}
+    @php
+      echo '<pre>';
+      print_r(session('data'));
+      echo '</pre>';
+    @endphp
+
+    {{-- @foreach (session('data') as $item)
+      {{ $item->order_number }};
+    @endforeach --}}
+  @endif
+
   <div class="container w-full flex justify-center p-3">
     <div class="w-96 shadow-lg shadow-black py-4 px-6 bg-neutral-950/50">
       <h1 class="py-8 text-3xl">Новая запись</h1>
       <form action="{{ route('max.store') }}" method="POST" class="flex flex-col">
         @csrf
-        <label for="date">Дата</label><input type="date" name="date" class="border-1 mb-3">
         <label for="order_number">Номер Заявки</label><input type="text" name="order_number" class="border-1 mb-3">
         <label for="from_address">Откуда</label>
         <textarea name="from_address" rows="2" class="border-1 mb-3"></textarea>

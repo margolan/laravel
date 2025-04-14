@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\TripLog;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Schema;
 
 use function PHPUnit\Framework\returnSelf;
 
@@ -12,7 +13,7 @@ class TripLogController extends Controller
 
     public function index()
     {
-        $data = TripLog::orderBy('date')->orderBy('created_at')->get();
+        $data = TripLog::orderBy('created_at')->get();
 
         // $data = TripLog::orderBy('date')->orderBy('created_at')->cursorPaginate(3);
 
@@ -30,7 +31,19 @@ class TripLogController extends Controller
     public function store(Request $request)
     {
 
-        TripLog::create($request->all());
+        $data = $request->all();
+
+        if ($request->start_end_mileage != null) {
+
+            $today_first_entry = TripLog::whereDate('created_at', date('Y-m-d'))->orderBy('created_at')->first();
+
+            if ($today_first_entry && $today_first_entry->start_end_mileage != null) {
+
+                $data['daily_mileage'] = $request->start_end_mileage - $today_first_entry->start_end_mileage;
+            }
+        }
+
+        TripLog::create($data);
 
         return redirect()->route('max.index')->with('status', 'Данные внесены');
     }
@@ -41,14 +54,12 @@ class TripLogController extends Controller
         $data = TripLog::where('order_number', $order_number)->first();
 
         return view('triplog.edit', ['data' => $data]);
-
     }
 
     public function update(Request $request, $order_hidden)
     {
 
         $data = [
-            'date',
             'order_number',
             'from_address',
             'to_address',
@@ -59,6 +70,7 @@ class TripLogController extends Controller
             'fuel_amount',
             'parking_fee',
             'mileage_at_fueling',
+            'archive'
         ];
 
         $found_record = TripLog::where('order_number', $order_hidden)->first();
@@ -71,7 +83,7 @@ class TripLogController extends Controller
 
             if ($request->start_end_mileage) {
 
-                $first_record = TripLog::where('date', $request->date)->orderBy('created_at')->first();
+                $first_record = TripLog::where('created_at', $request->created_at)->orderBy('created_at')->first();
 
                 if ($first_record && $first_record->start_end_mileage != null) {
 
@@ -86,16 +98,15 @@ class TripLogController extends Controller
         }
 
         return redirect()->route('max.index')->with('status', 'Изменения приняты');
-        // return redirect()->back()->with('test', $test);
-
     }
     public function destroy($id)
     {
 
-        TripLog::destroy($id);
+        $entry = TripLog::findOrFail($id);
+
+        $entry->delete();
 
         return redirect()->route('max.index')->with('status', "Запись удалена");
-
     }
     public function show($id)
     { /* показать одну запись */

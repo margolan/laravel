@@ -16,7 +16,7 @@
             </tr>
             @foreach ($data as $item)
               <tr class="odd:bg-neutral-600/50">
-                <td class="w-max px-2">{{ $item->date }}</td>
+                <td class="w-max px-2">{{ $item->created_at->format('d.m.Y') }}</td>
               </tr>
             @endforeach
           </table>
@@ -53,29 +53,6 @@
           </table>
         </div>
       </div>
-
-
-
-
-
-
-
-
-
-
-
-      <div class="delete_form hidden">
-        <div class="w-full h-screen flex justify-center items-center backdrop-blur-md fixed top-0 left-0">
-          <div class="w-full sm:w-110 shadow-lg shadow-black bg-neutral-950/75 p-10">
-            <span>Удалить заявку </span><span class="delete_order"></span>?
-            <div class="flex justify-center pt-5 gap-3">
-              <a href="" class="delete_confirm w-32 border-1 text-center cursor-default">Удалить</a>
-              <div class="delete_cancel w-32 border-1 text-center cursor-default bg-red-700">Отмена</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
     </div>
   @endisset
 @endsection

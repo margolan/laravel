@@ -13,8 +13,6 @@
           @method('PUT')
           <label for="order_number" class="w-32">Заявка: </label><input type="text" class="border-1 mb-3"
             name="order_number" value="{{ $data->order_number }}">
-          <label for="date" class="w-32">Дата: </label><input type="text" class="border-1" name="date"
-            value="{{ $data->date }}">
           <label for="from_address" class="w-32">Откуда: </label><input type="text" class="border-1 mb-3"
             name="from_address" value="{{ $data->from_address }}">
           <label for="to_address" class="w-32">Куда: </label><input type="text" class="border-1 mb-3" name="to_address"

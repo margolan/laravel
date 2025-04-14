@@ -15,14 +15,7 @@ Route::match(['get', 'post'], '/', [IndexController::class, 'index'])->name('ind
 
 Route::get('/logout', [AuthController::class, 'logout'])->name('auth_logout');
 
-// Route::get('/max', [TripLogController::class, 'index'])->name('triplog_index');
-// Route::post('/max', [TripLogController::class, 'edit'])->name('triplog_edit');
-// Route::get('/max', [TripLogController::class, 'delete'])->name('triplog_delete');
-// Route::get('/max/add', [TripLogController::class, 'add_show'])->name('triplog_add_show');
-// Route::post('/max/add', [TripLogController::class, 'add_process'])->name('triplog_add_process');
-
 Route::resource('max', TripLogController::class);
-
 
 Route::middleware('auth')->group(function () {
   Route::get('/s/delete', [ExcelController::class, 's_delete'])->name('s_delete');
