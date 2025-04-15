@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Key;
+use App\Models\TripLog;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Concerns\ToArray;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xls;
 
 class TestController extends Controller
 {
@@ -13,17 +16,16 @@ class TestController extends Controller
 
         if ($request->isMethod('get')) {
 
-            if (!empty($request->id)) {
-                $query = Key::query();
+            $data = TripLog::first()->toArray();
 
-                $query->where('id', $request->id);
+            $spreadsheet = new Spreadsheet();
 
-                $keys = $query->get()->toArray();
-            } else {
-                $keys = 'no data';
-            }
+            $sheet = $spreadsheet->getActiveSheet();
 
-            return view('test', ['data' => $request->all(), 'keys' => $keys]);
+            // return view('test', ['data' => $data]);
+        } else {
+
+            return redirect()->back()->with('status', 'Lol');
         }
     }
 }
