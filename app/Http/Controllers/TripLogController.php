@@ -6,6 +6,7 @@ use App\Models\TripLog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
 
+use function PHPUnit\Framework\isEmpty;
 use function PHPUnit\Framework\returnSelf;
 
 class TripLogController extends Controller
@@ -26,12 +27,9 @@ class TripLogController extends Controller
 
         $todays_orders = TripLog::whereDate('created_at', date('Y-m-d'))->orderBy('created_at')->get();
 
-        if ($todays_orders) {
+        $todays_orders->isNotEmpty() ? $data['from_address'] = $todays_orders->last()->to_address : $data = '';
 
-            $data['from_address'] = $todays_orders->last()->to_address;
-        }
-
-        return view('triplog.create', compact('data'));
+        return view('triplog.create', ['data' => $data]);
     }
 
     public function store(Request $request)
@@ -41,7 +39,7 @@ class TripLogController extends Controller
 
         $todays_orders = TripLog::whereDate('created_at', date('Y-m-d'))->orderBy('created_at')->get();
 
-        if ($todays_orders) {
+        if ($todays_orders->isNotEmpty()) {
 
             if ($request->start_end_mileage != null) { // Mileage count
 
@@ -121,7 +119,5 @@ class TripLogController extends Controller
 
         return redirect()->route('max.index')->with('status', "Запись удалена");
     }
-    public function show($id)
-    {
-    }
+    public function show($id) {}
 }
