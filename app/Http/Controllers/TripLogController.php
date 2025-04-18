@@ -13,9 +13,8 @@ class TripLogController extends Controller
 
     public function index()
     {
-        // $data = TripLog::orderBy('created_at')->get();
 
-        $data = TripLog::orderBy('created_at')->paginate(3);
+        $data = TripLog::orderBy('created_at', 'desc')->paginate(20);
 
         $test = '';
 
@@ -25,7 +24,14 @@ class TripLogController extends Controller
     public function create()
     {
 
-        return view('triplog.create');
+        $todays_orders = TripLog::whereDate('created_at', date('Y-m-d'))->orderBy('created_at')->get();
+
+        if ($todays_orders) {
+
+            $data['from_address'] = $todays_orders->last()->to_address;
+        }
+
+        return view('triplog.create', compact('data'));
     }
 
     public function store(Request $request)
@@ -33,14 +39,21 @@ class TripLogController extends Controller
 
         $data = $request->all();
 
-        if ($request->start_end_mileage != null) {
+        $todays_orders = TripLog::whereDate('created_at', date('Y-m-d'))->orderBy('created_at')->get();
 
-            $today_first_entry = TripLog::whereDate('created_at', date('Y-m-d'))->orderBy('created_at')->first();
+        if ($todays_orders) {
 
-            if ($today_first_entry && $today_first_entry->start_end_mileage != null) {
+            if ($request->start_end_mileage != null) { // Mileage count
 
-                $data['daily_mileage'] = $request->start_end_mileage - $today_first_entry->start_end_mileage;
+                $todays_orders_first = $todays_orders->first();
+
+                if ($todays_orders_first && $todays_orders_first->start_end_mileage != null) {
+
+                    $data['daily_mileage'] = $request->start_end_mileage - $todays_orders_first->start_end_mileage;
+                }
             }
+
+            $data['from_address'] = $todays_orders->last()->to_address;
         }
 
         TripLog::create($data);
@@ -48,15 +61,15 @@ class TripLogController extends Controller
         return redirect()->route('max.index')->with('status', 'Данные внесены');
     }
 
-    public function edit($order_number)
+    public function edit($id)
     {
 
-        $data = TripLog::where('order_number', $order_number)->first();
+        $data = TripLog::where('id', $id)->first();
 
         return view('triplog.edit', ['data' => $data]);
     }
 
-    public function update(Request $request, $order_hidden)
+    public function update(Request $request, $id)
     {
 
         $data = [
@@ -73,7 +86,7 @@ class TripLogController extends Controller
             'archive'
         ];
 
-        $found_record = TripLog::where('order_number', $order_hidden)->first();
+        $found_record = TripLog::where('id', $id)->first();
 
         if ($found_record) {
 
@@ -81,13 +94,13 @@ class TripLogController extends Controller
                 $found_record->$item = $request->$item;
             }
 
-            if ($request->start_end_mileage) {
+            if ($request->start_end_mileage) { // Mileage count
 
-                $first_record = TripLog::where('created_at', $request->created_at)->orderBy('created_at')->first();
+                $today_first_entry = TripLog::whereDate('created_at', date('Y-m-d'))->orderBy('created_at')->first();
 
-                if ($first_record && $first_record->start_end_mileage != null) {
+                if ($today_first_entry && $today_first_entry->start_end_mileage != null) {
 
-                    $found_record->daily_mileage = $request->start_end_mileage - $first_record->start_end_mileage;
+                    $found_record->daily_mileage = $request->start_end_mileage - $today_first_entry->start_end_mileage;
                 }
             }
 
@@ -109,6 +122,6 @@ class TripLogController extends Controller
         return redirect()->route('max.index')->with('status', "Запись удалена");
     }
     public function show($id)
-    { /* показать одну запись */
+    {
     }
 }

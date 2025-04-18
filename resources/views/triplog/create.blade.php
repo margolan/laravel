@@ -13,7 +13,7 @@
         <label for="order_number" class="text-sm">Номер Заявки</label><input type="text" name="order_number"
           class="px-3 py-2 rounded-lg border-1 mt-1 mb-3">
         <label for="from_address" class="text-sm">Откуда</label><input type="text" name="from_address"
-          class="px-3 py-2 rounded-lg border-1 mt-1 mb-3">
+          class="px-3 py-2 rounded-lg border-1 mt-1 mb-3" value="{{ $data['from_address'] ?? '' }}">
         <label for="to_address" class="text-sm">Куда</label><input type="text" name="to_address"
           class="px-3 py-2 rounded-lg border-1 mt-1 mb-3">
         <label for="trip_purpose" class="text-sm">Цель</label><input type="text" name="trip_purpose"

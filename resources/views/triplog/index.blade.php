@@ -38,7 +38,7 @@
             </tr>
             @foreach ($data as $item)
               <tr class="odd:bg-neutral-200 even:bg-neutral-100 text-neutral-900 hover:bg-neutral-300">
-                <td class="px-2 py-1 text-center"><a href="/max/{{ $item->order_number }}/edit"
+                <td class="px-2 py-1 text-center"><a href="/max/{{ $item->id }}/edit"
                     class="border-dashed border-b">{{ $item->order_number }}</a></td>
                 <td class="px-2 py-1">{{ $item->from_address }}</td>
                 <td class="px-2 py-1">{{ $item->to_address }}</td>
