@@ -6,6 +6,7 @@ use App\Http\Controllers\ExcelController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\KanbanController;
+use App\Http\Controllers\MailController;
 use App\Http\Controllers\PasswordController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\TripLogController;
@@ -73,6 +74,9 @@ Route::middleware('auth')->group(function () {
   Route::post('/kanban/add', [KanbanController::class, 'kanban_add'])->name('kanban_add');
   Route::post('/kanban/edit', [KanbanController::class, 'kanban_edit'])->name('kanban_edit');
 });
+
+Route::get('/sendmail', [MailController::class, 'form']);
+Route::post('/sendmail', [MailController::class, 'send']);
 
 /* Test */
 

@@ -4,17 +4,10 @@
 
 @section('content')
 
-  @if (session('data'))
-    {{ session('data') }}
-  @endif
-
-  @isset($data)
-    @php
-      echo '<pre>';
-      print_r($data);
-      echo '</pre>';
-    @endphp
-  @endisset
-
+  <form action="{{ 'sendmail' }}">
+    <input type="text" name="mailSubject">
+    <input type="text" name="mailBody">
+    <input type="submit" value="Send Email">
+  </form>
 
 @endsection
