@@ -34,7 +34,7 @@
     <div class="wrap w-full flex-col mt-5">
       @foreach ($processed_data as $city => $block)
         <h2 class="city text-xl px-4 pb-3 pt-2 rounded-t-lg border-1 border-b-0 w-max mt-7">{{ $city }}</h2>
-        <div class="w-full border-1 overflow-x-scroll">
+        <div class="w-full border-1 overflow-x-auto no-scrollbar">
           @foreach ($block as $row)
             <div
               class="w-max flex last:border-0 [border-image:linear-gradient(to_right,#ffffffff,#ffffff00)_1] border-b-1 border-solid border-transparent">

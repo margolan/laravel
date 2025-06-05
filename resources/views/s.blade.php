@@ -52,7 +52,7 @@
               </div>
             @endfor
           </div> <!-- names -->
-          <div class="data_column w-min overflow-x-auto rounded-r-lg font-semibold">
+          <div class="data_column w-min overflow-x-auto rounded-r-lg font-semibold no-scrollbar">
             <div class="dates_row">
               <div class="day_row inline-flex dark:bg-gray-200 dark:text-gray-700">
                 @foreach ($depart['dates']['day'] as $index => $day)
