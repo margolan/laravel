@@ -4,6 +4,16 @@
 
 @section('content')
 
+{{-- Test! --}}
+
+@if(isset($test))
+
+@dump($test)
+
+@endif
+    
+{{-- Test! --}}
+
   @if ($available_links->isEmpty())
     <p>Нет вариантов ключей</p>
   @else

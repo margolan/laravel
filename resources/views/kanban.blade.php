@@ -2,6 +2,8 @@
 
 @section('title', 'Kanban')
 
+@vite('resources/js/kanban.js')
+
 @section('content')
 
   @if ($errors->any())
@@ -14,20 +16,21 @@
 
   <div class="flex flex-col my-3 text-neutral-200">
 
-    <h1 class="w-85 text-lg rounded-2xl my-3 py-3 bg-neutral-800 px-5"><a href="/kanban">Канбан</a></h1>
+    <h1 class="w-85 text-lg rounded-2xl my-3 py-3 font-bold bg-neutral-800 px-5"><a href="/kanban">Канбан</a></h1>
 
     <div class="flex flex-wrap rounded-2xl gap-3">
 
       @if (isset($processed_data))
         @foreach ($processed_data as $status => $item)
-          <div class="todo w-85 h-max px-3 bg-neutral-800 rounded-2xl">
+          <div
+            class="todo w-85 {{ $status === 'Завершено' ? 'h-100 overflow-hidden relative' : 'h-max' }} bg-neutral-800 rounded-2xl">
             <div class="header h-18 flex flex-col justify-center">
               <span class="font-semibold text-lg ml-5">{{ $status }} ({{ count($item) }})</span>
             </div>
 
             @if (count($item))
               @foreach ($item as $task)
-                <div class="sticker border-1 border-neutral-300 rounded-2xl mb-5">
+                <div class="sticker w-78 mx-auto border-1 border-neutral-300 rounded-2xl mb-5">
                   <div class="p-4">
                     <div class="mb-2 flex justify-between">
                       <h2
@@ -38,7 +41,7 @@
                         } }}">
                         {{ $task['title'] }}</h2>
                       <span title="Удалить запись" id={{ $task['id'] }}
-                        class="text-neutral-400 hover:text-white">&#x2715;</span>
+                        class="text-neutral-400 cursor-pointer hover:text-white">&#x2715;</span>
                     </div>
 
                     <p class="indent-3">
@@ -69,7 +72,7 @@
             @endif
 
             @if ($status == 'Запланировано')
-              <div class="border-1 border-neutral-300 rounded-2xl mb-5 px-3 p-4">
+              <div class="w-78 border-1 border-neutral-300 rounded-2xl mb-5 px-3 p-4 mx-auto">
                 <form action="{{ route('kanban_add') }}" method="post">
                   @csrf
                   <p class="py-3 font-semibold">Новый Стикер</p>
@@ -83,6 +86,12 @@
                   </select>
                   <button type="submit" class="py-1 px-5 border-1 rounded-md">Добавить</button>
                 </form>
+              </div>
+            @endif
+            @if ($status == 'Завершено')
+              <div
+                class="box w-full h-15 bg-linear-to-b to-black absolute bottom-0 flex justify-center items-end">
+                <div class="btn_expand w-5 h-5 border-b-2 border-r-2 rotate-45 cursor-pointer mb-4 hover:mb-3 transition-all"></div>
               </div>
             @endif
           </div>

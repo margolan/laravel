@@ -4,9 +4,6 @@ namespace App\Imports;
 
 use App\Models\Key;
 use App\Models\Schedule;
-use App\Models\Test;
-use Maatwebsite\Excel\Concerns\WithLimit;
-use Illuminate\Support\Facades\App;
 
 
 class ExcelImport
@@ -164,7 +161,7 @@ class ExcelImport
 
         for ($i = 0; $i < cal_days_in_month(CAL_GREGORIAN, $request->month, $request->year); $i++) { // numbers and days of the week
             $processed_data['dates']['day'][] = $i + 1;
-            $processed_data['dates']['date'][] = __("messages.date" . date('w', mktime(0, 0, 0, $request->month, $i, $request->year)));
+            $processed_data['dates']['date'][] = __('messages.date' . date('w', mktime(0, 0, 0, $request->month, $i, $request->year)));
         }
 
         $dataToStore = [];

@@ -31,15 +31,13 @@ class ExcelController extends Controller
     public function s_delete(Request $request)
     {
 
-        $record = Schedule::find($request->id)->first();
+        $record = Schedule::find($request->id);
 
         if ($record) {
 
-            // $record->delete();
-            // return redirect()->route('admin_index')->with('status', 'Запись успешно удалена');
-
-            if ($record->city === Auth::user()->city) {
-                if ($record->depart === Auth::user()->depart) {
+            if ($record->city === Auth::user()->city || Auth::user()->role == 'admin') {
+                if ($record->depart === Auth::user()->depart || Auth::user()->role == 'admin') {
+                    $record->delete();
                     return redirect()->route('admin_index')->with('status', 'Запись успешно удалена');
                 } else {
                     return redirect()->route('admin_index')->with('status', 'Нельзя удалить запись другого подразделения');
@@ -153,7 +151,6 @@ class ExcelController extends Controller
         $processed_data = $ExcelImport->getKey($spreadsheet, $request);
 
         return redirect()->route('admin_index')->with('processed_data', $processed_data)->with('status', 'Запись успешно добавлена');
-        // return route('admin_index', ['processed_data' => $processed_data, 'status' => 'Запись успешно добавлена']);
     }
 
     public function k_index(Request $request)
@@ -202,6 +199,13 @@ class ExcelController extends Controller
             }
         }
 
-        return view('k', ['processed_data' => $processed_data, 'available_links' => $available_links]);
+        // Test!
+
+        $test = Cookie::get();
+
+
+        // Test!
+
+        return view('k', ['processed_data' => $processed_data, 'available_links' => $available_links, 'test' => $test]);
     }
 }
