@@ -154,3 +154,10 @@ Symbols
     11165 top 11181
     11166 right 11177
     11167 down 11183
+
+PostgreSQL
+
+  @echo off
+  set PGCLIENTENCODING=UTF8
+  chcp 65001 >nul
+  bin\psql.exe -h 127.0.0.1 -p 5432 -U postgres
