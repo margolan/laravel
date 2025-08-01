@@ -8,7 +8,6 @@
 
 @if(isset($test))
 
-@dump($test)
 
 @endif
     
