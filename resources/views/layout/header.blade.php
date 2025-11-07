@@ -28,8 +28,8 @@
       @if (Auth::check())
         <a href="{{ route('admin_index') }}"
           class="{{ request()->routeIs('admin_index') ? 'underline underline-offset-4' : 'text-neutral-300' }} hover:text-white">Где-то</a>
-        <a href="{{ route('auth_logout') }}"
-          class="{{ request()->routeIs('auth_logout') ? 'underline underline-offset-4' : 'text-neutral-300' }} hover:text-white">Выйти</a>
+        <a href="{{ route('logout') }}"
+          class="{{ request()->routeIs('logout') ? 'underline underline-offset-4' : 'text-neutral-300' }} hover:text-white">Выйти</a>
       @else
         <a href="{{ route('login') }}"
           class="{{ request()->routeIs('login') ? 'underline underline-offset-4' : 'text-neutral-300' }} hover:text-white">Войти</a>

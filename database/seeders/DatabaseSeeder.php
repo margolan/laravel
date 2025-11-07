@@ -34,6 +34,28 @@ class DatabaseSeeder extends Seeder
                 'var1' => '',
                 'var2' => '',
                 'var3' => '',
+            ],
+            [
+                'name' => 'sharapat',
+                'email' => 'sharapat@mail.com',
+                'password' => '$2y$12$OfU5mi.byEf1BPri3/J7G.eU0yr.9i3Q.gvyIdBceGcN6XFGBQUmy',
+                'role' => 'rg',
+                'depart' => 'pos',
+                'city' => 'aktobe',
+                'var1' => '',
+                'var2' => '',
+                'var3' => '',
+            ],
+            [
+                'name' => 'sayasat',
+                'email' => 'sayasat@mail.com',
+                'password' => '$2y$12$OfU5mi.byEf1BPri3/J7G.eU0yr.9i3Q.gvyIdBceGcN6XFGBQUmy',
+                'role' => 'se',
+                'depart' => 'atm',
+                'city' => 'aktobe',
+                'var1' => '',
+                'var2' => '',
+                'var3' => '',
             ]
         ]);
     }

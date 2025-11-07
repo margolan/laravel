@@ -1,19 +1,11 @@
 {
-  "public/assets/wow_bg.jpg": {
-    "file": "assets/wow_bg-AnCphf2S.jpg",
-    "src": "public/assets/wow_bg.jpg"
-  },
   "resources/css/app.css": {
-    "file": "assets/app-CYUL1E79.css",
+    "file": "assets/app-wn6xR1Sd.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
-  "resources/fonts/RobotoMono-VariableFont_wght.ttf": {
-    "file": "assets/RobotoMono-VariableFont_wght-Be6w_Krw.ttf",
-    "src": "resources/fonts/RobotoMono-VariableFont_wght.ttf"
-  },
   "resources/js/app.js": {
-    "file": "assets/app-BXgDwouG.js",
+    "file": "assets/app-Dj93mT4t.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true
